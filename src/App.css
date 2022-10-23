@@ -1,0 +1,206 @@
+.App {
+  tttext-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+/* .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+} */
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+* {
+	box-sizing: border-box;
+	/* font-family: ; */
+ }
+
+
+
+ 
+ 
+
+
+div {
+	bbborder: 1px solid red;
+}
+
+/* 
+	DetailView
+
+.detail-view {
+	position: fixed;
+	left: 100%;
+	top: 0px;
+	width: 40%;
+	height: 100%;
+	background-color: #e4e4e4;
+	border: 1px solid green;
+	z-index: 0;
+	overflow: hidden;
+	padding: 10px;
+}
+
+.detail-view-open {
+	animation-duration: 500ms;
+	animation-name: slidein;
+}
+
+.detail-view-close {
+	animation-duration: 400ms;
+	animation-name: slideout;
+}
+
+.detail-view div {
+	padding: 10px;
+}
+
+
+@keyframes slidein {
+	from {
+		left: 100%;
+	}
+
+	to {
+		left: 60%;
+	}
+}
+
+@keyframes slideout {
+	from {
+		left: 60%;
+	}
+
+	to {
+		left: 100%;
+	}
+}
+*/
+
+
+/*****************/
+
+.multiselect {
+	width: 300px;
+  }
+  
+  .selectBox {
+	position: relative;
+	border: 1px solid silver;
+	border-radius: 3px;
+	padding: 5px;
+	white-space: pre-line;
+	overflow-wrap: break-word;
+	display: flex;
+	align-items: center;
+  }
+  
+  .selectBox select {
+	width: 100%;
+	font-weight: bold;
+  }
+  
+  .overSelect {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+  }
+  
+  .options {
+	border: 1px #dadada solid;
+	height: 150px;
+    max-height: 150px;
+	border: 1px solid silver;
+	overflow-y: auto;
+	border-radius: 3px;
+  }
+  
+  .options label {
+	display: block;
+	margin: 0;
+	color: dimgrey;
+	padding: 2px 0px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	font-weight: normal;
+  }
+  
+  .options label:hover {
+	background-color: #1e90ff;
+  }
+
+  .options input {
+	padding: .5rem;
+	font-size: 16px;
+	display: block;
+	width: auto;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	margin: 2px 5px 0px 5px;
+  }
+
+
+  /* ul {
+	display: block;
+	list-style-type: disc;
+	margin-block-start: 0.1em;
+	margin-block-end: 0.1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 3px;
+  }
+
+  .multi-option {
+	padding: 1px 5px;
+	mmmargin: -5px 0px 5px 0px;
+	margin: 0px 5px 0px 0px;
+	margin-right: 5px;
+	background-color: orange;
+	display: inline; 
+	dddisplay: inline-block;
+	border-radius: 10px;
+  } */
+
+div.container-fluid, div.container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+div.row {
+    margin-right: 0px;
+    margin-left: 0px
+}
+
+button {
+	border-width: 0;
+}
