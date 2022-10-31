@@ -162,7 +162,7 @@ const Form: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
         {!isEdit() &&
           <div className="buttons">
             {props.canEdit &&
-              <button onClick={() => props.cancel()}>Cancel</button>}
+              <button className="secondary" onClick={() => props.cancel()}>Cancel</button>}
             {props.canEdit &&
               <button type="submit">Save</button>}
           </div>

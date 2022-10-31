@@ -58,6 +58,9 @@ export enum QuestionActionTypes {
 	STORE_QUESTION = 'STORE_QUESTION',
 	UPDATE_QUESTION = 'UPDATE_QUESTION',
 	CANCEL_QUESTION = 'CANCEL_QUESTION',
+	CLOSE_QUESTION_FORM = 'CLOSE_QUESTION_FORM',
+	OPEN_QUESTION_FORM = 'OPEN_QUESTION_FORM',
+
 	// groups
 	GET_CATEGORY = 'GET_CATEGORY',
 	ADD_CATEGORY = 'ADD_CATEGORY',
@@ -99,15 +102,18 @@ export interface IAdd {
 
 export interface IEdit {
 	type: QuestionActionTypes.EDIT_QUESTION;
-	categoryId: number,
-	questionId: number
+	categoryId: number;
+	questionId: number;
+	showQuestionForm: boolean;
 }
 
 export interface IRemove {
 	type: QuestionActionTypes.REMOVE_QUESTION;
-	categoryId: number,
-	questionId: number
+	categoryId: number;
+	questionId: number;
 }
+
+
 
 export interface IStore {
 	type: QuestionActionTypes.STORE_QUESTION;
@@ -123,6 +129,15 @@ export interface ICancel {
 	type: QuestionActionTypes.CANCEL_QUESTION;
 }
 
+export interface ICloseQuestionForm {
+	type: QuestionActionTypes.CLOSE_QUESTION_FORM;
+}
+
+export interface IOpenQuestionForm {
+	type: QuestionActionTypes.OPEN_QUESTION_FORM;
+}
+
+
 // group
 
 export interface IGetCategory {
@@ -133,6 +148,7 @@ export interface IGetCategory {
 export interface IAddCategory {
 	type: QuestionActionTypes.ADD_CATEGORY;
 	//categoryId: number
+	showCategoryForm: boolean
 }
 
 export interface ICancelCategory {
@@ -147,7 +163,8 @@ export interface IToggleCategory {
 
 export interface IEditCategory {
 	type: QuestionActionTypes.EDIT_CATEGORY;
-	categoryId: number
+	categoryId: number,
+	showCategoryForm: boolean
 }
 
 export interface IRemoveCategory {
@@ -201,11 +218,13 @@ export interface IAddAndAssignNewAnswer {
 
 
 // Combine the action types with a union (we assume there are more)
-export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | IUpdate | ICancel |
-	IGetCategory | IAddCategory | IToggleCategory | IEditCategory | IRemoveCategory | IStoreCategory | IUpdateCategory | ICancelCategory |
+export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | IUpdate | ICancel | 
+	IGetCategory | IAddCategory | IToggleCategory | IEditCategory | IRemoveCategory | 
+	IStoreCategory | IUpdateCategory | ICancelCategory |
 	IRemoveQuestionAnswer | IAssignQuestionAnswer |
 	ISetIsDetail |
-	IAddAndAssignNewAnswer;
+	IAddAndAssignNewAnswer |
+	ICloseQuestionForm | IOpenQuestionForm;
 
 const isWebStorageSupported = () => 'localStorage' in window
 
@@ -306,7 +325,8 @@ export const addQuestion: ActionCreator<
 				type: QuestionActionTypes.ADD_QUESTION,
 				createdBy: getState().topState.top!.auth!.who!.userId,
 				categoryId,
-				text
+				text,
+				showCategoryForm: false
 			});
 		}
 		catch (err) {
@@ -317,13 +337,15 @@ export const addQuestion: ActionCreator<
 
 export const editQuestion: ActionCreator<
 	ThunkAction<Promise<any>, ICategoriesState, null, IEdit>
-> = (categoryId: number, questionId: number) => {
+> = (categoryId: number, questionId: number, showQuestionForm: boolean) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			dispatch({
 				type: QuestionActionTypes.EDIT_QUESTION,
 				categoryId,
-				questionId
+				questionId,
+				showCategoryForm: false,
+				showQuestionForm
 			});
 		} catch (err) {
 			console.error(err);
@@ -566,6 +588,31 @@ export const cancelQuestion: ActionCreator<any> = () => {
 	};
 };
 
+export const closeQuestionForm: ActionCreator<any> = () => {
+	return (dispatch: Dispatch) => {
+		try {
+			dispatch({
+				type: QuestionActionTypes.CLOSE_QUESTION_FORM
+			});
+		} catch (err) {
+			console.error(err);
+		}
+	};
+};
+
+export const openQuestionForm: ActionCreator<any> = () => {
+	return (dispatch: Dispatch) => {
+		try {
+			dispatch({
+				type: QuestionActionTypes.OPEN_QUESTION_FORM
+			});
+		} catch (err) {
+			console.error(err);
+		}
+	};
+};
+
+
 export const getCategory: ActionCreator<
 	ThunkAction<Promise<any>, ICategoriesState, string, IGet>
 > = (categoryId: number) => {
@@ -588,7 +635,8 @@ export const addCategory: ActionCreator<
 	return async (dispatch: Dispatch) => {
 		try {
 			dispatch({
-				type: QuestionActionTypes.ADD_CATEGORY
+				type: QuestionActionTypes.ADD_CATEGORY,
+				showCategoryForm: true
 			});
 		} catch (err) {
 			console.error(err);
@@ -619,7 +667,8 @@ export const editCategory: ActionCreator<
 		try {
 			dispatch({
 				type: QuestionActionTypes.EDIT_CATEGORY,
-				categoryId
+				categoryId,
+				showCategoryForm: true
 			});
 		} catch (err) {
 			console.error(err);
@@ -679,7 +728,8 @@ export const updateCategory: ActionCreator<
 			});
 			if (doSync)
 				syncWithOthers(QuestionActionTypes.UPDATE_CATEGORY, category);
-		} catch (err) {
+		} 
+		catch (err) {
 			console.error(err);
 		}
 	};

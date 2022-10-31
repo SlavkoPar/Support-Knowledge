@@ -16,6 +16,7 @@ import { QuestionActions,
 	storeQuestion,
 	updateQuestion,
 	cancelQuestion,
+	closeQuestionForm,
 	removeQuestionAnswer,
 	assignQuestionAnswer,
 	setIsDetail,
@@ -38,7 +39,8 @@ const joinQuestionAnswers = (question: IQuestion | undefined, answers: IAnswer[]
 }
 
 interface IProps {
-	canEdit: boolean
+	canEdit: boolean,
+	handleClose: () => void
 }
 
 // Grab the categories from the store and make them available on props
@@ -52,20 +54,22 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		questionAnswers: joinQuestionAnswers(question, answers),
 		answers,
 		formMode,
-		canEdit: ownProps.canEdit
+		canEdit: ownProps.canEdit,
+		handleClose: ownProps.handleClose
 	};
 };
 
 
 const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
-		onSelectQuestion: (categoryId: number, questionId: number) => dispatch<any>(getQuestion(categoryId, questionId)),
-		add: (categoryId: number, text: string, canEdit?: boolean) => dispatch<any>(addQuestion(categoryId, text, canEdit)),
-		edit: (categoryId: number, questionId: number) => dispatch<any>(editQuestion(categoryId, questionId)),
-		remove: (categoryId: number, questionId: number) => dispatch<any>(removeQuestion(true, categoryId, questionId)),
+		//onSelectQuestion: (categoryId: number, questionId: number) => dispatch<any>(getQuestion(categoryId, questionId)),
+		//add: (categoryId: number, text: string, canEdit?: boolean) => dispatch<any>(addQuestion(categoryId, text, canEdit)),
+		//edit: (categoryId: number, questionId: number, showQuestionForm: boolean) => dispatch<any>(editQuestion(categoryId, questionId, showQuestionForm)),
+		//remove: (categoryId: number, questionId: number) => dispatch<any>(removeQuestion(true, categoryId, questionId)),
 		saveForm: (question: IQuestion, formMode: string) => 
 			dispatch<any>(formMode==='add'?storeQuestion(true, question):updateQuestion(true, question)),
 		cancel: () => dispatch<any>(cancelQuestion()),
+		//closeQuestionForm: () => dispatch<any>(closeQuestionForm()),
 
 		// question answers
 		selectQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => 

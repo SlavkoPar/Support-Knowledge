@@ -10,8 +10,8 @@ import { IQuestion } from '../types';
 
 interface IQuestionRowProps {
 	question: IQuestion;
-	onSelectQuestion: (categoryId: number, questionId: number) => IQuestion;
-	edit: (categoryId: number, questionId: number) => void;
+	onSelectQuestion: (categoryId: number, questionId: number) => void;
+	edit: (categoryId: number, questionId: number, showQuestionForm: boolean) => void;
 	remove: (categoryId: number, questionId: number) => void;
 }
 
@@ -30,7 +30,7 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 				{question.text}
 			</button>
 			{hoverProps.isHovered && 
-				<button className="button-edit" title="Edit" onClick={() => edit(categoryId, questionId)}>
+				<button className="button-edit" title="Edit" onClick={() => edit(categoryId, questionId, true)}>
 					<FontAwesomeIcon icon={faEdit} color='lightblue' />
 				</button>
 			}

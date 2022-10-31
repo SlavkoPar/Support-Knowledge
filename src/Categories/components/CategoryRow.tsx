@@ -34,12 +34,12 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 			</button>
 			<span className='question-group-title' onClick={() => onSelectCategory(categoryId)}>{title}</span>
 			{hoverProps.isHovered &&
-				<button className="button-edit" title="Edit Section" onClick={() => editCategory(categoryId)}>
+				<button className="button-edit" title="Edit Category" onClick={() => editCategory(categoryId)}>
 					<FontAwesomeIcon icon={faEdit} color='lightblue' />
 				</button>
 			}
 			{hoverProps.isHovered && categories.length === 0 &&
-				<button className="button-remove" title="Remove Section" onClick={() => removeCategory(categoryId)}>
+				<button className="button-remove" title="Remove Category" onClick={() => removeCategory(categoryId)}>
 					<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
 				</button>
 			}

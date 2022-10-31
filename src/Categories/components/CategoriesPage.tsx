@@ -23,22 +23,16 @@ type SupportParams = {
 const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 
 	let { tekst } = useParams<SupportParams>();
-	
-	// const { categories, categoryQuestions, category, question,
-	// 	formMode, categoryIdEditing, onSelectQuestion, add, edit, remove, canEdit,
-	// 	addCategory, toggleCategory, editCategory, removeCategory, storeCategory, updateCategory,
-	// 	addAndAssignNewAnswer,
-	// 	who } = props;
 
-	const { categories, categoryQuestions, category, question,
-		formMode, categoryIdEditing, onSelectCategory, onSelectQuestion, add, edit, remove, canEdit,
-		addCategory, toggleCategory, editCategory, removeCategory, storeCategory, updateCategory,
+	const { categories, categoryQuestions, showCategoryForm, category, showQuestionForm, question, 
+		closeQuestionForm, openQuestionForm,
+		formMode, categoryIdEditing, onSelectCategory, onSelectQuestion, canEdit,
+		toggleCategory, storeCategory, updateCategory,
 		addAndAssignNewAnswer,
 		who } = props;
 
-
 	//const [open, setOpen] = useState(false);
-	const open = categories && (category||question)
+	const open = categories && (category || question)
 
 	const inputEl = useRef<HTMLInputElement>(null);
 	setTimeout(() => {
@@ -49,24 +43,25 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	}, 100)
 
 	console.log('RENDERUJEM Categories ----------->>>>>>>>>>')
+	// if (showQuestionForm)
+	// 	closeQuestionForm();
 
 	return (
 		<>
 			<Container fluid>
 				<Row style={{ border: '3px solid lightblue' }}>
-					<Col md={open?6:12} lg={open?6:12} style={{ padding: '10px', backgroundColor: '#eff3f6', color: '#686c71' }}>
+					<Col md={open ? 6 : 12} lg={open ? 6 : 12} style={{ padding: '10px', backgroundColor: '#eff3f6', color: '#686c71' }}>
 						<div style={{ border: '0px solid silver', backgroundColor: 'white' }}>
 							<AutoSuggest
 								categories={categories}
 								categoryQuestions={categoryQuestions}
 								tekst={tekst}
-								onSelectQuestion={onSelectQuestion}
+								onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId)}
 							/>
 							<hr />
-							<h3>Categories</h3>
-							{categories &&
-								<CategoryList {...props} />
-							}
+							{/* <h3>Categories</h3> */}
+							{/* {categories && <CategoryList {...props} />} */}
+							{categories && <CategoryList {...props} />}
 						</div>
 					</Col>
 					{/* <Collapse
@@ -79,40 +74,31 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 						onExiting={() => { console.log('onExiting'); }}
 						onExited={() => { console.log('onExited'); }}
 					> */}
-						<Col md={open?6:0} lg={open?6:0} style={{ backgroundColor: '#eff3f6', color: '#686c71', padding: '10px' }}>
-							<div style={{ border: '0px solid silver', backgroundColor: 'white' }}>
-								{/* {categories && question &&
-									<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
-										<h4 style={{ marginTop: 0, color: 'white' }}>Question</h4>
-										{formMode === 'display' ?
-											<ContainerQuestionForm canEdit={false} />
-											:
-											<ContainerQuestionForm canEdit={canEdit} />
-										}
-									</div>
-								} */}
-								{categories && question &&
-									<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
-										<h4 style={{ marginTop: 0, color: 'white' }}>Question</h4>
-										{formMode === 'display' ?
-											<ContainerQuestionForm canEdit={false} />
-											:
-											<ContainerQuestionForm canEdit={canEdit} />
-										}
-									</div>
-								}
-								{categories && category &&
-									<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
-										<h4 style={{ marginTop: 0, color: 'white' }}>Category</h4>
-										{formMode === 'display' ?
-											<ContainerCategoryForm canEdit={false} />
-											:
-											<ContainerCategoryForm canEdit={canEdit} />
-										}
-									</div>
-								}
-							</div>
-						</Col>
+					<Col md={open ? 6 : 0} lg={open ? 6 : 0} style={{ backgroundColor: '#eff3f6', color: '#686c71', padding: '10px' }}>
+						<div style={{ border: '0px solid silver', backgroundColor: 'white' }}>
+							{categories && showCategoryForm && category &&
+								<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
+									<h4 style={{ marginTop: 0, color: 'white' }}>Category</h4>
+									{formMode === 'display' ?
+										<ContainerCategoryForm canEdit={false} />
+										:
+										<ContainerCategoryForm canEdit={canEdit} />
+									}
+								</div>
+							}
+
+							{categories && showQuestionForm && question &&
+								<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
+									<h4 style={{ marginTop: 0, color: 'white' }}>Question</h4>
+									{formMode === 'display' ?
+										<ContainerQuestionForm canEdit={false} handleClose={() => { }} />
+										:
+										<ContainerQuestionForm canEdit={canEdit} handleClose={() => { }} />
+									}
+								</div>
+							}
+						</div>
+					</Col>
 					{/* </Collapse> */}
 				</Row>
 			</Container>

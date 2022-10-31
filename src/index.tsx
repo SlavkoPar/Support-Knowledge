@@ -10,7 +10,7 @@ import { Store } from 'redux';
 import configureStore, { IAppState } from './store/Store';
 import { loadCategories, 
 	removeCategory, storeCategory, updateCategory,
-	removeQuestion, storeQuestion, editQuestion, updateQuestion 
+	removeQuestion, storeQuestion, updateQuestion 
 } from './Categories/actions';
 import { getAllAnswers } from './Answers/actions';
 

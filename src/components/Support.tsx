@@ -14,7 +14,7 @@ setTimeout(() => {
     div!.setAttribute('style', 'display:none')
 }, 10000)
 
-const Support: React.FC<{}> = () => {
+const Support: React.FC<{}> = () => { 
   return (
     <>
       <h2 style={{textAlign: 'center', marginBlockStart: '0.66rem', marginBlockEnd: '0.1rem' }}>Questions &amp; Answers</h2>

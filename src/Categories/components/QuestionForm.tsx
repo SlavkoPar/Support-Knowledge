@@ -18,17 +18,18 @@ import { statusOptions } from '../statusOptions'
 
 const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
-  const formik = useFormik({
+  const { question } = props;
+    const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      categoryId: props.question.categoryId,
-      questionId: props.question.questionId,
-      text: props.question.text,
-      source: props.question.source,
-      status: props.question.status,
-      answers: props.question.answers,
-      createdBy: props.question.createdBy,
-      created: props.question.created
+      categoryId: question.categoryId,
+      questionId: question.questionId,
+      text: question.text,
+      source: question.source,
+      status: question.status,
+      answers: question.answers,
+      createdBy: question.createdBy,
+      created: question.created
     },
     validationSchema: Yup.object({
       text: Yup.string()
@@ -40,10 +41,14 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
       email: Yup.string()
         .email('Invalid email address')
         .required('Required'),*/
+      categoryId: Yup.number()
+        .moreThan(0, 'Select Category')
+        .required('Required')
     }),
     onSubmit: values => {
       // alert(JSON.stringify(values, null, 2));
-      props.saveForm(values, props.formMode)
+      props.saveForm(values, props.formMode);
+      props.handleClose();
     }
   });
 
@@ -52,9 +57,10 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
   console.log('RENDERING', formik.values)
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
+    
+      <form onSubmit={formik.handleSubmit} className="formik-example">
       
-        <label className="id" htmlFor="questionId">QuestionId:</label>
+        <label className="id" htmlFor="questionId">QuestionId: </label>
         {/* <input
           id="questionId"
           name="questionId"
@@ -69,6 +75,7 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           <div>{formik.errors.questionId}</div>
         ) : null} */}
         <span id="questionId">{formik.values.questionId}</span>
+        <br/>
 
         <label htmlFor="categoryId">Category</label>
         <Select
@@ -82,8 +89,9 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           }}
           value={formik.values.categoryId}
         />
+        {formik.errors.categoryId && <div className="field-error">{formik.errors.categoryId}</div>}
 
-        <label htmlFor="text">Name</label>
+        <label htmlFor="text">Text</label>
         <textarea
           id="text"
           name="text"
@@ -116,7 +124,7 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
         <br />
         <QuestionAnswers
-          question={props.question}
+          question={question}
           questionAnswers={props.questionAnswers}
           answers={props.answers}
           canEdit={props.canEdit}
@@ -216,7 +224,10 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         {!isEdit() &&
           <div className="buttons">
             {props.canEdit &&
-              <button onClick={() => props.cancel()}>Cancel</button>}
+              <button onClick={() => { 
+                props.cancel(); 
+                props.handleClose()
+              } }>Cancel</button>}
             {props.canEdit &&
               <button type="submit">Save</button>}
           </div>

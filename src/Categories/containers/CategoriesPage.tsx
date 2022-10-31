@@ -12,6 +12,8 @@ import { QuestionActions,
 	addQuestion, 
 	editQuestion,
 	removeQuestion,
+	closeQuestionForm,
+	openQuestionForm,
 	addCategory,
 	editCategory,
 	removeCategory,
@@ -36,7 +38,9 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	const { 
 		categories,
 		categoryQuestions,
+		showCategoryForm,
 		category,
+		showQuestionForm,
 		question,
 		categoryOptions,
 		formMode,
@@ -48,7 +52,9 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		categories,
 		categoryQuestions,
 		categoryOptions,
+		showCategoryForm,
 		category,
+		showQuestionForm,
 		question,
 		formMode,
 		categoryIdEditing,
@@ -62,12 +68,16 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
-		onSelectQuestion: (categoryId: number, questionId: number) => dispatch<any>(getQuestion(categoryId, questionId)),
-		add: (categoryId: number, text: string, canEdit?: boolean) => {
-			dispatch<any>(addQuestion(categoryId, text, canEdit))
+		onSelectQuestion: (categoryId: number, questionId: number) => {
+			dispatch<any>(getQuestion(categoryId, questionId));
+			dispatch<any>(openQuestionForm());
 		},
-		edit: (categoryId: number, questionId: number) => dispatch<any>(editQuestion(categoryId, questionId)),
+		add: (categoryId: number, text: string, canEdit?: boolean) => dispatch<any>(addQuestion(categoryId, text, canEdit)),
+		//edit: (categoryId: number, questionId: number) => dispatch<any>(editQuestion(categoryId, questionId)),
+		edit: (categoryId: number, questionId: number, showQuestionForm: boolean) => dispatch<any>(editQuestion(categoryId, questionId, showQuestionForm)),
 		remove: (categoryId: number, questionId: number) => dispatch<any>(removeQuestion(categoryId, questionId)),
+		closeQuestionForm: () => dispatch<any>(closeQuestionForm()),
+		openQuestionForm: () => dispatch<any>(openQuestionForm()),
 
 		// groups
 		onSelectCategory: (categoryId: number) => dispatch<any>(getCategory(categoryId)),
@@ -80,7 +90,7 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 
 		addAndAssignNewAnswer: (categoryId: number, questionId: number, answer: IAnswer, formMode: string) => {
 			dispatch<any>(addAndAssignNewAnswer(categoryId, questionId, answer, formMode))
-		}
+		},
 	}
 }
 

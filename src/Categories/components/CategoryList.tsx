@@ -44,6 +44,12 @@ const CategoryList: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 
 	return (
 		<>
+			<h3>Categories
+				<button className="button-add-category" title="Add a new Category" onClick={() => addCategory()}>
+					<FontAwesomeIcon icon={faPlus} size='xs' color='lightblue' />
+				</button>
+			</h3>
+
 			{categories.map(category => {
 				const { categoryId, title, isExpanded } = category;
 				const categoryState = categoryQuestions.get(categoryId);
@@ -80,7 +86,7 @@ const CategoryList: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 									/>
 								)}
 								<div style={{ marginLeft: '0%' }}>
-									<button className="button-add" title="Add a new Question" onClick={() => add(category.categoryId, '')}>
+									<button className="button-add" title="Add a new Question" onClick={() => add(category.categoryId, '', true)}>
 										<FontAwesomeIcon icon={faPlus} size='xs' color='lightblue' />
 									</button>
 								</div>
@@ -91,11 +97,6 @@ const CategoryList: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 			})
 			}
 
-			<div style={{ marginLeft: '1rem', textAlign: 'start' }}>
-				<button className="button-add-category" title="Add a new Category" onClick={() => addCategory()}>
-					<FontAwesomeIcon icon={faPlus} size='xs' color='lightblue' />
-				</button>
-			</div>
 		</>
 
 	)
