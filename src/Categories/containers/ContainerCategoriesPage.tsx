@@ -10,18 +10,8 @@ import { Dispatch } from 'redux';  // ActionCreatorsMapObject,
 import { QuestionActions,  
 	getQuestion, 
 	addQuestion, 
-	editQuestion,
-	removeQuestion,
 	closeQuestionForm,
 	openQuestionForm,
-	addCategory,
-	editCategory,
-	removeCategory,
-	storeCategory,
-	updateCategory,
-	addAndAssignNewAnswer,
-	toggleCategory,
-	getCategory
 } from '../actions'
 
 import CategoriesPage from '../components/CategoriesPage'

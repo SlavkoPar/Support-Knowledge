@@ -5,25 +5,18 @@ import { IAppState } from '../../store/Store';
 import { IQuestion, IQuestionAnswer, ICategory } from '../types'
 import { IAnswer } from '../../Answers/types'
 
-import { Dispatch } from 'redux';  // ActionCreatorsMapObject, 
-import {IOption} from '../../common/types';
+import { Dispatch } from 'redux';
 
 import { QuestionActions,  
-	getQuestion, 
-	addQuestion, 
-	editQuestion,
-	removeQuestion,
 	storeQuestion,
 	updateQuestion,
 	cancelQuestion,
-	closeQuestionForm,
 	removeQuestionAnswer,
 	assignQuestionAnswer,
 	setIsDetail,
 	addAndAssignNewAnswer,
 	selectQuestionAnswer,
-	copyQuestionAnswer,
-	toggleCategory
+	copyQuestionAnswer
 } from '../actions'
 
 import { QuestionForm } from '../components/QuestionForm';
@@ -46,7 +39,7 @@ interface IProps {
 // Grab the categories from the store and make them available on props
 const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	const {categoriesState, answerState } = store;
-	const { category, question, categoryOptions, formMode } = categoriesState; 
+	const { question, categoryOptions, formMode } = categoriesState; 
 	const { answers } = answerState;
 	return {
 		categoryOptions,
@@ -62,14 +55,9 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
-		//onSelectQuestion: (categoryId: number, questionId: number) => dispatch<any>(getQuestion(categoryId, questionId)),
-		//add: (categoryId: number, text: string, canEdit?: boolean) => dispatch<any>(addQuestion(categoryId, text, canEdit)),
-		//edit: (categoryId: number, questionId: number, showQuestionForm: boolean) => dispatch<any>(editQuestion(categoryId, questionId, showQuestionForm)),
-		//remove: (categoryId: number, questionId: number) => dispatch<any>(removeQuestion(true, categoryId, questionId)),
 		saveForm: (question: IQuestion, formMode: string) => 
 			dispatch<any>(formMode==='add'?storeQuestion(true, question):updateQuestion(true, question)),
 		cancel: () => dispatch<any>(cancelQuestion()),
-		//closeQuestionForm: () => dispatch<any>(closeQuestionForm()),
 
 		// question answers
 		selectQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => 

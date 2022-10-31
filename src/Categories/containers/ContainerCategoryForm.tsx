@@ -42,10 +42,6 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
-		//onSelectCategory: (categoryId: number, questionId: number) => dispatch<any>(getCategory(categoryId)),
-		//add: (categoryId: number, text: string, canEdit?: boolean) => dispatch<any>(addCategory(categoryId, text, canEdit)),
-		//edit: (categoryId: number) => dispatch<any>(editCategory(categoryId)),
-		//remove: (categoryId: number) => dispatch<any>(removeCategory(true, categoryId)),
 		saveForm: (category: ICategory, formMode: string) => 
 			dispatch<any>(formMode==='add'?storeCategory(true, category):updateCategory(true, category)),
 		cancel: () => dispatch<any>(cancelCategory()),
