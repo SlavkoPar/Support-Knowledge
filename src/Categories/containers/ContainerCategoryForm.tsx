@@ -3,16 +3,10 @@ import { connect } from 'react-redux';
 
 import { IAppState } from '../../store/Store';
 import { ICategory } from '../types'
-import { IAnswer } from '../../Answers/types'
 
 import { Dispatch } from 'redux';  // ActionCreatorsMapObject, 
-import {IOption} from '../../common/types';
 
 import {
-	getCategory, 
-	addCategory, 
-	editCategory,
-	removeCategory,
 	storeCategory,
 	updateCategory,
 	cancelCategory,
