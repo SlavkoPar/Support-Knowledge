@@ -106,7 +106,7 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           rows={2}
         />
         {formik.touched.text && formik.errors.text ? (
-          <div>{formik.errors.text}</div>
+          <div className="field-error">{formik.errors.text}</div>
         ) : null}
 
         <label htmlFor="source">Source</label>

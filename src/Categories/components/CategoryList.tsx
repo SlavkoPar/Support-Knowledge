@@ -3,27 +3,19 @@ import { useRef } from 'react'
 import { faPlus, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ICategoriesProps } from '../types'
+import { ICategoryListProps } from '../types'
 
-
-import { AutoSuggest } from '../../components/AutoSuggest';
-import ContainerQuestionForm from '../containers/ContainerQuestionForm';
 import QuestionRow from './QuestionRow';
 import CategoryRow from './CategoryRow';
-import { useParams } from 'react-router-dom' // useRouteMatch
-import { DetailView } from './DetailView';
 
 import { COLORS } from '../../formik/theme';
-import { updateCategory } from '../actions';
 const color = 'blue';
 
-const CategoryList: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
+const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) => {
 
-	const { categories, categoryQuestions, question,
-		formMode, categoryIdEditing, onSelectCategory, onSelectQuestion, add, edit, remove, canEdit,
-		addCategory, toggleCategory, editCategory, removeCategory, storeCategory, updateCategory,
-		addAndAssignNewAnswer,
-		who } = props;
+	const { categories, categoryQuestions, 
+		categoryIdEditing, onSelectCategory, onSelectQuestion, add, edit, remove, canEdit,
+		addCategory, toggleCategory, editCategory, removeCategory, updateCategory, who } = props;
 
 
 	const inputEl = useRef<HTMLInputElement>(null);
@@ -103,4 +95,3 @@ const CategoryList: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 }
 
 export default CategoryList
-

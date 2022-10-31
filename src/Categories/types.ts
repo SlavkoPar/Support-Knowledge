@@ -61,7 +61,23 @@ export const initialQuestion: IQuestion = {
 	created: new Date()
  };
 
- export interface 	ICategoriesProps {
+export interface ICategoriesProps {
+	categories: ICategory[];
+	categoryQuestions: Map<number, ICategoryState>,
+	showCategoryForm: boolean;
+	showQuestionForm: boolean;
+	category: ICategory | undefined;
+	question: IQuestion | undefined;
+	formMode: string,
+	canEdit: boolean,
+	who: IUser,
+	navbarOpen: boolean,
+	onSelectQuestion: (categoryId: number, questionId: number) => void;
+	add: (categoryId: number, text: string, canEdit?: boolean) => void;
+	closeQuestionForm: () => void;
+}
+
+export interface ICategoryListProps {
 	categories: ICategory[];
 	categoryQuestions: Map<number, ICategoryState>,
 	categoryOptions: IOption<number>[],
@@ -93,6 +109,7 @@ export const initialQuestion: IQuestion = {
 	// question answer
 	addAndAssignNewAnswer: (categoryId: number, questionId: number, answer: IAnswer, formMode: string) => void
 }
+
 
 export interface ICategoryState {
 	questions: IQuestion[];

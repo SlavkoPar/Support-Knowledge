@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import containers from '../Categories/containers/CategoriesPage'
+import containers from '../Categories/containers/ContainerCategoriesPage'
 
 // type TParams = { id: string };
 

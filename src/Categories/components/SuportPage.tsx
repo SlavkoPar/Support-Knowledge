@@ -21,15 +21,14 @@ type SupportParams = {
 
 const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	let { tekst } = useParams<SupportParams>();
-	const { categories, categoryQuestions, question, showQuestionForm, onSelectQuestion, add, canEdit, 
-	closeQuestionForm, openQuestionForm } = props;
+	const { categories, categoryQuestions, question, showQuestionForm, onSelectQuestion, add, closeQuestionForm, canEdit } = props;
 	console.log('tekst:', tekst)
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	// if (showQuestionForm)
-	//	closeQuestionForm();
+	if (showQuestionForm)
+		closeQuestionForm();
 
 	return (
 		<div className="name-container">

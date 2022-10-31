@@ -5,7 +5,7 @@ import { IAppState } from '../../store/Store';
 import { IQuestion, IQuestionAnswer, ICategory } from '../types'
 import { IAnswer } from '../../Answers/types'
 
-import { Dispatch } from 'redux';  // ActionCreatorsMapObject, 
+import { Dispatch } from 'redux';
 
 import { QuestionActions,  
 	getQuestion, 
@@ -24,8 +24,7 @@ import { QuestionActions,
 	getCategory
 } from '../actions'
 
-import CategoriesPage from '../components/CategoriesPage'
-import SupportPage from '../components/SuportPage'
+import CategoryList from '../components/CategoryList'
 
 interface IProps {
 	canEdit: boolean
@@ -72,13 +71,20 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 			dispatch<any>(getQuestion(categoryId, questionId));
 			dispatch<any>(openQuestionForm());
 		},
-		add: (categoryId: number, text: string, canEdit?: boolean) => dispatch<any>(addQuestion(categoryId, text, canEdit)),
+		add: (categoryId: number, text: string, canEdit?: boolean) => {
+			dispatch<any>(addQuestion(categoryId, text, canEdit))
+			dispatch<any>(openQuestionForm());
+		},
 		//edit: (categoryId: number, questionId: number) => dispatch<any>(editQuestion(categoryId, questionId)),
 		edit: (categoryId: number, questionId: number, showQuestionForm: boolean) => dispatch<any>(editQuestion(categoryId, questionId, showQuestionForm)),
 		remove: (categoryId: number, questionId: number) => dispatch<any>(removeQuestion(categoryId, questionId)),
 		closeQuestionForm: () => dispatch<any>(closeQuestionForm()),
 		openQuestionForm: () => dispatch<any>(openQuestionForm()),
 
+		// question answer
+		addAndAssignNewAnswer: (categoryId: number, questionId: number, answer: IAnswer, formMode: string) => {
+			dispatch<any>(addAndAssignNewAnswer(categoryId, questionId, answer, formMode))
+		},
 		// groups
 		onSelectCategory: (categoryId: number) => dispatch<any>(getCategory(categoryId)),
 		addCategory: () => dispatch<any>(addCategory()),
@@ -87,15 +93,7 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 		removeCategory: (categoryId: number) => dispatch<any>(removeCategory(true, categoryId)),
 		storeCategory: (group: ICategory) => dispatch<any>(storeCategory(true, group)),
 		updateCategory: (group: ICategory) => dispatch<any>(updateCategory(true, group)),
-
-		addAndAssignNewAnswer: (categoryId: number, questionId: number, answer: IAnswer, formMode: string) => {
-			dispatch<any>(addAndAssignNewAnswer(categoryId, questionId, answer, formMode))
-		},
 	}
 }
 
-
-export default {
-	categories: connect(mapStateToProps, mapDispatchToProps)(CategoriesPage),
-	supporter: connect(mapStateToProps, mapDispatchToProps)(SupportPage)
-};
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)

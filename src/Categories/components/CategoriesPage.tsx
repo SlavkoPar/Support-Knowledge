@@ -13,7 +13,7 @@ import { DetailView } from './DetailView';
 
 import { COLORS } from '../../formik/theme';
 import { Col, Collapse, Container, Row } from 'react-bootstrap';
-import CategoryList from './CategoryList';
+import ContainerCategoryList from '../containers/ContainerCategoryList';
 const color = 'blue';
 
 type SupportParams = {
@@ -24,12 +24,16 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 
 	let { tekst } = useParams<SupportParams>();
 
-	const { categories, categoryQuestions, showCategoryForm, category, showQuestionForm, question, 
-		closeQuestionForm, openQuestionForm,
-		formMode, categoryIdEditing, onSelectCategory, onSelectQuestion, canEdit,
-		toggleCategory, storeCategory, updateCategory,
-		addAndAssignNewAnswer,
-		who } = props;
+	const { 
+		categories, 
+		categoryQuestions, 
+		showCategoryForm, 
+		category, 
+		showQuestionForm, 
+		question, 
+		formMode, 
+		canEdit,
+		onSelectQuestion } = props;
 
 	//const [open, setOpen] = useState(false);
 	const open = categories && (category || question)
@@ -60,8 +64,9 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							/>
 							<hr />
 							{/* <h3>Categories</h3> */}
-							{/* {categories && <CategoryList {...props} />} */}
-							{categories && <CategoryList {...props} />}
+							{categories && 
+								<ContainerCategoryList {...props} />
+							}
 						</div>
 					</Col>
 					{/* <Collapse

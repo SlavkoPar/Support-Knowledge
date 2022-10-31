@@ -110,6 +110,7 @@ pre {
 
 
 .formik-example input[type='text'] + .field-error,
+.formik-example textarea + .field-error,
 .formik-example input[type='number'] + .field-error,
 .formik-example input[type='email'] + .field-error,
 .formik-example select + .field-error {
