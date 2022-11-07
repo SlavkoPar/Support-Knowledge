@@ -18,7 +18,6 @@ import LoginForm from './Top/containers/LoginForm';
 import Landing from './components/Landing';
 import { ILogin, IAuth } from './Top/types';
 import Navig from './Navig';
-import Navv from './Navv';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft, faAngleDoubleRight, faRegistered } from '@fortawesome/free-solid-svg-icons';
 import { Button, Col, Collapse, Container, Form, FormControl, Nav, Row } from 'react-bootstrap';
