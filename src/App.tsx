@@ -1,5 +1,6 @@
-import React, { useCallback, useRef, useState, useEffect } from 'react';
 
+
+import React, { useCallback, useRef, useState, useContext, useEffect } from 'react';
 
 import { HashRouter as Router, Route, Routes } from 'react-router-dom' // useRouteMatch
 
@@ -7,6 +8,7 @@ import { connect, Provider } from 'react-redux';
 import { Store, Dispatch } from 'redux';
 
 import { IAppState } from './store/Store';
+import { ThemeContext } from "./ThemeContext";
 
 import Support from './components/Support';
 import AnswersPage from './Answers/containers/Page'
@@ -17,12 +19,12 @@ import { authenticate, unAuthenticate, TopActions, navbarToggle } from './Top/ac
 import LoginForm from './Top/containers/LoginForm';
 import Landing from './components/Landing';
 import { ILogin, IAuth } from './Top/types';
-import Navig from './Navig';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft, faAngleDoubleRight, faRegistered } from '@fortawesome/free-solid-svg-icons';
 import { Button, Col, Collapse, Container, Form, FormControl, Nav, Row } from 'react-bootstrap';
-import Header from './Header';
 
+import SideBar from './SideBar';
 
 interface IProps {
 	navbarOpen: boolean,
@@ -39,7 +41,7 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	//const [navbarOpen, setNavbarOpen] = useState(true);
 	let main: null | HTMLDivElement = null;
 
-	const [open, setOpen] = useState(navbarOpen);
+	//const [open, setOpen] = useState(navbarOpen);
 	const [mainMd, setMainMd] = useState(9);
 	const [mainLg, setMainLg] = useState(10);
 
@@ -60,18 +62,26 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	}
 
 	const register = () => {
-		
 	}
 
-	
+	const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
+
+	const [open, setOpen] = useState(false);
+	const handleClose = () => {
+		setOpen(false);
+	}
+
 	// null is the third state false/true/null in reducer
 	const app = //isAuthenticated !== null ? (  
 		<Router>
-			<Header open={open} setOpen={setOpen} register={register} signIn={signIn} signOut={signOut} />
-
+			{/* <Header open={open} setOpen={setOpen} register={register} signIn={signIn} signOut={signOut} /> */}
+			<SideBar open={open} handleClose={handleClose} 
+				register={register} signIn={signIn} signOut={signOut}
+			/>
 			<Container fluid>
 				<Row>
-					<Collapse
+					{/* <Collapse
 						in={open}
 						dimension="width"
 						onEnter={() => { console.log('onEnter'); setMainMd(9); setMainLg(10) }}
@@ -81,8 +91,6 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 						onExiting={() => { console.log('onExiting'); }}
 						onExited={() => { console.log('onExited'); setMainMd(12); setMainLg(12) }}
 					>
-						{/* <Col id="example-collapse-text" className="position-sticky pt-3"> */}
-						{/* <Col id="example-collapse-text" className="position-sticky p-0 m-0 col-md-3 ms-sm-auto col-lg-2"> */}
 						<Col
 							id="example-collapse-text"
 							md={3}
@@ -92,9 +100,10 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 						>
 							<Navig signOut={signOut} />
 						</Col>
-					</Collapse>
+					</Collapse> */}
 
-					<Col id="main" md={mainMd} lg={mainLg} className="ms-sm-auto px-md-4">
+					{/* <Col id="main" md={mainMd} lg={mainLg} className="ms-sm-auto px-md-4"> */}
+					<Col id="main" className="ms-sm-auto px-md-4">
 						<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 							<h1 className="h2">Dashboard</h1>
 							<div className="btn-toolbar mb-2 mb-md-0">
@@ -153,7 +162,7 @@ const mapStateToProps = (store: IAppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<TopActions>) => {
 	return {
 		toggleNavbar: () => dispatch<any>(navbarToggle()),
-		checkAuthentication: async(login: ILogin) => await dispatch<any>(authenticate(login)),
+		checkAuthentication: async (login: ILogin) => await dispatch<any>(authenticate(login)),
 		signOut: () => dispatch<any>(unAuthenticate())
 	}
 };

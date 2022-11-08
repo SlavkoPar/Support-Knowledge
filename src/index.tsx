@@ -8,19 +8,20 @@ import { Provider } from 'react-redux';
 import { Store } from 'redux';
 
 import configureStore, { IAppState } from './store/Store';
-import { loadCategories, 
+import {
+	loadCategories,
 	removeCategory, storeCategory, updateCategory,
-	removeQuestion, storeQuestion, updateQuestion 
+	removeQuestion, storeQuestion, updateQuestion
 } from './Categories/actions';
 import { getAllAnswers } from './Answers/actions';
 
-import 'bootstrap/dist/css/bootstrap.css'
 // import './formik/formikStyles.css';
+import './custom.scss'
 import './index.css';
 import './App.css';
 import './dashboard.css';
 
-import './formik/formikStyles.css';
+// import './formik/formikStyles.css';
 import { getAllUsers, storeUser } from './user/actions';
 import { getAllTags } from './roleTags/actions';
 import { loadTop } from './Top/actions';
@@ -28,6 +29,8 @@ import { IUser } from './user/types';
 import App from './App';
 import { coolColors } from './cool-colors';
 import { IQuestion } from './Categories/types';
+
+import { ThemeProvider } from './ThemeContext';
 
 interface IProps {
 	store: Store<IAppState>;
@@ -42,7 +45,6 @@ interface IEvt {
 	type: string;
 	entity: IQuestion;
 }
-
 
 const store = configureStore();
 store.dispatch(loadCategories());
@@ -77,19 +79,19 @@ window.addEventListener("PassToBackground", function (evt: any) {
 				store.dispatch(storeQuestion(false, detail.entity));
 				break;
 			case "UPDATE_QUESTION": {
-					const question = detail.entity;
-					question.created = new Date(question.created);
-					for (let i=0; i < question.answers.length; i++) {
-						const a = question.answers[i];
-						a.assigned = new Date(a.assigned);
-					}
-					store.dispatch(updateQuestion(false, question));
+				const question = detail.entity;
+				question.created = new Date(question.created);
+				for (let i = 0; i < question.answers.length; i++) {
+					const a = question.answers[i];
+					a.assigned = new Date(a.assigned);
 				}
-				break;			
+				store.dispatch(updateQuestion(false, question));
+			}
+				break;
 			case "REMOVE_Question": {
-					const { categoryId, questionId } = detail.entity
-					store.dispatch(removeQuestion(false, categoryId, questionId));
-				}
+				const { categoryId, questionId } = detail.entity
+				store.dispatch(removeQuestion(false, categoryId, questionId));
+			}
 				break;
 			default:
 				break;
@@ -122,7 +124,9 @@ if (state.usersState.allUsers.length === 0) {
 			ReactDOM.render(
 				<React.StrictMode>
 					<Provider store={store} >
-						<App />
+						<ThemeProvider>
+							<App />
+						</ThemeProvider>
 					</Provider>
 				</React.StrictMode>,
 				document.getElementById('root')
@@ -134,7 +138,9 @@ else {
 	ReactDOM.render(
 		<React.StrictMode>
 			<Provider store={store} >
-				<App />
+				<ThemeProvider>
+					<App />
+				</ThemeProvider>
 			</Provider>
 		</React.StrictMode>,
 		document.getElementById('root')
