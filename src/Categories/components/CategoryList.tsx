@@ -1,7 +1,8 @@
-import * as React from 'react';
-import { useRef } from 'react'
+import { useRef, useContext } from 'react'
 import { faPlus, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { ThemeContext } from "../../ThemeContext";
 
 import { ICategoryListProps } from '../types'
 
@@ -12,6 +13,9 @@ import { COLORS } from '../../formik/theme';
 const color = 'blue';
 
 const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) => {
+
+	const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
 
 	const { categories, categoryQuestions, 
 		categoryIdEditing, onSelectCategory, onSelectQuestion, add, edit, remove, canEdit,
@@ -47,8 +51,8 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 				const categoryState = categoryQuestions.get(categoryId);
 				const { questions } = categoryState!;
 				return (
-					<div key={categoryId} style={{ paddingBottom: '5px' }}>
-						<div style={{ textAlign: 'start' }}>
+					<div key={categoryId} className={`${darkMode ? "row-dark" : "row-light"}`} style={{ paddingBottom: '5px' }}>
+						<div  className={`${darkMode ? "row-dark" : "row-light"}`} style={{ textAlign: 'start' }}>
 							{categoryIdEditing === categoryId &&
 								<input ref={inputEl} name="groupTitle" type="text"
 									onBlur={(e) => updateCategory({ ...category, title: e.target.value })}

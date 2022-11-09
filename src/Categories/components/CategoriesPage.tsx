@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef, useState } from 'react'
+import { useRef, useState, useContext } from 'react'
 
 import { ICategoriesProps } from '../types'
 
@@ -9,11 +9,12 @@ import ContainerQuestionForm from '../containers/ContainerQuestionForm';
 import QuestionRow from './QuestionRow';
 import CategoryRow from './CategoryRow';
 import { useParams } from 'react-router-dom' // useRouteMatch
-import { DetailView } from './DetailView';
+import { ThemeContext } from "../../ThemeContext";
 
 import { COLORS } from '../../formik/theme';
 import { Col, Collapse, Container, Row } from 'react-bootstrap';
 import ContainerCategoryList from '../containers/ContainerCategoryList';
+
 const color = 'blue';
 
 type SupportParams = {
@@ -49,13 +50,16 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	console.log('RENDERUJEM Categories ----------->>>>>>>>>>')
 	// if (showQuestionForm)
 	// 	closeQuestionForm();
+	const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
+
 
 	return (
 		<>
 			<Container fluid>
-				<Row style={{ border: '3px solid lightblue' }}>
-					<Col md={open ? 6 : 12} lg={open ? 6 : 12} style={{ padding: '10px', backgroundColor: '#eff3f6', color: '#686c71' }}>
-						<div style={{ border: '0px solid silver', backgroundColor: 'white' }}>
+				<Row className={`${darkMode ? "row-dark" : "row-light"}`}>
+					<Col md={open ? 6 : 12} lg={open ? 6 : 12}>
+						<div style={{ border: '0px solid silver' }}>
 							<AutoSuggest
 								categories={categories}
 								categoryQuestions={categoryQuestions}
@@ -69,17 +73,7 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							}
 						</div>
 					</Col>
-					{/* <Collapse
-						in={open}
-						dimension="width"
-						onEnter={() => { console.log('onEnter'); }}
-						onEntering={() => { console.log('onEntering'); }}
-						onEntered={() => { console.log('onEntered'); }}
-						onExit={() => { console.log('onExit'); }}
-						onExiting={() => { console.log('onExiting'); }}
-						onExited={() => { console.log('onExited'); }}
-					> */}
-					<Col md={open ? 6 : 0} lg={open ? 6 : 0} style={{ backgroundColor: '#eff3f6', color: '#686c71', padding: '10px' }}>
+					<Col md={open ? 6 : 0} lg={open ? 6 : 0} >
 						<div style={{ border: '0px solid silver', backgroundColor: 'white' }}>
 							{categories && showCategoryForm && category &&
 								<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
@@ -95,11 +89,7 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							{categories && showQuestionForm && question &&
 								<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
 									<h4 style={{ marginTop: 0, color: 'white' }}>Question</h4>
-									{formMode === 'display' ?
-										<ContainerQuestionForm canEdit={false} handleClose={() => { }} />
-										:
-										<ContainerQuestionForm canEdit={canEdit} handleClose={() => { }} />
-									}
+									<ContainerQuestionForm canEdit={formMode === 'display' ? false: canEdit} handleClose={() => { }} />
 								</div>
 							}
 						</div>
@@ -107,13 +97,6 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					{/* </Collapse> */}
 				</Row>
 			</Container>
-			{/* <DetailView
-				categoryId={question ? question!.categoryId : 0}
-				questionId={question ? question!.questionId : 0}
-				addAndAssignNewAnswer={addAndAssignNewAnswer}
-				who={who}
-			/>	 */}
-			{/* visible={isDetail} */}
 		</>
 	);
 }

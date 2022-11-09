@@ -46,8 +46,10 @@ function SideBar({ isAuthenticated, uuid, signOut, open, handleClose }: ISideBar
     navigate('/landing');
   }
 
+  // className="mb-3" 
+
   return (
-    <Navbar expand={"md"} className="mb-3" variant={variant} bg={bg}>
+    <Navbar expand={"md"} variant={variant} bg={bg} collapseOnSelect>
       <Container fluid>
         <Navbar.Brand href="#">Support Knowledge</Navbar.Brand>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} />
@@ -58,14 +60,23 @@ function SideBar({ isAuthenticated, uuid, signOut, open, handleClose }: ISideBar
           className={`text-bg-${bg}`}
         >
           <Offcanvas.Header closeButton closeVariant={darkMode ? "white" : ""}>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>Support
             </Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>
             <Nav
-              className="justify-content-end flex-grow-1 pe-3"
-              onSelect={(eventKey) => theme.dispatch({ type: eventKey })}
+              className="justify-content-end flex-grow-1 pe-3 d-flex flex-nowrap"
+              onSelect={(eventKey) => {
+                if (document.body.classList.contains('row-dark')) {
+                  document.body.classList.remove('row-dark')
+                }
+                else {
+                  document.body.classList.add('row-dark')
+                }
+                theme.dispatch({ type: eventKey })
+              }
+              }
             >
               <Nav.Link href="#/supporter/promo">
                 <FontAwesomeIcon icon={faSurprise} color='lightblue' />{' '}Supporter
@@ -77,7 +88,7 @@ function SideBar({ isAuthenticated, uuid, signOut, open, handleClose }: ISideBar
                 <FontAwesomeIcon icon={faAnchor} color='lightblue' />{' '}Answers
               </Nav.Link>
               <NavDropdown
-                title="Dropdown"
+                title="Themes"
                 id={`offcanvasNavbarDropdown-expand`}
                 menuVariant={variant}
               >

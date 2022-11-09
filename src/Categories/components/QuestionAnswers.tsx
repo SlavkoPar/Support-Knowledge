@@ -80,7 +80,7 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 					<tbody>
 						{ questionAnswers.map(qa => 
 							<tr key={qa.answerId}>
-								<td className="name" title={`AnswerId:${qa.answerId}\nAssigned: ${qa.assigned.toLocaleDateString()} ${qa.assigned.toLocaleTimeString()}`}>
+								<td title={`AnswerId:${qa.answerId}\nAssigned: ${qa.assigned.toLocaleDateString()} ${qa.assigned.toLocaleTimeString()}`}>
 									<QuestionAnswerRow
 										key={qa.answerId}
 										question={question}
@@ -90,7 +90,7 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 										removeQuestionAnswer={removeQuestionAnswer}
 									/>
 								</td>
-								{/* <td className="name" title={`AnswerId:${qa.answerId}\nAssigned: ${qa.assigned.toLocaleDateString()} ${qa.assigned.toLocaleTimeString()}`}>
+								{/* <td title={`AnswerId:${qa.answerId}\nAssigned: ${qa.assigned.toLocaleDateString()} ${qa.assigned.toLocaleTimeString()}`}>
 									{qa.text}
 								</td>
 								{ canEdit && formMode !== 'display' &&

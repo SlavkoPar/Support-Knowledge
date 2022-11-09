@@ -15,13 +15,12 @@ import {
 } from './Categories/actions';
 import { getAllAnswers } from './Answers/actions';
 
-// import './formik/formikStyles.css';
 import './custom.scss'
 import './index.css';
 import './App.css';
-import './dashboard.css';
+//import './dashboard.css';
 
-// import './formik/formikStyles.css';
+//import './formik/formikStyles.css';
 import { getAllUsers, storeUser } from './user/actions';
 import { getAllTags } from './roleTags/actions';
 import { loadTop } from './Top/actions';

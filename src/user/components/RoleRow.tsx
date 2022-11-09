@@ -22,7 +22,7 @@ const RoleRow: React.FC<IUserRowProps> = (props: IUserRowProps) => {
 	const {roleId: roleId, title, users, isExpanded, color} = userRole;
 
 	return (
-		<div ref={hoverRef} key={roleId} className="name" >
+		<div ref={hoverRef} key={roleId}>
 			<button
 				className="button-edit"
 				title="Expand"

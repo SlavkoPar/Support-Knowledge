@@ -26,10 +26,9 @@ const QuestionAnswerRow: React.FC<IQuestionAnswerRowProps> = (props: IQuestionAn
 	const id = `inputQuestionAnswer${answerId}`;
 
 	return (
-		<div ref={hoverRef} className="name">
+		<div ref={hoverRef}>
 			{/* <input id={id} type="hidden" value={questionAnswer.text}></input> */}
 			<button
-				className="question-button"
 				onClick={() => {
 					// selectQuestionAnswer(categoryId, questionId, answerId)}
 					alert('No action for the time being')

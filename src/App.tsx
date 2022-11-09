@@ -74,36 +74,16 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 
 	// null is the third state false/true/null in reducer
 	const app = //isAuthenticated !== null ? (  
+		
 		<Router>
 			{/* <Header open={open} setOpen={setOpen} register={register} signIn={signIn} signOut={signOut} /> */}
 			<SideBar open={open} handleClose={handleClose} 
 				register={register} signIn={signIn} signOut={signOut}
 			/>
 			<Container fluid>
-				<Row>
-					{/* <Collapse
-						in={open}
-						dimension="width"
-						onEnter={() => { console.log('onEnter'); setMainMd(9); setMainLg(10) }}
-						onEntering={() => { console.log('onEntering'); }}
-						onEntered={() => { console.log('onEntered'); }}
-						onExit={() => { console.log('onExit'); }}
-						onExiting={() => { console.log('onExiting'); }}
-						onExited={() => { console.log('onExited'); setMainMd(12); setMainLg(12) }}
-					>
-						<Col
-							id="example-collapse-text"
-							md={3}
-							lg={2}
-							className="p-3 m-3 ms-sm-auto sidebar"
-							style={{ border: '1px solid silver', backgroundColor: 'yellow' }}
-						>
-							<Navig signOut={signOut} />
-						</Col>
-					</Collapse> */}
-
+				<Row className={`${darkMode ? "row-dark" : "row-light"}`}>
 					{/* <Col id="main" md={mainMd} lg={mainLg} className="ms-sm-auto px-md-4"> */}
-					<Col id="main" className="ms-sm-auto px-md-4">
+					<Col id="main" className="ms-sm-auto px-md-4" variant={variant} bg={variant}>
 						<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 							<h1 className="h2">Dashboard</h1>
 							<div className="btn-toolbar mb-2 mb-md-0">
@@ -118,7 +98,7 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 							</div>
 						</div>
 
-						<div style={{ border: '1px solid navy' }}>
+						<div className={`${darkMode ? "row-dark" : "row-light"}`}>
 							<Routes>
 								<Route path="/" element={<Landing />} />
 								<Route path="/sign-in" element={

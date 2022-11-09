@@ -23,7 +23,7 @@ const UserRow: React.FC<IRowProps> = (props: IRowProps) => {
 	const { roleId: roleId, userId } = user;
 
    return (
-		<div ref={hoverRef} className="name">
+		<div ref={hoverRef}>
 			<button
 				className="user-button"
 				onClick={() => onSelectUser(userId)}>

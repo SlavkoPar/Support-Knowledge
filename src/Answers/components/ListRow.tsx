@@ -17,10 +17,10 @@ export const ListRow: React.FC<IProps> = (props: IProps) => {
 	const { answer, usedAnswers, edit, remove } = props;
 	return (
 		<tr key={answer.answerId} >
-			<td className="name">
+			<td>
 				{answer.answerId}
 			</td>
-			<td className="name">
+			<td>
 				{answer.text}
 			</td>
 			<td>
