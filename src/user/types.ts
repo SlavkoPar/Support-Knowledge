@@ -75,3 +75,10 @@ export interface IFormProps {
 	roleOptions: IOption<number>[];
   }
  
+  export enum RoleId {
+	OWNER = 11,
+	ADMINS = 22,
+	EDITORS = 33,
+	VIEWERS = 44
+}
+ 

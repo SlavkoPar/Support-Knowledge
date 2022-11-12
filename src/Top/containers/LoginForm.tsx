@@ -25,7 +25,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps) => {
 		uuid: top.uuid,
 		who: !auth
 			? { userName: '', pwd:'' } 
-			: { userName: auth.who.userName, pwd: auth.who.pwd },
+			: { userName: '', pwd:'' },  //{ userName: auth.who.userName, pwd: auth.who.pwd },
 		authError: top.authError,
 		canEdit: ownProps.canEdit,
 		isRegister: ownProps.isRegister,

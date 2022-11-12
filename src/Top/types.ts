@@ -28,7 +28,9 @@ export interface ITop {
 	uuid: string | null;
 	authError?: string,
 	auth?: IAuth;
+	darkMode: boolean;
 }
+
 export interface ITopJson extends Omit<ITop, 'auth'> {
 	auth: IAuthJson;
 }

@@ -16,12 +16,14 @@ import {
 import { getAllAnswers } from './Answers/actions';
 
 import './custom.scss'
+import './normalize.scss'
 import './index.css';
 import './App.css';
 //import './dashboard.css';
 
 //import './formik/formikStyles.css';
 import { getAllUsers, storeUser } from './user/actions';
+import { authenticate } from './Top/actions'
 import { getAllTags } from './roleTags/actions';
 import { loadTop } from './Top/actions';
 import { IUser } from './user/types';
@@ -38,7 +40,7 @@ interface IProps {
 // coolColors();
 
 // Generate the store
-localStorage.clear(); // !!!!!!!!!!!!
+//localStorage.clear(); // !!!!!!!!!!!!
 
 interface IEvt {
 	type: string;
@@ -102,12 +104,8 @@ window.addEventListener("PassToBackground", function (evt: any) {
 
 const userIdOwner = 101;
 const state = store.getState();
+/*
 if (state.usersState.allUsers.length === 0) {
-
-	const treatFirstUserAsTheOwner = async () => {
-		return await store.dispatch(storeUser(user, 'add'))
-	};
-
 	const user: IUser = {
 		roleId: 11,
 		userId: userIdOwner,
@@ -118,33 +116,27 @@ if (state.usersState.allUsers.length === 0) {
 		created: new Date()
 	}
 
+	const treatFirstUserAsTheOwner = async () => {
+		return await store.dispatch(storeUser(user, 'add'))
+	};
+
 	treatFirstUserAsTheOwner()
 		.then((res) => {
-			ReactDOM.render(
-				<React.StrictMode>
-					<Provider store={store} >
-						<ThemeProvider>
-							<App />
-						</ThemeProvider>
-					</Provider>
-				</React.StrictMode>,
-				document.getElementById('root')
-			);
+			store.dispatch(authenticate(user))
 		})
-	// store.dispatch(authenticate(user))
 }
-else {
-	ReactDOM.render(
-		<React.StrictMode>
-			<Provider store={store} >
-				<ThemeProvider>
-					<App />
-				</ThemeProvider>
-			</Provider>
-		</React.StrictMode>,
-		document.getElementById('root')
-	);
-}
+*/
+
+ReactDOM.render(
+	<React.StrictMode>
+		<Provider store={store} >
+			<ThemeProvider>
+				<App />
+			</ThemeProvider>
+		</Provider>
+	</React.StrictMode>,
+	document.getElementById('root')
+);
 
 // Render the App
 // ReactDOM.render(<Root store={store} />, document.getElementById(

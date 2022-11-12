@@ -46,23 +46,21 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	const [mainLg, setMainLg] = useState(10);
 
 	useEffect(() => {
-		const login = {
-			userName: 'Jack',
-			pwd: 'Daniels'
-		}
-		checkAuthentication(login);
+		// const login = {
+		// 	userName: 'Jack',
+		// 	pwd: 'Daniels'
+		// }
+		// checkAuthentication(login);
 	}, []);
 
 	const signIn = () => {
-		const login = {
-			userName: 'Jack',
-			pwd: 'Daniels'
-		}
-		checkAuthentication(login);
+		// const login = {
+		// 	userName: 'Jack',
+		// 	pwd: 'Daniels'
+		// }
+		// checkAuthentication(login);
 	}
 
-	const register = () => {
-	}
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
@@ -76,12 +74,12 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	const app = //isAuthenticated !== null ? (  
 		
 		<Router>
-			{/* <Header open={open} setOpen={setOpen} register={register} signIn={signIn} signOut={signOut} /> */}
-			<SideBar open={open} handleClose={handleClose} 
-				register={register} signIn={signIn} signOut={signOut}
-			/>
+			<button className="btn btn-primary">Primary</button>
+            <button className="btn btn-secondary">Secondary</button>
+			{/* <Header open={open} setOpen={setOpen} signIn={signIn} signOut={signOut} /> */}
+			<SideBar open={open} handleClose={handleClose} signIn={signIn} signOut={signOut} />
 			<Container fluid>
-				<Row className={`${darkMode ? "row-dark" : "row-light"}`}>
+				<Row className={`${darkMode ? "dark" : ""}`}>
 					{/* <Col id="main" md={mainMd} lg={mainLg} className="ms-sm-auto px-md-4"> */}
 					<Col id="main" className="ms-sm-auto px-md-4" variant={variant} bg={variant}>
 						<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -98,7 +96,7 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 							</div>
 						</div>
 
-						<div className={`${darkMode ? "row-dark" : "row-light"}`}>
+						<div className={`${darkMode ? "dark" : ""}`}>
 							<Routes>
 								<Route path="/" element={<Landing />} />
 								<Route path="/sign-in" element={

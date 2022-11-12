@@ -1,6 +1,7 @@
 import { IAnswer } from '../Answers/types'
 import { IOption } from '../common/types';
 import { IUser } from '../user/types';
+import { IAuth } from "../Top/types";
 
 // Define the Question type
 
@@ -70,7 +71,8 @@ export interface ICategoriesProps {
 	question: IQuestion | undefined;
 	formMode: string,
 	canEdit: boolean,
-	who: IUser,
+	//who: IUser,
+	auth?: IAuth,
 	navbarOpen: boolean,
 	onSelectQuestion: (categoryId: number, questionId: number) => void;
 	add: (categoryId: number, text: string, canEdit?: boolean) => void;

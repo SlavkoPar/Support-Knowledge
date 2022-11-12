@@ -26,7 +26,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	return (
-		<div ref={hoverRef} key={categoryId}  className={`${darkMode ? "row-dark" : "row-light"}`}>
+		<div ref={hoverRef} key={categoryId}  className={`${darkMode ? "dark" : ""}`}>
 			<button
 				className="button-edit"
 				title="Expand"
@@ -35,7 +35,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 			>
 				<FontAwesomeIcon icon={isExpanded?faCaretDown:faCaretRight} color='orange' size='lg' />
 			</button>
-			<span className={`question-group-title ${darkMode ? "row-dark" : "row-light"}`} onClick={() => onSelectCategory(categoryId)}>{title}</span>
+			<span className={`question-group-title ${darkMode ? "dark" : "light"}`} onClick={() => onSelectCategory(categoryId)}>{title}</span>
 			{hoverProps.isHovered &&
 				<button className="button-edit" title="Edit Category" onClick={() => editCategory(categoryId)}>
 					<FontAwesomeIcon icon={faEdit} color='lightblue' />

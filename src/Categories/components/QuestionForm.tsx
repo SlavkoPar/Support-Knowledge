@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-import { IQuestion, IQuestionAnswer, IQuestionFormProps } from '../types';
-import { IAnswer } from '../../Answers/types';
+import { IQuestionFormProps } from '../types';
 
 import QuestionAnswers from './QuestionAnswers'
 import { Select } from '../../common/Select';
 import { COLORS } from '../../formik/theme';
 //import { MultiSelect } from '../../common/MultiSelect';
-import { IOption } from '../../common/types';
 import UserName from '../../common/containers/UserName';
 //import { number } from 'yup/lib/locale';
+import { ThemeContext } from "../../ThemeContext";
 
 import { sourceOptions } from '../sourceOptions'
 import { statusOptions } from '../statusOptions'
@@ -257,8 +256,12 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 const color = 'blue';
 
 export const QuestionForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
+
+  const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
+
   return (
-    <div style={{ height: '100%' }} className="formik-example formik-example--blue">
+    <div style={{ height: '100%' }} className={`formik-example formik-example--blue ${darkMode ? "dark" : ""}`}>
       <div
         style={{
           height: '100%',

@@ -51,8 +51,8 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 				const categoryState = categoryQuestions.get(categoryId);
 				const { questions } = categoryState!;
 				return (
-					<div key={categoryId} className={`${darkMode ? "row-dark" : "row-light"}`} style={{ paddingBottom: '5px' }}>
-						<div  className={`${darkMode ? "row-dark" : "row-light"}`} style={{ textAlign: 'start' }}>
+					<div key={categoryId} className={`${darkMode ? "dark" : ""}`} style={{ paddingBottom: '5px' }}>
+						<div  className={`${darkMode ? "dark" : ""}`} style={{ textAlign: 'start' }}>
 							{categoryIdEditing === categoryId &&
 								<input ref={inputEl} name="groupTitle" type="text"
 									onBlur={(e) => updateCategory({ ...category, title: e.target.value })}

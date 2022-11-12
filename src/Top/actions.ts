@@ -1,11 +1,11 @@
-// Import redux types
+ // Import redux types
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 // Import Top Typing
 import { ILogin, ITop, ITopJson, ITopState } from './types';
 
 import { IAppState } from '../store/Store';
-import { IUser } from '../user/types';
+import { IUser, RoleId, IUsersState } from '../user/types';
 import { findUser, getUser, storeUser } from '../user/actions';
 
 // localStorage
@@ -84,10 +84,17 @@ const parseFromLocalStorage = (json: ITopJson): ITop => {
 
 const parseObj = (json: ITopJson): ITop => {
 	const { auth } = json;
+	if (!auth) {
+		return {
+			...json,
+			auth: undefined
+		}
+	}
+
 	const { who, visited, authenticated } = auth;
 	return {
 		...json,
-		auth: {
+		auth: !auth ? undefined : {
 			...auth,
 			who: {
 				...who,
@@ -121,6 +128,9 @@ export const loadTop: ActionCreator<
 					type: TopActionTypes.LOAD_TOP,
 					top
 				});
+				if (top.auth && top.auth.who) { // check if date is older then a few months
+					dispatch<any>(authenticate(top.auth!.who))
+				}
 			}
 		}
 		catch (err) {
@@ -135,6 +145,7 @@ export const register: ActionCreator<
 > = (loginUser: ILogin) => {
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
+			const { usersState } = getState();
 			dispatch<any>(findUser(loginUser.userName))
 				.then((user: IUser) => {
 					if (user) {
@@ -144,8 +155,8 @@ export const register: ActionCreator<
 					}
 					else {
 						const user: IUser = {
-							roleId: 44, // Viewers
-							userId: 357, //-1,
+							roleId:  usersState.allUsers.length === 0 ? RoleId.OWNER : RoleId.VIEWERS,
+							userId: -1,
 							userName: loginUser.userName,
 							pwd: loginUser.pwd,
 							department: "dept1",
@@ -159,6 +170,7 @@ export const register: ActionCreator<
 									type: TopActionTypes.REGISTER,
 									user
 								});
+								dispatch<any>(authenticate(loginUser));
 							});
 					}
 				});
@@ -174,7 +186,7 @@ export const authenticate: ActionCreator<
 > = (loginUser: ILogin) => {
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
-			dispatch<any>(findUser(loginUser.userName))
+			dispatch<any>(await findUser(loginUser.userName))
 				.then((user: IUser) => {
 					if (user) {
 						if (user.pwd === loginUser.pwd) {

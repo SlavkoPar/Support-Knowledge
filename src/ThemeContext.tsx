@@ -39,7 +39,7 @@ const themeReducer = (state: IThemeState, action: IThemeAction) => {
   }
 };
 
-export function ThemeProvider(props: { children: JSX.Element |JSX.Element[] })
+export function ThemeProvider(props: { children: React.ReactNode })
 {
   const [state, dispatch] = useReducer(themeReducer, initialState);
   return <ThemeContext.Provider value={{ state, dispatch }}>

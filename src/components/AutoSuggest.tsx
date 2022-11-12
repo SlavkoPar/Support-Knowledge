@@ -8,7 +8,7 @@ import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 
 import { IQuestion, ICategory, ICategoryState } from '../Categories/types'
 import './AutoSuggest.css'
-
+import './AutoSuggestDark.css'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expression
 // s#Using_Special_Characters

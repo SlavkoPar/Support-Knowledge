@@ -18,7 +18,7 @@ export interface IAppState {
   answerState: IAnswerState;
   usersState: IUsersState;
   tagState: ITagState;
-  topState: ITopState
+  topState: ITopState;
 }
 
 // Create the root reducer

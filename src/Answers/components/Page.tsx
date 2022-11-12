@@ -1,13 +1,12 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom' // useRouteMatch
+import { ThemeContext } from "../../ThemeContext";
 
 import { IAnswer } from '../types';
 import { AnswerForm } from './Form'
-import { ListRow } from './ListRow';
 import List from './List';
 import { COLORS } from '../../formik/theme';
 import { IQuestionAnswer } from '../../Categories/types';
-import { IOption } from '../../common/types';
 const color = 'blue';
 
 interface IProps {
@@ -29,10 +28,15 @@ type MyParams = {
 
 const Page: React.FC<IProps> = (props: IProps) => {
 	let { slug } = useParams<MyParams>();
+
+	const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
+
+
 	// slug = ''
 	const { answers, answer, usedAnswers, formMode, add, edit, remove, cancel, saveForm } = props;
 	return (
-		<div className="name-container">
+		<div className={`${darkMode ? "dark" : ""}`}>
 			{slug}
 			{ answers.length === 0 && 
 				<div>

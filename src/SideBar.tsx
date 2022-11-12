@@ -3,17 +3,17 @@ import { useContext } from "react";
 import { ThemeContext } from "./ThemeContext";
 import SwitchButton from "./SwitchButton";
 
-
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import { IAppState } from "./store/Store";
+import { IAuth } from "./Top/types";
 
 import logo from './logo.svg'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestion, faHome, faPlus, faSurprise, faUser, faUserFriends, faSignOutAlt, faSignInAlt, faRegistered, faAnchor } from '@fortawesome/free-solid-svg-icons'
+import { faQuestion, faHome, faPlus, faSurprise, faUser, faUserFriends, faSignOutAlt, faSignInAlt, faRegistered, faAnchor, faCog } from '@fortawesome/free-solid-svg-icons'
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -23,18 +23,17 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
-
 interface ISideBarProps {
   open: boolean,
   isAuthenticated: boolean | null;
   uuid: string | null;
-  register: () => void;
+  auth?: IAuth,
   signIn: () => void;
   signOut: () => void;
   handleClose: () => void;
 }
 
-function SideBar({ isAuthenticated, uuid, signOut, open, handleClose }: ISideBarProps) {
+function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClose }: ISideBarProps) {
 
   const theme = useContext(ThemeContext);
   const { darkMode, variant, bg } = theme.state;
@@ -68,13 +67,15 @@ function SideBar({ isAuthenticated, uuid, signOut, open, handleClose }: ISideBar
             <Nav
               className="justify-content-end flex-grow-1 pe-3 d-flex flex-nowrap"
               onSelect={(eventKey) => {
-                if (document.body.classList.contains('row-dark')) {
-                  document.body.classList.remove('row-dark')
+                if (["LIGHTMODE", "DARKMODE"].includes(eventKey!)) {
+                  if (document.body.classList.contains('dark')) {
+                    document.body.classList.remove('dark')
+                  }
+                  else {
+                    document.body.classList.add('dark')
+                  }
+                  theme.dispatch({ type: eventKey })
                 }
-                else {
-                  document.body.classList.add('row-dark')
-                }
-                theme.dispatch({ type: eventKey })
               }
               }
             >
@@ -87,12 +88,17 @@ function SideBar({ isAuthenticated, uuid, signOut, open, handleClose }: ISideBar
               <Nav.Link href="#/answers/pera">
                 <FontAwesomeIcon icon={faAnchor} color='lightblue' />{' '}Answers
               </Nav.Link>
+              <Nav.Link href="#/users/2">
+                <FontAwesomeIcon icon={faUserFriends} color='lightblue' />{' '}Users
+              </Nav.Link>
               <NavDropdown
-                title="Themes"
+                title={<><FontAwesomeIcon icon={faCog} color='lightblue' />{' '}Themes</>}
                 id={`offcanvasNavbarDropdown-expand`}
                 menuVariant={variant}
               >
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+                {isAuthenticated &&
+                  <NavDropdown.Item href="#" onClick={otkaciMe}>Sign out</NavDropdown.Item>
+                }
                 <NavDropdown.Item href="#action4">
                   Another action
                 </NavDropdown.Item>
@@ -103,27 +109,56 @@ function SideBar({ isAuthenticated, uuid, signOut, open, handleClose }: ISideBar
                 <NavDropdown.Item eventKey="LIGHTMODE">
                   Light mode
                 </NavDropdown.Item>
+                {/* <Form className="d-flex">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    aria-label="Search"
+                  />
+                  <Button variant="outline-success">Search</Button>
+                </Form> */}
               </NavDropdown>
+
+              {!isAuthenticated &&
+                <Nav.Link href="#/Register">
+                  Register
+                </Nav.Link>
+              }
+              {!isAuthenticated &&
+                <Nav.Link href="#/sign-in ">
+                  Sign In
+                </Nav.Link>
+              }
+              {isAuthenticated &&
+                <Nav.Link href="#" disabled>
+                  <FontAwesomeIcon icon={faUser} />{' '}{auth!.who.userName}
+                </Nav.Link>
+              }
+
             </Nav>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
+
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
     </Navbar>
   );
 }
+interface IOwnProps {
+  open: boolean,
+  signIn: () => void;
+  signOut: () => void;
+  handleClose: () => void;
+}
 
-const mapStateToProps = (store: IAppState) => ({
+const mapStateToProps = (store: IAppState, ownProps: IOwnProps) => ({
   isAuthenticated: store.topState.top.isAuthenticated,
-  uuid: store.topState.top.uuid
+  uuid: store.topState.top.uuid,
+  auth: store.topState.top.auth,
+  open: ownProps.open,
+  signIn: ownProps.signIn,
+  signOut: ownProps.signOut,
+  handleClose: ownProps.handleClose
 });
 
 export default connect(

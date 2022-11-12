@@ -8,7 +8,8 @@ import { ITop, ITopState } from './types';
 const initialTop: ITop = {
 	navbarOpen: true,
 	isAuthenticated: null,
-	uuid: null
+	uuid: null,
+	darkMode: false
 };
 
 const initialTopState: ITopState = {
@@ -49,7 +50,8 @@ const myReducer: Reducer<ITopState, TopActions> = (
 						who: action.user,
 						authenticated: new Date(),
 						visited: new Date()
-					}
+					},
+					darkMode: false
 				}
 			};
 		}
@@ -85,7 +87,8 @@ const myReducer: Reducer<ITopState, TopActions> = (
 						who: action.user,
 						authenticated: new Date(),
 						visited: new Date()
-					}
+					},
+					darkMode: false
 				}
 			};
 		}
@@ -94,9 +97,9 @@ const myReducer: Reducer<ITopState, TopActions> = (
 			return {
 				...state,
 				top: {
-					navbarOpen: true,
+					...state.top,
 					isAuthenticated: false,
-					uuid: null
+					auth: undefined
 				}
 			};
 		}

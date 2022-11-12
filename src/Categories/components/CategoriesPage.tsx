@@ -6,13 +6,11 @@ import { ICategoriesProps } from '../types'
 import { AutoSuggest } from '../../components/AutoSuggest';
 import ContainerCategoryForm from '../containers/ContainerCategoryForm';
 import ContainerQuestionForm from '../containers/ContainerQuestionForm';
-import QuestionRow from './QuestionRow';
-import CategoryRow from './CategoryRow';
 import { useParams } from 'react-router-dom' // useRouteMatch
 import { ThemeContext } from "../../ThemeContext";
 
 import { COLORS } from '../../formik/theme';
-import { Col, Collapse, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import ContainerCategoryList from '../containers/ContainerCategoryList';
 
 const color = 'blue';
@@ -52,12 +50,11 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	// 	closeQuestionForm();
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
-
-
+	
 	return (
 		<>
 			<Container fluid>
-				<Row className={`${darkMode ? "row-dark" : "row-light"}`}>
+				<Row className={`${darkMode ? "dark" : ""}`}>
 					<Col md={open ? 6 : 12} lg={open ? 6 : 12}>
 						<div style={{ border: '0px solid silver' }}>
 							<AutoSuggest
@@ -78,11 +75,7 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							{categories && showCategoryForm && category &&
 								<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
 									<h4 style={{ marginTop: 0, color: 'white' }}>Category</h4>
-									{formMode === 'display' ?
-										<ContainerCategoryForm canEdit={false} />
-										:
-										<ContainerCategoryForm canEdit={canEdit} />
-									}
+										<ContainerCategoryForm canEdit={formMode === 'display' ? false: canEdit} />
 								</div>
 							}
 
