@@ -125,7 +125,7 @@ const color = 'blue';
 export const LoginForm: React.FC<IFormProps> = (props: IFormProps) => {
 
   return (
-    <div style={{ height: '100%', padding: '5%', display: 'flex', alignItems: 'center', justifyContent: 'center'  }} className="formik-example formik-example--blue">
+    <div style={{ height: '100%', padding: '5%', display: 'flex', alignItems: 'center', justifyContent: 'center'  }} >
       <div
         style={{
           height: '100%',
@@ -145,7 +145,7 @@ export const LoginForm: React.FC<IFormProps> = (props: IFormProps) => {
             width: '250px'
           }}
         >
-          <div className="formik-example formik-example--blue">
+          <div>
             {props.isRegister ? (
               <span>Register</span>
             ) : (

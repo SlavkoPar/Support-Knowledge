@@ -193,7 +193,7 @@ const color = 'blue';
 
 export const CategoryForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
   return (
-    <div style={{ height: '100%' }} className="formik-example formik-example--blue">
+    <div style={{ height: '100%' }}>
       <div
         style={{
           height: '100%',
@@ -211,7 +211,7 @@ export const CategoryForm: React.FC<ICategoryFormProps> = (props: ICategoryFormP
             padding: '1rem',
           }}
         >
-          <div className="formik-example formik-example--blue">
+          <div>
             <Form {...props} />
           </div>
         </div>

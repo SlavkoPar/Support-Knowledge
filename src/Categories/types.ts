@@ -75,7 +75,7 @@ export interface ICategoriesProps {
 	auth?: IAuth,
 	navbarOpen: boolean,
 	onSelectQuestion: (categoryId: number, questionId: number) => void;
-	add: (categoryId: number, text: string, canEdit?: boolean) => void;
+	add:  (categoryId: number, text: string, canEdit?: boolean) => void;
 	closeQuestionForm: () => void;
 }
 

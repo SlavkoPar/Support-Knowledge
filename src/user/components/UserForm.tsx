@@ -165,7 +165,7 @@ const color = 'blue';
 
 export const UserForm: React.FC<IFormProps> = (props: IFormProps) => {
   return (
-    <div style={{ height: '100%' }} className="formik-example formik-example--blue">
+    <div style={{ height: '100%' }} >
       <div
         style={{
           height: '100%',
@@ -183,7 +183,7 @@ export const UserForm: React.FC<IFormProps> = (props: IFormProps) => {
             padding: '1rem',
           }}
         >
-          <div className="formik-example formik-example--blue">
+          <div>
             <Form {...props} />
           </div>
         </div>

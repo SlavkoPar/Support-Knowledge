@@ -51,22 +51,22 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 						<button
 							className="button-edit"
 							title="Create a new Question"
-							onClick={() => { handleShow(); add(0, tekst ?? '', true) }}
+							onClick={() => { add(0, tekst ?? '', true); handleShow(); }}
 						>
 							<FontAwesomeIcon icon={faPlus} color='lightblue' />
 						</button>
 					</div>
 					<div className="b">
 						{categories && question && showQuestionForm &&
-							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
-								<h4 style={{ marginTop: 0, color: 'white' }}>Question</h4>
+							<div>
+								<h4>Question</h4>
 								<ContainerQuestionForm canEdit={canEdit} handleClose={() => { }} />
 							</div>
 						}
 					</div>
 				</Col>
 			</Row>
-			<Modal show={show} onHide={handleClose} animation={true} size="lg" centered>
+			<Modal show={show} onHide={handleClose} animation={true} size="sm" centered>
 				<Modal.Header closeButton className={`${darkMode ? "dark" : ""}`}>
 					<Modal.Title>Store question</Modal.Title>
 				</Modal.Header>

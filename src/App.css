@@ -42,6 +42,15 @@
 	/* font-family: ; */
  }
 
+ .buttons {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+ }
+
+ button[type='submit'] {
+	margin-left: 10px;
+ }
 
 
  

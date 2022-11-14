@@ -28,7 +28,7 @@ import { getAllTags } from './roleTags/actions';
 import { loadTop } from './Top/actions';
 import { IUser } from './user/types';
 import App from './App';
-import { coolColors } from './cool-colors';
+//import { coolColors } from './cool-colors';
 import { IQuestion } from './Categories/types';
 
 import { ThemeProvider } from './ThemeContext';

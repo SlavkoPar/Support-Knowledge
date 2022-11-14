@@ -1,4 +1,5 @@
 import React from "react";
+import Form from 'react-bootstrap/Form';
 import { IOption, OptionValue } from "./types";
 
 type Props<T extends OptionValue> = {
@@ -19,17 +20,18 @@ export function Select<T extends OptionValue>(props: Props<T>) {
     }
 
     return (
-        <select
+        <Form.Select
             id={props.id}
             value={props.value}
             onChange={handleOnChange}
             disabled={disabled}
+            size="sm"
         >
             {props.options.map(option => (
                 <option key={option.value} value={option.value}>
                     {option.label}
                 </option>
             ))}
-        </select>
+        </Form.Select>
     );
 }

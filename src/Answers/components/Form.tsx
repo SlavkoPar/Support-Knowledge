@@ -159,7 +159,7 @@ const color = 'blue';
 
 export const AnswerForm: React.FC<IProps> = (props: IProps) => {
 	return (
-		<div style={{ height: '100%' }} className="formik-example formik-example--blue">
+		<div style={{ height: '100%' }}>
 			<div
 				style={{
 					height: '100%',
@@ -177,7 +177,7 @@ export const AnswerForm: React.FC<IProps> = (props: IProps) => {
 						padding: '0.5rem',
 					}}
 				>
-					<div className="formik-example formik-example--blue">
+					<div>
 						<Form {...props} />
 					</div>
 				</div>

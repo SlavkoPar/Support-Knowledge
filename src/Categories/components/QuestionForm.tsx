@@ -10,15 +10,18 @@ import { COLORS } from '../../formik/theme';
 import UserName from '../../common/containers/UserName';
 //import { number } from 'yup/lib/locale';
 import { ThemeContext } from "../../ThemeContext";
+import { Button, Container, Row, Form } from "react-bootstrap";
+
 
 import { sourceOptions } from '../sourceOptions'
 import { statusOptions } from '../statusOptions'
 
 
-const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
+
+const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
   const { question } = props;
-    const formik = useFormik({
+  const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       categoryId: question.categoryId,
@@ -56,11 +59,13 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
   console.log('RENDERING', formik.values)
   return (
     <>
-    
-      <form onSubmit={formik.handleSubmit} className="formik-example">
-      
-        <label className="id" htmlFor="questionId">QuestionId: </label>
-        {/* <input
+
+      <Form onSubmit={formik.handleSubmit}>
+
+        {isEdit() &&
+          <Form.Group controlId="questionId">
+            <Form.Label htmlFor="questionId">QuestionId: </Form.Label>
+            {/* <input
           id="questionId"
           name="questionId"
           type="text"
@@ -73,53 +78,70 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         {formik.touched.questionId && formik.errors.questionId ? (
           <div>{formik.errors.questionId}</div>
         ) : null} */}
-        <span id="questionId">{formik.values.questionId}</span>
-        <br/>
+            <span> {formik.values.questionId}</span>
+          </Form.Group>}
 
-        <label htmlFor="categoryId">Category</label>
-        <Select
-          id="categoryId"
-          name="categoryId"
-          options={props.categoryOptions}
-          //onChange={formik.handleChange}
-          onChange={(e, value) => {
-            formik.setFieldValue("categoryId", value);
-            if (isEdit()) formik.submitForm();
-          }}
-          value={formik.values.categoryId}
-        />
-        {formik.errors.categoryId && <div className="field-error">{formik.errors.categoryId}</div>}
+        <Form.Group controlId="categoryId">
+          <Form.Label>Category</Form.Label>
+          <Select
+            id="categoryId" 
+            name="categoryId"
+            options={props.categoryOptions}
+            //onChange={formik.handleChange}
+            onChange={(e, value) => {
+              formik.setFieldValue("categoryId", value);
+              if (isEdit()) formik.submitForm();
+            }}
+            value={formik.values.categoryId}
+          />
+          <Form.Text className="text-danger">
+            {formik.touched.categoryId && formik.errors.categoryId ? (
+              <div className="text-danger">{formik.errors.categoryId}</div>
+            ) : null}
+          </Form.Text>
+        </Form.Group>
 
-        <label htmlFor="text">Text</label>
-        <textarea
-          id="text"
-          name="text"
-          onChange={formik.handleChange}
-          //onBlur={formik.handleBlur}
-          onBlur={(e: React.FormEvent<HTMLTextAreaElement>): void => {
-            if (isEdit() && formik.initialValues.text !== formik.values.text)
-              formik.submitForm();
-          }}
-          value={formik.values.text}
-          style={{ width: '100%' }}
-          rows={2}
-        />
-        {formik.touched.text && formik.errors.text ? (
-          <div className="field-error">{formik.errors.text}</div>
-        ) : null}
+        <Form.Group controlId="text">
+          <Form.Label>Text</Form.Label>
+          <Form.Control
+            as="textarea"
+            name="text"
+            onChange={formik.handleChange}
+            //onBlur={formik.handleBlur}
+            onBlur={(e: React.FocusEvent<HTMLTextAreaElement>): void => {
+              if (isEdit() && formik.initialValues.text !== formik.values.text)
+                formik.submitForm();
+            }}
+            value={formik.values.text}
+            style={{ width: '100%' }}
+            rows={2}
+          />
+          <Form.Text className="text-danger">
+            {formik.touched.text && formik.errors.text ? (
+              <div className="text-danger">{formik.errors.text}</div>
+            ) : null}
+          </Form.Text>
+        </Form.Group>
 
-        <label htmlFor="source">Source</label>
-        <Select
-          id="source"
-          name="source"
-          options={sourceOptions}
-          // onChange={formik.handleChange}
-          onChange={(e, value) => {
-            formik.setFieldValue("source", value)
-            if (isEdit()) formik.submitForm();
-          }}
-          value={formik.values.source}
-        />
+        <Form.Group controlId="source">
+          <Form.Label>Source</Form.Label>
+          <Select
+            id="source"
+            name="source"
+            options={sourceOptions}
+            // onChange={formik.handleChange}
+            onChange={(e, value) => {
+              formik.setFieldValue("source", value)
+              if (isEdit()) formik.submitForm();
+            }}
+            value={formik.values.source}
+          />
+          <Form.Text className="text-danger">
+            {formik.touched.source && formik.errors.source ? (
+              <div className="text-danger">{formik.errors.source}</div>
+            ) : null}
+          </Form.Text>
+        </Form.Group>
 
         <br />
         <QuestionAnswers
@@ -136,22 +158,32 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         />
         <br />
 
-        <label htmlFor="status">Status</label>
-        <Select
-          id="status"
-          name="status"
-          options={statusOptions}
-          //onChange={formik.handleChange}
-          onChange={(e, value) => {
-            formik.setFieldValue("status", value)
-            if (isEdit()) formik.submitForm();
-          }}
-          value={formik.values.status}
-        />
+        <Form.Group controlId="status">
+          <Form.Label>Status</Form.Label>
+          <Select
+            id="status"
+            name="status"
+            options={statusOptions}
+            //onChange={formik.handleChange}
+            onChange={(e, value) => {
+              formik.setFieldValue("status", value)
+              if (isEdit()) formik.submitForm();
+            }}
+            value={formik.values.status}
+          />
+          <Form.Text className="text-danger">
+            {formik.touched.status && formik.errors.status ? (
+              <div className="text-danger">{formik.errors.status}</div>
+            ) : null}
+          </Form.Text>
+        </Form.Group>
 
-        <label className="id" htmlFor="createdBy">Created by:</label>
+        <Form.Label htmlFor="createdBy">Created by:</Form.Label>
         <UserName id={formik.values.createdBy} />
-			  <br/>
+        {/* <br /> */}
+        <Form.Label className="id" htmlFor="created">Created:</Form.Label>
+        <span>{formik.values.created.toLocaleDateString()}</span>
+
         {/* <Select
           id="createdBy"
           name="createdBy"
@@ -223,17 +255,28 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         {!isEdit() &&
           <div className="buttons">
             {props.canEdit &&
-              <button onClick={() => { 
-                props.cancel(); 
-                props.handleClose()
-              } }>Cancel</button>}
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => {
+                  props.cancel();
+                  props.handleClose()
+                }}>
+                Cancel
+              </Button>}
             {props.canEdit &&
-              <button type="submit">Save</button>}
+              <Button
+                variant="primary"
+                size="sm"
+                type="submit"
+              >
+                Save
+              </Button>}
           </div>
         }
-      </form>
+      </Form>
 
-      <label className="id" htmlFor="created">Created:</label>
+
       {/* <input
         id="created"
         name="text"
@@ -246,44 +289,20 @@ const Form: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
       {formik.touched.created && formik.errors.created ? (
         <div>{formik.errors.created}</div>
       ) : null} */}
-      <span>{formik.values.created.toLocaleDateString()}</span>
 
     </>
   );
 };
 
 
-const color = 'blue';
-
 export const QuestionForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
   const theme = useContext(ThemeContext);
-	const { darkMode, variant, bg } = theme.state;
+  const { darkMode, variant, bg } = theme.state;
 
   return (
-    <div style={{ height: '100%' }} className={`formik-example formik-example--blue ${darkMode ? "dark" : ""}`}>
-      <div
-        style={{
-          height: '100%',
-          background: COLORS[color][5],
-          padding: '1rem 1rem',
-        }}
-      >
-        <div
-          style={{
-            borderRadius: '4px',
-            boxShadow: '0 8px 16px rgba(0,0,0,.2)',
-            background: '#fff',
-            maxWidth: '90%',
-            margin: '0 auto',
-            padding: '1rem',
-          }}
-        >
-          <div className="formik-example formik-example--blue">
-            <Form {...props} />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container className={`${darkMode ? "dark" : ""}`}>
+      <QuestForm {...props} />
+    </Container>
   )
 }
