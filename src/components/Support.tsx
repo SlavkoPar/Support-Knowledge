@@ -11,7 +11,7 @@ import containers from '../Categories/containers/ContainerCategoriesPage'
 setTimeout(() => {
   const div = document.querySelector('#divKnowledge');
   if (div)
-    div!.setAttribute('style', 'display:none')
+    div!.setAttribute('style', 'display:none') 
 }, 10000)
 
 const Support: React.FC<{}> = () => { 

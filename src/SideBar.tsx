@@ -4,6 +4,8 @@ import { ThemeContext } from "./ThemeContext";
 import SwitchButton from "./SwitchButton";
 
 import { connect } from "react-redux";
+import { Dispatch } from 'redux';
+
 import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
@@ -22,6 +24,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { toggleMode, TopActions } from "./Top/actions";
 
 interface ISideBarProps {
   open: boolean,
@@ -31,9 +34,10 @@ interface ISideBarProps {
   signIn: () => void;
   signOut: () => void;
   handleClose: () => void;
+  toggleMode: () => void;
 }
 
-function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClose }: ISideBarProps) {
+function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClose, toggleMode }: ISideBarProps) {
 
   const theme = useContext(ThemeContext);
   const { darkMode, variant, bg } = theme.state;
@@ -58,58 +62,84 @@ function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClo
           placement="end"
           className={`text-bg-${bg}`}
         >
-          <Offcanvas.Header closeButton closeVariant={darkMode ? "white" : ""}>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>Support
-            </Offcanvas.Title>
-          </Offcanvas.Header>
+          {darkMode ? (
+            <Offcanvas.Header closeButton closeVariant="white">
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>Support</Offcanvas.Title>
+            </Offcanvas.Header>
+          ) : (
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>Support</Offcanvas.Title>
+            </Offcanvas.Header>
+          )}
 
-          <Offcanvas.Body>
-            <Nav
-              className="justify-content-end flex-grow-1 pe-3 d-flex flex-nowrap"
-              onSelect={(eventKey) => {
-                if (["LIGHTMODE", "DARKMODE"].includes(eventKey!)) {
-                  if (document.body.classList.contains('dark')) {
-                    document.body.classList.remove('dark')
-                  }
-                  else {
-                    document.body.classList.add('dark')
-                  }
-                  theme.dispatch({ type: eventKey })
+          < Offcanvas.Body >
+          <Nav
+            className="justify-content-end flex-grow-1 pe-3 d-flex flex-nowrap"
+            onSelect={(eventKey) => {
+              if (["LIGHTMODE", "DARKMODE"].includes(eventKey!)) {
+                if (document.body.classList.contains('dark')) {
+                  document.body.classList.remove('dark')
                 }
+                else {
+                  document.body.classList.add('dark')
+                }
+                theme.dispatch({ type: eventKey })
+                toggleMode();
               }
-              }
-            >
+            }
+            }
+          >
+            {isAuthenticated &&
               <Nav.Link href="#/supporter/promo">
                 <FontAwesomeIcon icon={faSurprise} color='lightblue' />{' '}Supporter
               </Nav.Link>
+            }
+            {isAuthenticated &&
               <Nav.Link href="#/questions">
                 <FontAwesomeIcon icon={faQuestion} color='lightblue' />{' '}Questions
               </Nav.Link>
+            }
+            {isAuthenticated &&
               <Nav.Link href="#/answers/pera">
                 <FontAwesomeIcon icon={faAnchor} color='lightblue' />{' '}Answers
               </Nav.Link>
+            }
+            {isAuthenticated &&
               <Nav.Link href="#/users/2">
                 <FontAwesomeIcon icon={faUserFriends} color='lightblue' />{' '}Users
               </Nav.Link>
-              <NavDropdown
-                title={<><FontAwesomeIcon icon={faCog} color='lightblue' />{' '}Themes</>}
-                id={`offcanvasNavbarDropdown-expand`}
-                menuVariant={variant}
-              >
-                {isAuthenticated &&
-                  <NavDropdown.Item href="#" onClick={otkaciMe}>Sign out</NavDropdown.Item>
-                }
-                <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item eventKey="DARKMODE">
-                  Dark mode
-                </NavDropdown.Item>
-                <NavDropdown.Item eventKey="LIGHTMODE">
-                  Light mode
-                </NavDropdown.Item>
-                {/* <Form className="d-flex">
+            }
+
+            {!isAuthenticated &&
+              <Nav.Link href="#/landing">
+                Landing
+              </Nav.Link>
+            }
+            {!isAuthenticated &&
+              <Nav.Link href="#/About">
+                About
+              </Nav.Link>
+            }
+
+            <NavDropdown
+              title={<><FontAwesomeIcon icon={faCog} color='lightblue' />{' '}Themes</>}
+              id={`offcanvasNavbarDropdown-expand`}
+              menuVariant={variant}
+            >
+              {isAuthenticated &&
+                <NavDropdown.Item href="#" onClick={otkaciMe}>Sign out</NavDropdown.Item>
+              }
+              <NavDropdown.Item href="#action4">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item eventKey="DARKMODE">
+                Dark mode
+              </NavDropdown.Item>
+              <NavDropdown.Item eventKey="LIGHTMODE">
+                Light mode
+              </NavDropdown.Item>
+              {/* <Form className="d-flex">
                   <Form.Control
                     type="search"
                     placeholder="Search"
@@ -118,30 +148,31 @@ function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClo
                   />
                   <Button variant="outline-success">Search</Button>
                 </Form> */}
-              </NavDropdown>
+            </NavDropdown>
 
-              {!isAuthenticated &&
-                <Nav.Link href="#/Register">
-                  Register
-                </Nav.Link>
-              }
-              {!isAuthenticated &&
-                <Nav.Link href="#/sign-in ">
-                  Sign In
-                </Nav.Link>
-              }
-              {isAuthenticated &&
-                <Nav.Link href="#" disabled>
-                  <FontAwesomeIcon icon={faUser} />{' '}{auth!.who.userName}
-                </Nav.Link>
-              }
+            {!isAuthenticated &&
+              <Nav.Link href="#/Register">
+                Register
+              </Nav.Link>
+            }
+            {!isAuthenticated &&
+              <Nav.Link href="#/sign-in ">
+                Sign In
+              </Nav.Link>
+            }
 
-            </Nav>
+            {isAuthenticated &&
+              <Nav.Link href="#" disabled>
+                <FontAwesomeIcon icon={faUser} />{' '}{auth!.who.userName}
+              </Nav.Link>
+            }
+
+          </Nav>
 
           </Offcanvas.Body>
-        </Navbar.Offcanvas>
-      </Container>
-    </Navbar>
+      </Navbar.Offcanvas>
+    </Container>
+    </Navbar >
   );
 }
 interface IOwnProps {
@@ -161,7 +192,15 @@ const mapStateToProps = (store: IAppState, ownProps: IOwnProps) => ({
   handleClose: ownProps.handleClose
 });
 
+const mapDispatchToProps = (dispatch: Dispatch<TopActions>) => {
+	return {
+		toggleMode: () => dispatch<any>(toggleMode())
+	}
+};
+
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(SideBar);
 

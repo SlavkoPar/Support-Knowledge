@@ -19,7 +19,7 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 
 	const { categories, categoryQuestions, 
 		categoryIdEditing, onSelectCategory, onSelectQuestion, add, edit, remove, canEdit,
-		addCategory, toggleCategory, editCategory, removeCategory, updateCategory, who } = props;
+		addCategory, toggleCategory, editCategory, removeCategory, updateCategory, auth } = props;
 
 
 	const inputEl = useRef<HTMLInputElement>(null);

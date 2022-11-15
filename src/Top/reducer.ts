@@ -76,6 +76,16 @@ const myReducer: Reducer<ITopState, TopActions> = (
 			};
 		}	
 
+		case TopActionTypes.TOGGLE_MODE: {
+			return {
+				...state,
+				top: {
+					...state.top,
+					darkMode: !state.top.darkMode
+				}
+			};
+		}	
+
 		case TopActionTypes.AUTHENTICATE: {
 			return {
 				...state,

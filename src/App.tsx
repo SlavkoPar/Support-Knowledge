@@ -33,7 +33,7 @@ interface IProps {
 	auth?: IAuth,
 	toggleNavbar: () => void,
 	checkAuthentication: (login: ILogin) => void;
-	signOut: () => void
+	signOut: () => void;
 }
 
 const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, signOut }: IProps) => {
@@ -132,6 +132,7 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 
 const mapStateToProps = (store: IAppState) => ({
 	navbarOpen: store.topState.top.navbarOpen,
+	darkMode: store.topState.top.darkMode,
 	isAuthenticated: store.topState.top.isAuthenticated,
 	auth: store.topState.top.auth,
 	uuid: store.topState.top.uuid

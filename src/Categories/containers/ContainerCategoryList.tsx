@@ -60,7 +60,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		canEdit: ownProps.canEdit,
 		isDetail,
 		tagOptions: tagState.tags.map(f => ({ label: f.name, value: f.tagId, color: f.color })),
-		who: topState.top.auth!.who,
+		auth: topState.top.auth,
 		navbarOpen: topState.top.navbarOpen
 	};
 };

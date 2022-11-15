@@ -66,11 +66,13 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					</div>
 				</Col>
 			</Row>
-			<Modal show={show} onHide={handleClose} animation={true} size="sm" centered>
-				<Modal.Header closeButton className={`${darkMode ? "dark" : ""}`}>
+			<Modal show={show} onHide={handleClose} animation={true} size="sm" centered 
+				className={`${darkMode ? "dark" : ""}`}
+				contentClassName={`${darkMode ? "dark" : ""}`}>
+				<Modal.Header closeButton>
 					<Modal.Title>Store question</Modal.Title>
 				</Modal.Header>
-				<Modal.Body className={`${darkMode ? "dark" : ""}`}>
+				<Modal.Body>
 					<ContainerQuestionForm canEdit={canEdit} handleClose={handleClose} />
 				</Modal.Body>
 				{/* <Modal.Footer>

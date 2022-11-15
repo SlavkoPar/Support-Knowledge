@@ -31,8 +31,10 @@ import App from './App';
 //import { coolColors } from './cool-colors';
 import { IQuestion } from './Categories/types';
 
-import { ThemeProvider } from './ThemeContext';
+import { ThemeContext, ThemeProvider } from './ThemeContext';
+import { ITop } from './Top/types';
 
+import { useContext } from 'react'
 interface IProps {
 	store: Store<IAppState>;
 }
@@ -51,7 +53,13 @@ const store = configureStore();
 store.dispatch(loadCategories());
 store.dispatch(getAllAnswers());
 store.dispatch(getAllUsers())
-store.dispatch(loadTop());
+store.dispatch<any>(loadTop())
+	.then((top: ITop)=> {
+		console.log({top})
+	})
+	.catch((err: { getMessage: () => any; }) => {
+		console.error(err.getMessage());
+	});
 store.dispatch(getAllTags());
 
 const sessionId = Math.floor((Math.random() * 10000) + 1);
@@ -104,28 +112,6 @@ window.addEventListener("PassToBackground", function (evt: any) {
 
 const userIdOwner = 101;
 const state = store.getState();
-/*
-if (state.usersState.allUsers.length === 0) {
-	const user: IUser = {
-		roleId: 11,
-		userId: userIdOwner,
-		userName: "Jack",
-		pwd: "Daniels",
-		department: "dept1",
-		createdBy: userIdOwner,
-		created: new Date()
-	}
-
-	const treatFirstUserAsTheOwner = async () => {
-		return await store.dispatch(storeUser(user, 'add'))
-	};
-
-	treatFirstUserAsTheOwner()
-		.then((res) => {
-			store.dispatch(authenticate(user))
-		})
-}
-*/
 
 ReactDOM.render(
 	<React.StrictMode>

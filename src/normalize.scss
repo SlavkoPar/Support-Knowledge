@@ -38,6 +38,15 @@
     
     --#{$variable-prefix}body-color: #{$body-color};
     --#{$variable-prefix}body-bg: #{$body-bg};
+
+    --#{$variable-prefix}modal-color: #{$body-color};
+    --#{$variable-prefix}modal-bg: #{$body-bg};
+
+
+    .modal-content {
+        background-color: #000;
+        color: #fff;
+      }
       
     @import "~bootstrap/scss/bootstrap";
 }

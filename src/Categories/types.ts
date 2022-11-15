@@ -71,7 +71,6 @@ export interface ICategoriesProps {
 	question: IQuestion | undefined;
 	formMode: string,
 	canEdit: boolean,
-	//who: IUser,
 	auth?: IAuth,
 	navbarOpen: boolean,
 	onSelectQuestion: (categoryId: number, questionId: number) => void;
@@ -91,7 +90,7 @@ export interface ICategoryListProps {
 	formMode: string,
 	categoryIdEditing: number,
 	canEdit: boolean,
-	who: IUser,
+	auth?: IAuth,
 	navbarOpen: boolean,
 	onSelectQuestion: (categoryId: number, questionId: number) => void;
 	add: (categoryId: number, text: string, canEdit?: boolean) => void;

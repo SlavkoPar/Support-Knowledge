@@ -12,15 +12,16 @@ import UserName from '../../common/containers/UserName';
 import { ThemeContext } from "../../ThemeContext";
 import { Button, Container, Row, Form } from "react-bootstrap";
 
-
 import { sourceOptions } from '../sourceOptions'
 import { statusOptions } from '../statusOptions'
-
-
+import { initialQuestion } from '../categoriesReducer';
 
 const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
-  const { question } = props;
+  let { question } = props;
+  if (!question) // it is still view in modal, although hidden
+    question = { ...initialQuestion };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -84,7 +85,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         <Form.Group controlId="categoryId">
           <Form.Label>Category</Form.Label>
           <Select
-            id="categoryId" 
+            id="categoryId"
             name="categoryId"
             options={props.categoryOptions}
             //onChange={formik.handleChange}
@@ -178,11 +179,15 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           </Form.Text>
         </Form.Group>
 
-        <Form.Label htmlFor="createdBy">Created by:</Form.Label>
-        <UserName id={formik.values.createdBy} />
+        <Form.Group controlId="createdBy">
+          <Form.Label htmlFor="createdBy">Created by:</Form.Label>
+          <UserName id={formik.values.createdBy} />
+        </Form.Group>
         {/* <br /> */}
-        <Form.Label className="id" htmlFor="created">Created:</Form.Label>
-        <span>{formik.values.created.toLocaleDateString()}</span>
+        <Form.Group controlId="created">
+          <Form.Label className="id" htmlFor="created">Created:</Form.Label>
+          <span>{formik.values.created.toLocaleDateString()}</span>
+        </Form.Group>
 
         {/* <Select
           id="createdBy"

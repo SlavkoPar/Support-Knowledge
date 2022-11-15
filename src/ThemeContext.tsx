@@ -1,4 +1,6 @@
+import { connect, Provider } from 'react-redux';
 import { createContext, useReducer } from "react";
+import { IAppState } from './store/Store';
 
 export interface IThemeState {
   darkMode: boolean,
@@ -46,3 +48,4 @@ export function ThemeProvider(props: { children: React.ReactNode })
     {props.children}
   </ThemeContext.Provider>;
 }
+

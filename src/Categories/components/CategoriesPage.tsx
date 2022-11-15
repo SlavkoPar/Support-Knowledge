@@ -71,17 +71,17 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 						</div>
 					</Col>
 					<Col md={open ? 6 : 0} lg={open ? 6 : 0} >
-						<div style={{ border: '0px solid silver', backgroundColor: 'white' }}>
+						<div className={`${darkMode ? "dark" : ""}`}>
 							{categories && showCategoryForm && category &&
 								<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
-									<h4 style={{ marginTop: 0, color: 'white' }}>Category</h4>
-										<ContainerCategoryForm canEdit={formMode === 'display' ? false: canEdit} />
+									<h4 style={{ marginTop: 0}}>Category</h4>
+									<ContainerCategoryForm canEdit={formMode === 'display' ? false: canEdit} />
 								</div>
 							}
 
 							{categories && showQuestionForm && question &&
-								<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
-									<h4 style={{ marginTop: 0, color: 'white' }}>Question</h4>
+								<div>
+									<h4 style={{ marginTop: 0 }}>Question</h4>
 									<ContainerQuestionForm canEdit={formMode === 'display' ? false: canEdit} handleClose={() => { }} />
 								</div>
 							}

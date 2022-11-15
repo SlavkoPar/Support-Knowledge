@@ -7,6 +7,8 @@ import { ILogin, ITop, ITopJson, ITopState } from './types';
 import { IAppState } from '../store/Store';
 import { IUser, RoleId, IUsersState } from '../user/types';
 import { findUser, getUser, storeUser } from '../user/actions';
+import { ThemeContext } from '../ThemeContext';
+import { useContext } from 'react';
 
 // localStorage
 export const SUPPORT_TOP = 'SUPPORT_TOP';
@@ -21,7 +23,8 @@ export enum TopActionTypes {
 	UNAUTHENTICATE = 'UNAUTHENTICATE',
 	AUTHENTICATE_WRONG_USERNAME = 'AUTHENTICATE_WRONG_USERNAME',
 	AUTHENTICATE_WRONG_PWD = 'AUTHENTICATE_WRONG_PWD',
-	CANCEL = 'CANCEL'
+	CANCEL = 'CANCEL',
+	TOGGLE_MODE = 'TOGGLE_MODE'
 }
 
 
@@ -64,6 +67,10 @@ export interface ICancel {
 	type: TopActionTypes.CANCEL;
 }
 
+export interface IToggleMode {
+	type: TopActionTypes.TOGGLE_MODE;
+}
+
 
 // Combine the action types with a union (we assume there are more)
 export type TopActions = ILoadTop |
@@ -74,7 +81,8 @@ export type TopActions = ILoadTop |
 	IAuthenticateWrongUsername |
 	IAuthenticateWrongPwd |
 	IUnAuthenticate |
-	ICancel;
+	ICancel |
+	IToggleMode;
 
 const isWebStorageSupported = () => 'localStorage' in window
 
@@ -107,7 +115,7 @@ const parseObj = (json: ITopJson): ITop => {
 }
 
 export const loadTop: ActionCreator<
-	ThunkAction<Promise<any>, IAppState, null, IAuthenticate>
+	ThunkAction<Promise<any>, IAppState, null, ILoadTop>
 > = () => {
 	return async (dispatch: Dispatch) => {
 		try {
@@ -132,6 +140,7 @@ export const loadTop: ActionCreator<
 					dispatch<any>(authenticate(top.auth!.who))
 				}
 			}
+			return top;
 		}
 		catch (err) {
 			console.error(err);
@@ -234,6 +243,19 @@ export const cancelLogin: ActionCreator<any> = () => {
 		try {
 			dispatch({
 				type: TopActionTypes.CANCEL
+			});
+		} catch (err) {
+			console.error(err);
+		}
+	};
+};
+
+
+export const toggleMode: ActionCreator<any> = () => {
+	return (dispatch: Dispatch) => {
+		try {
+			dispatch({
+				type: TopActionTypes.TOGGLE_MODE
 			});
 		} catch (err) {
 			console.error(err);
