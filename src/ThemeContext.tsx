@@ -41,9 +41,16 @@ const themeReducer = (state: IThemeState, action: IThemeAction) => {
   }
 };
 
-export function ThemeProvider(props: { children: React.ReactNode })
+export function ThemeProvider(props: { children: React.ReactNode, darkMode: boolean })
 {
-  const [state, dispatch] = useReducer(themeReducer, initialState);
+  const initState = {
+    ...initialState, 
+    darkMode: props.darkMode,
+    variant: props.darkMode? 'dark' : 'light',
+    bg: props.darkMode? 'dark' : 'light'
+  }
+
+  const [state, dispatch] = useReducer(themeReducer, initState);
   return <ThemeContext.Provider value={{ state, dispatch }}>
     {props.children}
   </ThemeContext.Provider>;

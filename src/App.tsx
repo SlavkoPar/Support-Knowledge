@@ -45,12 +45,16 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	const [mainMd, setMainMd] = useState(9);
 	const [mainLg, setMainLg] = useState(10);
 
+	const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
+
 	useEffect(() => {
 		// const login = {
 		// 	userName: 'Jack',
 		// 	pwd: 'Daniels'
 		// }
 		// checkAuthentication(login);
+		document.body.classList.add(bg)
 	}, []);
 
 	const signIn = () => {
@@ -61,10 +65,6 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 		// checkAuthentication(login);
 	}
 
-
-	const theme = useContext(ThemeContext);
-	const { darkMode, variant, bg } = theme.state;
-
 	const [open, setOpen] = useState(false);
 	const handleClose = () => {
 		setOpen(false);
@@ -72,10 +72,10 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 
 	// null is the third state false/true/null in reducer
 	const app = //isAuthenticated !== null ? (  
-		
+
 		<Router>
 			<button className="btn btn-primary">Primary</button>
-            <button className="btn btn-secondary">Secondary</button>
+			<button className="btn btn-secondary">Secondary</button>
 			{/* <Header open={open} setOpen={setOpen} signIn={signIn} signOut={signOut} /> */}
 			<SideBar open={open} handleClose={handleClose} signIn={signIn} signOut={signOut} />
 			<Container fluid>
@@ -132,7 +132,6 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 
 const mapStateToProps = (store: IAppState) => ({
 	navbarOpen: store.topState.top.navbarOpen,
-	darkMode: store.topState.top.darkMode,
 	isAuthenticated: store.topState.top.isAuthenticated,
 	auth: store.topState.top.auth,
 	uuid: store.topState.top.uuid

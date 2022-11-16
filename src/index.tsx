@@ -116,7 +116,7 @@ const state = store.getState();
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store} >
-			<ThemeProvider>
+			<ThemeProvider darkMode={state.topState.top.darkMode }>
 				<App />
 			</ThemeProvider>
 		</Provider>

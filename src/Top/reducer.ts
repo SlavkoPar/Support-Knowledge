@@ -90,6 +90,7 @@ const myReducer: Reducer<ITopState, TopActions> = (
 			return {
 				...state,
 				top: {
+					...state.top,
 					navbarOpen: true,
 					isAuthenticated: true,
 					uuid: "placeholder-uuid",
@@ -97,8 +98,7 @@ const myReducer: Reducer<ITopState, TopActions> = (
 						who: action.user,
 						authenticated: new Date(),
 						visited: new Date()
-					},
-					darkMode: false
+					}
 				}
 			};
 		}

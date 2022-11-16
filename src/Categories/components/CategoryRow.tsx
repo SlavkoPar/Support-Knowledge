@@ -4,6 +4,7 @@ import { useHover } from '../../common/useHover'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose, faEdit, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { ThemeContext } from "../../ThemeContext";
+import { Button } from 'react-bootstrap'
 
 import { ICategory } from '../types';
 
@@ -26,15 +27,15 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	return (
-		<div ref={hoverRef} key={categoryId}  className={`${darkMode ? "dark" : ""}`}>
-			<button
-				className="button-edit"
+		<div ref={hoverRef} key={categoryId} className={bg}>
+			<Button
+				variant="variant"
 				title="Expand"
 				onClick={() => toggleCategory(categoryId)} 
 				style={{ marginLeft: '5px', background: 'transparent' }}
 			>
 				<FontAwesomeIcon icon={isExpanded?faCaretDown:faCaretRight} color='orange' size='lg' />
-			</button>
+			</Button>
 			<span className={`question-group-title ${darkMode ? "dark" : "light"}`} onClick={() => onSelectCategory(categoryId)}>{title}</span>
 			{hoverProps.isHovered &&
 				<button className="button-edit" title="Edit Category" onClick={() => editCategory(categoryId)}>

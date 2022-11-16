@@ -1,11 +1,13 @@
-import * as React from 'react';
+import {useContext }  from 'react';
 
 import { useHover } from '../../common/useHover'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { Button } from 'react-bootstrap'
 
 import { IQuestion } from '../types';
+import { ThemeContext } from '../../ThemeContext';
 
 
 interface IQuestionRowProps {
@@ -22,21 +24,38 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 	const { question, onSelectQuestion, edit, remove } = props;
 	const { categoryId, questionId } = question;
 
+	const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
+	
+
+
    return (
-		<div ref={hoverRef}>
-			<button
+		<div ref={hoverRef} className={bg}>
+			<Button
+				variant={bg}
+				size="sm"
 				onClick={() => onSelectQuestion(categoryId, questionId)}>
 				{question.text}
-			</button>
+			</Button>
 			{hoverProps.isHovered && 
-				<button className="button-edit" title="Edit" onClick={() => edit(categoryId, questionId, true)}>
+				<Button
+					variant={bg}
+					size="sm"
+					title="Edit" 
+					onClick={() => edit(categoryId, questionId, true)}
+				>
 					<FontAwesomeIcon icon={faEdit} color='lightblue' />
-				</button>
+				</Button>
 			}
 			{hoverProps.isHovered &&
-				<button className="button-remove" title="Remove" onClick={() => remove(categoryId, questionId)}>
+				<Button 
+					variant={bg}
+					size="sm" 
+					title="Remove" 
+					onClick={() => remove(categoryId, questionId)}
+				>
 					<FontAwesomeIcon icon={faWindowClose}  color='lightblue' />
-				</button>
+				</Button>
 			}
 		</div>
 	)
