@@ -17,7 +17,7 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
 
-	const { categories, categoryQuestions, 
+	const { categories, categoryQuestions,
 		categoryIdEditing, onSelectCategory, onSelectQuestion, add, edit, remove, canEdit,
 		addCategory, toggleCategory, editCategory, removeCategory, updateCategory, auth } = props;
 
@@ -40,19 +40,19 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 
 	return (
 		<>
-			<h3>Categories
-				<button className="button-add-category" title="Add a new Category" onClick={() => addCategory()}>
+			<h5>Categories{' '}
+				<button className="button-add-category button-edit" title="Add a new Category" onClick={() => addCategory()}>
 					<FontAwesomeIcon icon={faPlus} size='xs' color='lightblue' />
 				</button>
-			</h3>
+			</h5>
 
 			{categories.map(category => {
 				const { categoryId, title, isExpanded } = category;
 				const categoryState = categoryQuestions.get(categoryId);
 				const { questions } = categoryState!;
 				return (
-					<div key={categoryId} className={`${darkMode ? "dark" : ""}`} style={{ paddingBottom: '5px' }}>
-						<div  className={`${darkMode ? "dark" : ""}`} style={{ textAlign: 'start' }}>
+					<div key={categoryId} className={`${darkMode ? "dark" : ""}`} >
+						<div className={`${darkMode ? "dark" : ""}`} style={{ textAlign: 'start' }}>
 							{categoryIdEditing === categoryId &&
 								<input ref={inputEl} name="groupTitle" type="text"
 									onBlur={(e) => updateCategory({ ...category, title: e.target.value })}
@@ -67,7 +67,9 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 									toggleCategory={toggleCategory}
 									editCategory={editCategory}
 									removeCategory={removeCategory}
+									add={add}
 								/>
+								
 							)}
 						</div>
 						{isExpanded &&
@@ -81,11 +83,11 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 										remove={remove}
 									/>
 								)}
-								<div style={{ marginLeft: '0%' }}>
-									<button className="button-add" title="Add a new Question" onClick={() => add(category.categoryId, '', true)}>
+								{/* <div style={{ marginLeft: '0%' }}>
+									<button className="button-add button-edit" title="Add a new Question" onClick={() => add(category.categoryId, '', true)}>
 										<FontAwesomeIcon icon={faPlus} size='xs' color='lightblue' />
 									</button>
-								</div>
+								</div> */}
 							</div>
 						}
 					</div>

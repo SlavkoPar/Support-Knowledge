@@ -1,4 +1,4 @@
-import {useContext }  from 'react';
+import { useContext } from 'react';
 
 import { useHover } from '../../common/useHover'
 
@@ -26,35 +26,33 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
-	
 
-
-   return (
-		<div ref={hoverRef} className={bg}>
+	return (
+		<div ref={hoverRef} className={`div-row ${bg}`}>
 			<Button
-				variant={bg}
+				variant="light"
 				size="sm"
 				onClick={() => onSelectQuestion(categoryId, questionId)}>
 				{question.text}
 			</Button>
-			{hoverProps.isHovered && 
+			{hoverProps.isHovered &&
 				<Button
-					variant={bg}
+					variant="light"
 					size="sm"
-					title="Edit" 
+					title="Edit"
 					onClick={() => edit(categoryId, questionId, true)}
 				>
 					<FontAwesomeIcon icon={faEdit} color='lightblue' />
 				</Button>
 			}
 			{hoverProps.isHovered &&
-				<Button 
-					variant={bg}
-					size="sm" 
-					title="Remove" 
+				<Button
+					variant="light"
+					size="sm"
+					title="Remove"
 					onClick={() => remove(categoryId, questionId)}
 				>
-					<FontAwesomeIcon icon={faWindowClose}  color='lightblue' />
+					<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
 				</Button>
 			}
 		</div>

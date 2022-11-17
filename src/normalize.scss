@@ -42,6 +42,10 @@
     --#{$variable-prefix}modal-color: #{$body-color};
     --#{$variable-prefix}modal-bg: #{$body-bg};
 
+    .btn-dark {
+        --#{$variable-prefix}btn-color: #{$body-color};
+        --#{$variable-prefix}btn-bg: #{$body-bg};
+    }
 
     .modal-content {
         background-color: #000;

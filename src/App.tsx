@@ -74,8 +74,6 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	const app = //isAuthenticated !== null ? (  
 
 		<Router>
-			<button className="btn btn-primary">Primary</button>
-			<button className="btn btn-secondary">Secondary</button>
 			{/* <Header open={open} setOpen={setOpen} signIn={signIn} signOut={signOut} /> */}
 			<SideBar open={open} handleClose={handleClose} signIn={signIn} signOut={signOut} />
 			<Container fluid>

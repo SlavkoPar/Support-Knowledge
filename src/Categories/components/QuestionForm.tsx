@@ -62,7 +62,6 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
     <>
 
       <Form onSubmit={formik.handleSubmit}>
-
         {isEdit() &&
           <Form.Group controlId="questionId">
             <Form.Label htmlFor="questionId">QuestionId: </Form.Label>
@@ -180,12 +179,12 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         </Form.Group>
 
         <Form.Group controlId="createdBy">
-          <Form.Label htmlFor="createdBy">Created by:</Form.Label>
+          <Form.Label>Created by:</Form.Label>
           <UserName id={formik.values.createdBy} />
         </Form.Group>
         {/* <br /> */}
         <Form.Group controlId="created">
-          <Form.Label className="id" htmlFor="created">Created:</Form.Label>
+          <Form.Label className="id">Created:</Form.Label>
           <span>{formik.values.created.toLocaleDateString()}</span>
         </Form.Group>
 

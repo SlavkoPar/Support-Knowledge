@@ -53,7 +53,9 @@
  }
 
 
- 
+ .div-row .btn {
+	padding: 2px 8px;
+ }
  
 
 
@@ -216,4 +218,8 @@ button {
 
 .button-add-category {
 	margin-left: 1rem;
+}
+
+.button-edit {
+	background-color: transparent;
 }

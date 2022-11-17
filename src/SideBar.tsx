@@ -52,7 +52,7 @@ function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClo
   // className="mb-3" 
 
   return (
-    <Navbar expand={"md"} variant={variant} bg={bg} collapseOnSelect>
+    <Navbar expand={"md"} variant={variant} bg={bg} collapseOnSelect className="sticky-top">
       <Container fluid>
         <Navbar.Brand href="#">Support Knowledge</Navbar.Brand>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} />

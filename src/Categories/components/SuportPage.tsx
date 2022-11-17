@@ -48,13 +48,14 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							tekst={tekst}
 							onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId)}
 						/>
-						<button
+						<Button
+							variant="primary"
 							className="button-edit"
 							title="Create a new Question"
 							onClick={() => { add(0, tekst ?? '', true); handleShow(); }}
 						>
-							<FontAwesomeIcon icon={faPlus} color='lightblue' />
-						</button>
+							<FontAwesomeIcon icon={faPlus} size="lg" />
+						</Button>
 					</div>
 					<div className="b">
 						{categories && question && showQuestionForm &&
