@@ -142,7 +142,8 @@ export interface IOpenQuestionForm {
 
 export interface IGetCategory {
 	type: QuestionActionTypes.GET_CATEGORY;
-	categoryId: number
+	categoryId: number,
+	showCategoryForm: boolean
 }
 
 export interface IAddCategory {
@@ -615,12 +616,13 @@ export const openQuestionForm: ActionCreator<any> = () => {
 
 export const getCategory: ActionCreator<
 	ThunkAction<Promise<any>, ICategoriesState, string, IGet>
-> = (categoryId: number) => {
+> = (categoryId: number, showCategoryForm:boolean) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			dispatch({
 				type: QuestionActionTypes.GET_CATEGORY,
-				categoryId
+				categoryId,
+				showCategoryForm
 			});
 		} catch (err) {
 			console.error(err);

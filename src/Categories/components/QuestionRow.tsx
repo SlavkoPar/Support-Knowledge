@@ -4,7 +4,7 @@ import { useHover } from '../../common/useHover'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose, faEdit } from '@fortawesome/free-solid-svg-icons'
-import { Button } from 'react-bootstrap'
+import { Button, ListGroup } from 'react-bootstrap'
 
 import { IQuestion } from '../types';
 import { ThemeContext } from '../../ThemeContext';
@@ -28,34 +28,42 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	return (
-		<div ref={hoverRef} className={`div-row ${bg}`}>
-			<Button
-				variant="light"
-				size="sm"
-				onClick={() => onSelectQuestion(categoryId, questionId)}>
-				{question.text}
-			</Button>
-			{hoverProps.isHovered &&
+		<ListGroup.Item className="py-0" variant={variant}>
+			<div ref={hoverRef} className="d-flex justify-content-start align-items-center">
 				<Button
-					variant="light"
+					style={{fontSize: '13px'}}
+					variant='link'
 					size="sm"
-					title="Edit"
-					onClick={() => edit(categoryId, questionId, true)}
-				>
-					<FontAwesomeIcon icon={faEdit} color='lightblue' />
+					className="py-0 px-1 text-decoration-none"
+					onClick={() => onSelectQuestion(categoryId, questionId)}>
+					{question.text}
 				</Button>
-			}
-			{hoverProps.isHovered &&
-				<Button
-					variant="light"
-					size="sm"
-					title="Remove"
-					onClick={() => remove(categoryId, questionId)}
-				>
-					<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
-				</Button>
-			}
-		</div>
+				{hoverProps.isHovered &&
+					<>
+					<Button
+						variant={variant}
+						size="sm"
+						className="py-0 px-1"
+						style={{backgroundColor: 'transparent', borderWidth:'0'}}
+						title="Edit"
+						onClick={() => edit(categoryId, questionId, true)}
+					>
+						<FontAwesomeIcon icon={faEdit} color='lightblue' />
+					</Button>
+					<Button
+						variant={variant}
+						size="sm"
+						className="py-0 px-1"
+						style={{backgroundColor: 'transparent', borderWidth: '0'}}
+						title="Remove"
+						onClick={() => remove(categoryId, questionId)}
+					>
+						<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
+					</Button>
+					</>
+				}
+			</div>
+		</ListGroup.Item>
 	)
 }
 

@@ -2,7 +2,7 @@
 //bg-dark + text-light
 
 // Override default variables before the import
-$body-bg: rgb(203, 226, 234);
+$body-bg: rgb(248, 249, 250);
 $offcanvas-horizontal-width: 300px !default;
 
 //$modal-content-bg: red;
@@ -87,5 +87,5 @@ root {
 */
 
 // Import Bootstrap and its default variables
-@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap/scss/bootstrap';
 

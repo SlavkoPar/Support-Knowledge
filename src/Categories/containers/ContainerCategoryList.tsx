@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 
 import { IAppState } from '../../store/Store';
-import { IQuestion, IQuestionAnswer, ICategory } from '../types'
+import { ICategory } from '../types'
 import { IAnswer } from '../../Answers/types'
 
 import { Dispatch } from 'redux';
@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 			dispatch<any>(addAndAssignNewAnswer(categoryId, questionId, answer, formMode))
 		},
 		// groups
-		onSelectCategory: (categoryId: number) => dispatch<any>(getCategory(categoryId)),
+		onSelectCategory: (categoryId: number) => dispatch<any>(getCategory(categoryId, true)),
 		addCategory: () => dispatch<any>(addCategory()),
 		toggleCategory: (categoryId: number) =>  dispatch<any>(toggleCategory(categoryId)),
 		editCategory: (categoryId: number) =>  dispatch<any>(editCategory(categoryId)),

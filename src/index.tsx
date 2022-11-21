@@ -15,9 +15,9 @@ import {
 } from './Categories/actions';
 import { getAllAnswers } from './Answers/actions';
 
-import './custom.scss'
-import './normalize.scss'
+//import './custom.scss'
 import './index.css';
+import './normalize.scss'
 import './App.css';
 //import './dashboard.css';
 

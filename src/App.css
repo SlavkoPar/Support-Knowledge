@@ -223,3 +223,8 @@ button {
 .button-edit {
 	background-color: transparent;
 }
+
+.list-group-item {
+	padding: 2px 8px;
+}
+

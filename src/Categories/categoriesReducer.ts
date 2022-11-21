@@ -255,14 +255,16 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 		///////////////////////////////////////////////////////////////////////////////////
 		// groups
 		case QuestionActionTypes.GET_CATEGORY: {
-			const { categoryId } = action;
+			const { categoryId, showCategoryForm } = action;
 			//const questions = getQuestions(categoryId, state)
 			//const question = questions.find(q => q.questionId === questionId);
 			const category = state.categories.find(g => g.categoryId === categoryId);
 			return {
 				...state,
 				category,
-				question: undefined
+				question: undefined,
+				showCategoryForm,
+				showQuestionForm: false
 			};
 		}
 
@@ -304,10 +306,11 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 
 		case QuestionActionTypes.EDIT_CATEGORY: {
 			const { categories } = state;
-			const { showCategoryForm } = action;
-			const category = categories.find(g => g.categoryId === action.categoryId)!
+			const { categoryId, showCategoryForm } = action;
+			const category = categories.find(g => g.categoryId === categoryId)!
 			return {
 				...state,
+				category,
 				categoryCopy: { ...category },
 				categoryIdEditing: category.categoryId,
 				showCategoryForm,

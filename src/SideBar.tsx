@@ -73,73 +73,91 @@ function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClo
           )}
 
           < Offcanvas.Body >
-          <Nav
-            className="justify-content-end flex-grow-1 pe-3 d-flex flex-nowrap"
-            onSelect={(eventKey) => {
-              if (["LIGHTMODE", "DARKMODE"].includes(eventKey!)) {
-                if (document.body.classList.contains('dark')) {
-                  document.body.classList.remove('dark')
+            <Nav
+              className="justify-content-end flex-grow-1 pe-3 d-flex flex-nowrap"
+              onSelect={(eventKey) => {
+                if (["LIGHTMODE", "DARKMODE"].includes(eventKey!)) {
+                  if (document.body.classList.contains('dark')) {
+                    document.body.classList.remove('dark')
+                    document.body.classList.add('light')
+                  }
+                  else {
+                    document.body.classList.add('dark')
+                  }
+                  theme.dispatch({ type: eventKey })
+                  toggleMode();
                 }
-                else {
-                  document.body.classList.add('dark')
-                }
-                theme.dispatch({ type: eventKey })
-                toggleMode();
               }
-            }
-            }
-          >
-            {isAuthenticated &&
-              <Nav.Link href="#/supporter/promo">
-                <FontAwesomeIcon icon={faSurprise} color='lightblue' />{' '}Supporter
-              </Nav.Link>
-            }
-            {isAuthenticated &&
-              <Nav.Link href="#/questions">
-                <FontAwesomeIcon icon={faQuestion} color='lightblue' />{' '}Questions
-              </Nav.Link>
-            }
-            {isAuthenticated &&
-              <Nav.Link href="#/answers/pera">
-                <FontAwesomeIcon icon={faAnchor} color='lightblue' />{' '}Answers
-              </Nav.Link>
-            }
-            {isAuthenticated &&
-              <Nav.Link href="#/users/2">
-                <FontAwesomeIcon icon={faUserFriends} color='lightblue' />{' '}Users
-              </Nav.Link>
-            }
-
-            {!isAuthenticated &&
-              <Nav.Link href="#/landing">
-                Landing
-              </Nav.Link>
-            }
-            {!isAuthenticated &&
-              <Nav.Link href="#/About">
-                About
-              </Nav.Link>
-            }
-
-            <NavDropdown
-              title={<><FontAwesomeIcon icon={faCog} color='lightblue' />{' '}Themes</>}
-              id={`offcanvasNavbarDropdown-expand`}
-              menuVariant={variant}
+              }
             >
               {isAuthenticated &&
-                <NavDropdown.Item href="#" onClick={otkaciMe}>Sign out</NavDropdown.Item>
+                <Nav.Link href="#/supporter/promo">
+                  <FontAwesomeIcon icon={faSurprise} color='lightblue' />{' '}Supporter
+                </Nav.Link>
               }
-              <NavDropdown.Item href="#action4">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item eventKey="DARKMODE">
-                Dark mode
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey="LIGHTMODE">
-                Light mode
-              </NavDropdown.Item>
-              {/* <Form className="d-flex">
+              {isAuthenticated &&
+                <Nav.Link href="#/questions">
+                  <FontAwesomeIcon icon={faQuestion} color='lightblue' />{' '}Questions
+                </Nav.Link>
+              }
+              {isAuthenticated &&
+                <Nav.Link href="#/answers/pera">
+                  <FontAwesomeIcon icon={faAnchor} color='lightblue' />{' '}Answers
+                </Nav.Link>
+              }
+              {isAuthenticated &&
+                <Nav.Link href="#/users/2">
+                  <FontAwesomeIcon icon={faUserFriends} color='lightblue' />{' '}Users
+                </Nav.Link>
+              }
+
+              {!isAuthenticated &&
+                <Nav.Link href="#/landing">
+                  Landing
+                </Nav.Link>
+              }
+              {!isAuthenticated &&
+                <Nav.Link href="#/About">
+                  About
+                </Nav.Link>
+              }
+
+              {/* <NavDropdown
+                title={<><FontAwesomeIcon icon={faCog} color='lightblue' />{' '}Settings</>}
+                id={`offcanvasNavbarDropdown-expand`}
+                menuVariant={variant}
+              >
+              </NavDropdown> */}
+
+              {!isAuthenticated &&
+                <Nav.Link href="#/Register">
+                  Register
+                </Nav.Link>
+              }
+              {!isAuthenticated &&
+                <Nav.Link href="#/sign-in ">
+                  Sign In
+                </Nav.Link>
+              }
+
+              {isAuthenticated &&
+                // <Nav.Link href="#" disabled>
+                //   <FontAwesomeIcon icon={faUser} />{' '}{auth!.who.userName}
+                // </Nav.Link>
+
+                <NavDropdown
+                  title={<><FontAwesomeIcon icon={faUser} />{' '}{auth!.who.userName}</>}
+                  id={`offcanvasNavbarDropdown-expand`}
+                  menuVariant={variant}
+                  align="end"
+                >
+                <NavDropdown.Item eventKey="DARKMODE">
+                  Dark mode
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="LIGHTMODE">
+                  Light mode
+                </NavDropdown.Item>
+                {/* <Form className="d-flex">
                   <Form.Control
                     type="search"
                     placeholder="Search"
@@ -148,30 +166,19 @@ function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClo
                   />
                   <Button variant="outline-success">Search</Button>
                 </Form> */}
-            </NavDropdown>
+                   <NavDropdown.Divider />
+                  {isAuthenticated &&
+                    <NavDropdown.Item href="#" onClick={otkaciMe}>Sign out</NavDropdown.Item>
+                  }
+                </NavDropdown>
 
-            {!isAuthenticated &&
-              <Nav.Link href="#/Register">
-                Register
-              </Nav.Link>
-            }
-            {!isAuthenticated &&
-              <Nav.Link href="#/sign-in ">
-                Sign In
-              </Nav.Link>
-            }
+              }
 
-            {isAuthenticated &&
-              <Nav.Link href="#" disabled>
-                <FontAwesomeIcon icon={faUser} />{' '}{auth!.who.userName}
-              </Nav.Link>
-            }
-
-          </Nav>
+            </Nav>
 
           </Offcanvas.Body>
-      </Navbar.Offcanvas>
-    </Container>
+        </Navbar.Offcanvas>
+      </Container>
     </Navbar >
   );
 }
@@ -193,9 +200,9 @@ const mapStateToProps = (store: IAppState, ownProps: IOwnProps) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<TopActions>) => {
-	return {
-		toggleMode: () => dispatch<any>(toggleMode())
-	}
+  return {
+    toggleMode: () => dispatch<any>(toggleMode())
+  }
 };
 
 

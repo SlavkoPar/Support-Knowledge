@@ -46,16 +46,15 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	}, 100)
 
 	console.log('RENDERUJEM Categories ----------->>>>>>>>>>')
-	// if (showQuestionForm)
-	// 	closeQuestionForm();
+	
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
 	
 	return (
 		<>
 			<Container fluid>
-				<Row className={`${darkMode ? "dark" : ""}`}>
-					<Col md={open ? 6 : 12} lg={open ? 6 : 12}>
+				<Row className={`${darkMode ? "dark" : "light"}`}>
+					<Col md={7}>
 						<div style={{ border: '0px solid silver' }}>
 							<AutoSuggest
 								categories={categories}
@@ -70,8 +69,8 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							}
 						</div>
 					</Col>
-					<Col md={open ? 6 : 0} lg={open ? 6 : 0} >
-						<div className={`${darkMode ? "dark" : ""}`}>
+					<Col md={5}>
+						<div className={`${darkMode ? "dark" : "light"}`}>
 							{categories && showCategoryForm && category &&
 								<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5] }}>
 									<h4 style={{ marginTop: 0}}>Category</h4>

@@ -1,19 +1,32 @@
 @import "~bootstrap/scss/functions";
+
+$body-bg: rgb(248, 249, 250);
+$offcanvas-horizontal-width: 250px !default;
+
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
+
+.light {
+    .btn-link {
+         --bs-btn-color: #000;
+    }
+    ul.question-list .btn-link {
+        --bs-btn-color: #343a40;
+    }
+}
+
 .dark {
-    
+
     $enable-gradients: true;
 
     /* redefine theme colors for dark theme */
     $primary: #012345;
     $secondary: #111111;
     $success: #222222;
-    $dark: #000;
-    
-    $theme-colors: (
-        "primary": $primary,
+    $dark: #263C5C;
+
+    $theme-colors: ("primary": $primary,
         "secondary": $secondary,
         "success": $success,
         "danger": $danger,
@@ -23,37 +36,53 @@
     );
 
     /* redefine theme color variables */
-    @each $color, $value in $theme-colors {
+    @each $color,
+    $value in $theme-colors {
         --#{$variable-prefix}#{$color}: #{$value};
     }
-    
+
     $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
-    
-    @each $color, $value in $theme-colors-rgb {
+
+    @each $color,
+    $value in $theme-colors-rgb {
         --#{$variable-prefix}#{$color}-rgb: #{$value};
     }
 
     $body-color: #eeeeee;
     $body-bg: #263C5C;
-    
+
     --#{$variable-prefix}body-color: #{$body-color};
     --#{$variable-prefix}body-bg: #{$body-bg};
 
     --#{$variable-prefix}modal-color: #{$body-color};
     --#{$variable-prefix}modal-bg: #{$body-bg};
 
+    .list-group-item-dark {
+        color: #eeeeee;
+        background-color: #263C5C;
+    }
+
     .btn-dark {
-        --#{$variable-prefix}btn-color: #{$body-color};
-        --#{$variable-prefix}btn-bg: #{$body-bg};
+        --bs-btn-color: #eeeeee;
+        --bs-btn-bg: #263C5C;
     }
 
     .modal-content {
-        background-color: #000;
+        background-color: #263C5C;
         color: #fff;
-      }
-      
-    @import "~bootstrap/scss/bootstrap";
+    }
+
+    .btn-link {
+        --bs-btn-color: orange;
+    }
+
+    ul.question-list .btn-link {
+        --bs-btn-color: #eee;
+    }
 }
+
+
+@import "~bootstrap/scss/bootstrap";
 
 /* this is generated
 .dark {
