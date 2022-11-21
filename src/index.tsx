@@ -22,11 +22,11 @@ import './App.css';
 //import './dashboard.css';
 
 //import './formik/formikStyles.css';
-import { getAllUsers, storeUser } from './user/actions';
+import { getAllUsers, storeUser } from './Users/actions';
 import { authenticate } from './Top/actions'
 import { getAllTags } from './roleTags/actions';
 import { loadTop } from './Top/actions';
-import { IUser } from './user/types';
+import { IUser } from './Users/types';
 import App from './App';
 //import { coolColors } from './cool-colors';
 import { IQuestion } from './Categories/types';

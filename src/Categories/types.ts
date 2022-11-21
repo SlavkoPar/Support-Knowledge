@@ -1,6 +1,6 @@
 import { IAnswer } from '../Answers/types'
 import { IOption } from '../common/types';
-import { IUser } from '../user/types';
+import { IUser } from '../Users/types';
 import { IAuth } from "../Top/types";
 
 // Define the Question type

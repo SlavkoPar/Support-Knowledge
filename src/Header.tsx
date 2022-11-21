@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion, faHome, faPlus, faSurprise, faUserFriends, faSignOutAlt, faSignInAlt, faAnchor } from '@fortawesome/free-solid-svg-icons'
 import { faAngleDoubleLeft, faAngleDoubleRight, faRegistered, faUser, faCog } from '@fortawesome/free-solid-svg-icons';
 import { Button, Col, Collapse, Container, Form, FormControl, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
-import { IUser } from "./user/types";
+import { IUser } from "./Users/types";
 import { IAuth } from "./Top/types";
 
 

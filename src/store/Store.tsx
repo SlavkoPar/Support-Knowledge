@@ -6,8 +6,8 @@ import { answerReducer } from '../Answers/reducer';
 
 import { IAnswerState } from '../Answers/types';
 import { ICategoriesState } from '../Categories/types';
-import { IUsersState } from '../user/types';
-import { userReducer } from '../user/reducer';
+import { IUsersState } from '../Users/types';
+import { userReducer } from '../Users/reducer';
 import { ITagState } from '../roleTags/types';
 import { tagReducer } from '../roleTags/reducer';
 import { ITopState } from '../Top/types';

@@ -80,7 +80,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 							<FontAwesomeIcon icon={faEdit} color='lightblue' />
 						</Button>
 					}
-					{hoverProps.isHovered && categories.length === 0 &&
+					{hoverProps.isHovered && questions.length === 0 &&
 						<Button
 							size="sm"
 							className="py-0 px-1"
@@ -96,7 +96,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 
 			{isExpanded &&
 				<ListGroup.Item className="py-0" variant={variant}>
-					<ListGroup as="ul" variant={variant} className="question-list">
+					<ListGroup as="ul" variant={variant} className="inner-list">
 						{questions.map(question =>
 							<QuestionRow
 								key={question.questionId}

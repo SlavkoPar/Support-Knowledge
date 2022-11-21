@@ -1,6 +1,6 @@
 // Define the Top State
 
-import { IUser, IUserJson } from "../user/types";
+import { IUser, IUserJson } from "../Users/types";
 
 // -----
 // Auth

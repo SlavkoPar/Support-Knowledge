@@ -14,7 +14,7 @@ import Support from './components/Support';
 import AnswersPage from './Answers/containers/Page'
 import containers from './Categories/containers/ContainerCategoriesPage'
 
-import UsersPage from './user/containers/UsersPage';
+import UsersPage from './Users/containers/UsersPage';
 import { authenticate, unAuthenticate, TopActions, navbarToggle } from './Top/actions';
 import LoginForm from './Top/containers/LoginForm';
 import Landing from './components/Landing';

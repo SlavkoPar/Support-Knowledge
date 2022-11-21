@@ -5,8 +5,8 @@ import { ThunkAction } from 'redux-thunk';
 import { ILogin, ITop, ITopJson, ITopState } from './types';
 
 import { IAppState } from '../store/Store';
-import { IUser, RoleId, IUsersState } from '../user/types';
-import { findUser, getUser, storeUser } from '../user/actions';
+import { IUser, RoleId, IUsersState } from '../Users/types';
+import { findUser, getUser, storeUser } from '../Users/actions';
 import { ThemeContext } from '../ThemeContext';
 import { useContext } from 'react';
 

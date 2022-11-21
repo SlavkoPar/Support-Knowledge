@@ -5,8 +5,6 @@ import { IQuestionFormProps } from '../types';
 
 import QuestionAnswers from './QuestionAnswers'
 import { Select } from '../../common/Select';
-import { COLORS } from '../../formik/theme';
-//import { MultiSelect } from '../../common/MultiSelect';
 import UserName from '../../common/containers/UserName';
 //import { number } from 'yup/lib/locale';
 import { ThemeContext } from "../../ThemeContext";
@@ -65,24 +63,11 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         {isEdit() &&
           <Form.Group controlId="questionId">
             <Form.Label htmlFor="questionId">QuestionId: </Form.Label>
-            {/* <input
-          id="questionId"
-          name="questionId"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.questionId}
-          disabled
-          style={{ width: '50px' }}
-        />
-        {formik.touched.questionId && formik.errors.questionId ? (
-          <div>{formik.errors.questionId}</div>
-        ) : null} */}
             <span> {formik.values.questionId}</span>
           </Form.Group>}
 
-        <Form.Group controlId="categoryId">
-          <Form.Label>Category</Form.Label>
+          <Form.Group controlId="categoryId">
+            <Form.Label>Category</Form.Label>
           <Select
             id="categoryId"
             name="categoryId"
@@ -188,73 +173,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           <span>{formik.values.created.toLocaleDateString()}</span>
         </Form.Group>
 
-        {/* <Select
-          id="createdBy"
-          name="createdBy"
-          options={props.userOptions}
-          //onChange={formik.handleChange}
-          onChange={(e, value) => {
-            formik.setFieldValue("createdBy", value);
-            if (isEdit()) formik.submitForm();
-          }}
-          value={formik.values.createdBy}
-        // onChange={(gradeId: number) =>
-        // 	dispatch({
-        // 		type: StudentActionTypes.STUDENT_ASSIGN_GRADE,
-        // 		studentGradeIds: {
-        // 			studentId: student!.id,
-        // 			gradeId: gradeId,
-        // 			gradeName: gradesAll[gradeId].name
-        // 		}
-        // 	})
-        // }
-        /> */}
-
-        {/* 
-      <label htmlFor="answers">Answers</label>
-      <input
-        id="answers"
-        name="answers"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.answers}
-      />
-      {formik.touched.answers && formik.errors.answers ? (
-        <div>{formik.errors.answers}</div>
-      ) : null}
-
-
-
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.email}
-      />
-      {formik.touched.email && formik.errors.email ? (
-        <div>{formik.errors.email}</div>
-      ) : null} */}
-
-        {/* <button type="submit">Submit</button> */}
-
-        {/* <label htmlFor="features">Features</label>
-        <MultiSelect
-          id="features"
-          name="features"
-          label="Select features..."
-          options={props.featureOptions}
-          onChange={()=>{}} 
-          value={[]}
-          // onChange={(e, value) => {
-          //   formik.setFieldValue("status", value)
-          //   if (isEdit()) formik.submitForm();
-          // }}
-          // value={formik.values.status}
-        /> */}
+       
 
         {!isEdit() &&
           <div className="buttons">
@@ -281,19 +200,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
       </Form>
 
 
-      {/* <input
-        id="created"
-        name="text"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.created.toLocaleDateString()}
-        disabled={true}
-      />
-      {formik.touched.created && formik.errors.created ? (
-        <div>{formik.errors.created}</div>
-      ) : null} */}
-
+     
     </>
   );
 };

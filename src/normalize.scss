@@ -11,7 +11,7 @@ $offcanvas-horizontal-width: 250px !default;
     .btn-link {
          --bs-btn-color: #000;
     }
-    ul.question-list .btn-link {
+    ul.inner-list .btn-link {
         --bs-btn-color: #343a40;
     }
 }
@@ -76,7 +76,7 @@ $offcanvas-horizontal-width: 250px !default;
         --bs-btn-color: orange;
     }
 
-    ul.question-list .btn-link {
+    ul.inner-list .btn-link {
         --bs-btn-color: #eee;
     }
 }
