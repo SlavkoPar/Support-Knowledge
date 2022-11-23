@@ -8,6 +8,7 @@ import { faWindowClose, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { IUser } from '../types';
 import { Button, ListGroup } from 'react-bootstrap';
 import { ThemeContext } from '../../ThemeContext';
+import { userReducer } from '../reducer';
 
 
 interface IRowProps {
@@ -22,13 +23,17 @@ const UserRow: React.FC<IRowProps> = (props: IRowProps) => {
 	const [hoverRef, hoverProps] = useHover();
 
 	const { user, onSelectUser, edit, remove } = props;
-	const { roleId: roleId, userId } = user;
+	const { roleId, userId, userName } = user;
 
 	const theme = React.useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
 
 	return (
-		<ListGroup.Item className="py-0" variant={variant}>
+		<ListGroup.Item
+			as="li"
+			className="py-0"
+			variant={variant}
+		>
 			<div ref={hoverRef} className="d-flex justify-content-start align-items-center">
 				<Button
 					style={{ fontSize: '13px' }}
@@ -36,7 +41,7 @@ const UserRow: React.FC<IRowProps> = (props: IRowProps) => {
 					size="sm"
 					className="py-0 px-1 text-decoration-none"
 					onClick={() => onSelectUser(userId)}>
-					{user.userName}
+					{userName}
 				</Button>
 				{hoverProps.isHovered &&
 					<>

@@ -36,12 +36,6 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
       text: Yup.string()
         .max(150, 'Must be 150 characters or less')
         .required('Required'),
-      /*answers: Yup.string()
-        .max(20, 'Must be 20 characters or less')
-        .required('Required'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('Required'),*/
       categoryId: Yup.number()
         .moreThan(0, 'Select Category')
         .required('Required')
@@ -57,151 +51,144 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
   console.log('RENDERING', formik.values)
   return (
-    <>
-
-      <Form onSubmit={formik.handleSubmit}>
-        {isEdit() &&
-          <Form.Group controlId="questionId">
-            <Form.Label htmlFor="questionId">QuestionId: </Form.Label>
-            <span> {formik.values.questionId}</span>
-          </Form.Group>}
-
-          <Form.Group controlId="categoryId">
-            <Form.Label>Category</Form.Label>
-          <Select
-            id="categoryId"
-            name="categoryId"
-            options={props.categoryOptions}
-            //onChange={formik.handleChange}
-            onChange={(e, value) => {
-              formik.setFieldValue("categoryId", value);
-              if (isEdit()) formik.submitForm();
-            }}
-            value={formik.values.categoryId}
-          />
-          <Form.Text className="text-danger">
-            {formik.touched.categoryId && formik.errors.categoryId ? (
-              <div className="text-danger">{formik.errors.categoryId}</div>
-            ) : null}
-          </Form.Text>
+    <Form onSubmit={formik.handleSubmit}>
+      {isEdit() &&
+        <Form.Group controlId="questionId">
+          <Form.Label htmlFor="questionId">QuestionId: </Form.Label>
+          <span> {formik.values.questionId}</span>
         </Form.Group>
+      }
 
-        <Form.Group controlId="text">
-          <Form.Label>Text</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="text"
-            onChange={formik.handleChange}
-            //onBlur={formik.handleBlur}
-            onBlur={(e: React.FocusEvent<HTMLTextAreaElement>): void => {
-              if (isEdit() && formik.initialValues.text !== formik.values.text)
-                formik.submitForm();
-            }}
-            value={formik.values.text}
-            style={{ width: '100%' }}
-            rows={2}
-          />
-          <Form.Text className="text-danger">
-            {formik.touched.text && formik.errors.text ? (
-              <div className="text-danger">{formik.errors.text}</div>
-            ) : null}
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group controlId="source">
-          <Form.Label>Source</Form.Label>
-          <Select
-            id="source"
-            name="source"
-            options={sourceOptions}
-            // onChange={formik.handleChange}
-            onChange={(e, value) => {
-              formik.setFieldValue("source", value)
-              if (isEdit()) formik.submitForm();
-            }}
-            value={formik.values.source}
-          />
-          <Form.Text className="text-danger">
-            {formik.touched.source && formik.errors.source ? (
-              <div className="text-danger">{formik.errors.source}</div>
-            ) : null}
-          </Form.Text>
-        </Form.Group>
-
-        <br />
-        <QuestionAnswers
-          question={question}
-          questionAnswers={props.questionAnswers}
-          answers={props.answers}
-          canEdit={props.canEdit}
-          formMode={props.formMode}
-          selectQuestionAnswer={props.selectQuestionAnswer}
-          copyQuestionAnswer={props.copyQuestionAnswer}
-          removeQuestionAnswer={props.removeQuestionAnswer}
-          assignQuestionAnswer={props.assignQuestionAnswer}
-          setIsDetail={props.setIsDetail}
+      <Form.Group controlId="categoryId">
+        <Form.Label>Category</Form.Label>
+        <Select
+          id="categoryId"
+          name="categoryId"
+          options={props.categoryOptions}
+          //onChange={formik.handleChange}
+          onChange={(e, value) => {
+            formik.setFieldValue("categoryId", value);
+            if (isEdit()) formik.submitForm();
+          }}
+          value={formik.values.categoryId}
         />
-        <br />
+        <Form.Text className="text-danger">
+          {formik.touched.categoryId && formik.errors.categoryId ? (
+            <div className="text-danger">{formik.errors.categoryId}</div>
+          ) : null}
+        </Form.Text>
+      </Form.Group>
 
-        <Form.Group controlId="status">
-          <Form.Label>Status</Form.Label>
-          <Select
-            id="status"
-            name="status"
-            options={statusOptions}
-            //onChange={formik.handleChange}
-            onChange={(e, value) => {
-              formik.setFieldValue("status", value)
-              if (isEdit()) formik.submitForm();
-            }}
-            value={formik.values.status}
-          />
-          <Form.Text className="text-danger">
-            {formik.touched.status && formik.errors.status ? (
-              <div className="text-danger">{formik.errors.status}</div>
-            ) : null}
-          </Form.Text>
-        </Form.Group>
+      <Form.Group controlId="text">
+        <Form.Label>Text</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="text"
+          onChange={formik.handleChange}
+          //onBlur={formik.handleBlur}
+          onBlur={(e: React.FocusEvent<HTMLTextAreaElement>): void => {
+            if (isEdit() && formik.initialValues.text !== formik.values.text)
+              formik.submitForm();
+          }}
+          value={formik.values.text}
+          style={{ width: '100%' }}
+          rows={2}
+        />
+        <Form.Text className="text-danger">
+          {formik.touched.text && formik.errors.text ? (
+            <div className="text-danger">{formik.errors.text}</div>
+          ) : null}
+        </Form.Text>
+      </Form.Group>
 
-        <Form.Group controlId="createdBy">
-          <Form.Label>Created by:</Form.Label>
-          <UserName id={formik.values.createdBy} />
-        </Form.Group>
-        {/* <br /> */}
-        <Form.Group controlId="created">
-          <Form.Label className="id">Created:</Form.Label>
-          <span>{formik.values.created.toLocaleDateString()}</span>
-        </Form.Group>
+      <Form.Group controlId="source">
+        <Form.Label>Source</Form.Label>
+        <Select
+          id="source"
+          name="source"
+          options={sourceOptions}
+          // onChange={formik.handleChange}
+          onChange={(e, value) => {
+            formik.setFieldValue("source", value)
+            if (isEdit()) formik.submitForm();
+          }}
+          value={formik.values.source}
+        />
+        <Form.Text className="text-danger">
+          {formik.touched.source && formik.errors.source ? (
+            <div className="text-danger">{formik.errors.source}</div>
+          ) : null}
+        </Form.Text>
+      </Form.Group>
 
-       
+      <br />
+      <QuestionAnswers
+        question={question}
+        questionAnswers={props.questionAnswers}
+        answers={props.answers}
+        canEdit={props.canEdit}
+        formMode={props.formMode}
+        selectQuestionAnswer={props.selectQuestionAnswer}
+        copyQuestionAnswer={props.copyQuestionAnswer}
+        removeQuestionAnswer={props.removeQuestionAnswer}
+        assignQuestionAnswer={props.assignQuestionAnswer}
+        setIsDetail={props.setIsDetail}
+      />
+      <br />
 
-        {!isEdit() &&
-          <div className="buttons">
-            {props.canEdit &&
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => {
-                  props.cancel();
-                  props.handleClose()
-                }}>
-                Cancel
-              </Button>}
-            {props.canEdit &&
-              <Button
-                variant="primary"
-                size="sm"
-                type="submit"
-              >
-                Save
-              </Button>}
-          </div>
-        }
-      </Form>
+      <Form.Group controlId="status">
+        <Form.Label>Status</Form.Label>
+        <Select
+          id="status"
+          name="status"
+          options={statusOptions}
+          //onChange={formik.handleChange}
+          onChange={(e, value) => {
+            formik.setFieldValue("status", value)
+            if (isEdit()) formik.submitForm();
+          }}
+          value={formik.values.status}
+        />
+        <Form.Text className="text-danger">
+          {formik.touched.status && formik.errors.status ? (
+            <div className="text-danger">{formik.errors.status}</div>
+          ) : null}
+        </Form.Text>
+      </Form.Group>
 
+      <Form.Group controlId="createdBy">
+        <Form.Label>Created by:</Form.Label>
+        <UserName id={formik.values.createdBy} />
+      </Form.Group>
+      {/* <br /> */}
+      <Form.Group controlId="created">
+        <Form.Label className="id">Created:</Form.Label>
+        <span>{formik.values.created.toLocaleDateString()}</span>
+      </Form.Group>
 
-     
-    </>
+      {!isEdit() &&
+        <div className="buttons">
+          {props.canEdit &&
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => {
+                props.cancel();
+                props.handleClose()
+              }}>
+              Cancel
+            </Button>}
+          {props.canEdit &&
+            <Button
+              variant="primary"
+              size="sm"
+              type="submit"
+            >
+              Save
+            </Button>}
+        </div>
+      }
+    </Form>
   );
 };
 

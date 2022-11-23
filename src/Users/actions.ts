@@ -136,7 +136,7 @@ export interface ISetIsDetail {
 // Combine the action types with a union (we assume there are more)
 export type UserActions = IGetAll | IGet | IAdd | IEdit | IRemove | IStore | ICancel |
 	IAddRole | IToggleRole | IEditRole | IRemoveRole | IStoreRole |
-	ISetIsDetail | ICreateOptions;
+	ICreateOptions;
 
 const isWebStorageSupported = () => 'localStorage' in window
 

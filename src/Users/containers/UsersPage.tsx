@@ -17,11 +17,10 @@ import { UserActions,
 	editRole,
 	removeRole,
 	storeRole,
-	setIsDetail,
 	toggleRole
 } from '../actions'
 
-import UserPage from '../components/UserPage'
+import UsersPage from '../components/UsersPage'
 
 interface IProps {
 	canEdit: boolean
@@ -30,14 +29,13 @@ interface IProps {
 // Grab the users from the store and make them available on props
 const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	const { usersState,  topState} = store;
-	const { roles, user, formMode, roleIdEditing, isDetail } = usersState; 
+	const { roles, userEditing, formMode, roleIdEditing } = usersState; 
 	return {
 		roles,
-		user: user!,
+		userEditing,
 		formMode,
 		roleIdEditing,
 		canEdit: ownProps.canEdit,
-		isDetail,
 		auth: topState.top.auth
 	};
 };
@@ -54,13 +52,9 @@ const mapDispatchToProps = (dispatch: Dispatch<UserActions>) => {
 		toggleRole: (roleId: number) =>  dispatch<any>(toggleRole(roleId)),
 		editRole: (roleId: number) =>  dispatch<any>(editRole(roleId)),
 		removeRole: (roleId: number) => dispatch<any>(removeRole(roleId)),
-		storeRole: (role: IRole) => dispatch<any>(storeRole(role)),
-		
-		setIsDetail: (isDetail: boolean) => {
-			dispatch<any>(setIsDetail(isDetail))
-		}
+		storeRole: (role: IRole) => dispatch<any>(storeRole(role))
 	}
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserPage);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersPage);

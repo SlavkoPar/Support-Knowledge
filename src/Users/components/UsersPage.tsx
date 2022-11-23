@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { useRef } from 'react'
 import { Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -23,8 +23,8 @@ type SupportParams = {
 
 const UserPage: React.FC<IRolesProps> = (props: IRolesProps) => {
 
-	let { tekst } = useParams<SupportParams>();
-	const { roles, user,
+	//let { tekst } = useParams<SupportParams>();
+	const { roles, userEditing,
 		formMode, roleIdEditing,
 		onSelectUser, add, edit, remove, canEdit,
 		addRole, toggleRole, editRole, removeRole, storeRole } = props;
@@ -46,6 +46,7 @@ const UserPage: React.FC<IRolesProps> = (props: IRolesProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	const userRoles: IRole[] = roles ?? [];
+	console.log({userRoles})
 
 	return (
 		<Container fluid>
@@ -62,64 +63,69 @@ const UserPage: React.FC<IRolesProps> = (props: IRolesProps) => {
 							variant={variant}
 						>
 							{userRoles.map(role => {
-								const { roleId: roleId, title, isExpanded, users } = role;
+								const { roleId, title, isExpanded, users } = role;
 								return (
-									<>
+									<Fragment key={roleId}>
 										<ListGroup.Item
 											variant={variant}
 											className="py-0 px-1"
 											as="li"
+											key={roleId + "_1"}
 										>
-											<div key={roleId} className="d-flex justify-content-start align-items-center">
-												<div style={{ textAlign: 'start' }}>
-													{roleIdEditing === roleId &&
-														<input ref={inputEl} name="groupTitle" type="text"
-															onBlur={(e) => storeRole({ ...role, title: e.target.value })}
-															defaultValue={title}
-														/>
-													}
-													{roleIdEditing !== roleId && (
-														<RoleRow
-															userRole={role}
-															toggleRole={toggleRole}
-															editRole={editRole}
-															removeRole={removeRole}
-															add={add}
-														/>
-													)}
-												</div>
-											</div>
-										</ListGroup.Item>
-										{isExpanded &&
-											<ListGroup
-												as="ul"
-												variant={variant}
-												className="inner-list py-0"
-											>
-												{users.map(user =>
-													<UserRow
-														key={user.userId}
-														user={user}
-														onSelectUser={onSelectUser}
-														edit={edit}
-														remove={remove}
+											<div className="d-flex justify-content-start align-items-center" style={{ textAlign: 'start' }}>
+												{roleIdEditing === roleId &&
+													<input ref={inputEl} name="groupTitle" type="text"
+														onBlur={(e) => storeRole({ ...role, title: e.target.value })}
+														defaultValue={title}
+													/>
+												}
+												{roleIdEditing !== roleId && (
+													<RoleRow
+														userRole={role}
+														toggleRole={toggleRole}
+														editRole={editRole}
+														removeRole={removeRole}
+														add={add}
 													/>
 												)}
-											</ListGroup>
+											</div>
+										</ListGroup.Item>
+										{isExpanded && role.users.length > 0 &&
+											<ListGroup.Item
+												variant={variant}
+												className="py-0 px-1"
+												as="li"
+												key={roleId + "_2"}
+											>
+												<ListGroup
+													as="ul"
+													variant={variant}
+													className="inner-list py-0 ms-5"
+												>
+													{users.map(user =>
+														<UserRow
+															key={user.userId}
+															user={user}
+															onSelectUser={onSelectUser}
+															edit={edit}
+															remove={remove}
+														/>
+													)}
+												</ListGroup>
+											</ListGroup.Item>
 										}
-									</>
+									</Fragment>
 								);
 							})}
 						</ListGroup>
-
 					</div>
 				</Col>
 				<Col md={5}>
 					<div className={`${darkMode ? "dark" : "light"}`}>
-						{userRoles && user &&
+						{userRoles && userEditing &&
 							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
 								<h4 style={{ marginTop: 0, color: 'white' }}>User</h4>
-								<UserForm canEdit={formMode === 'display' ? false: canEdit} />
+								<UserForm canEdit={formMode === 'display' ? false : canEdit} />
 							</div>
 						}
 					</div>

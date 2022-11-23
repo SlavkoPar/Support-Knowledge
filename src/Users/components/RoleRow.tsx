@@ -29,50 +29,43 @@ const RoleRow: React.FC<IUserRowProps> = (props: IUserRowProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	return (
-		<ListGroup.Item
-			variant={variant}
-			className="py-0 px-1"
-			as="li"
-		>
-
-			<div ref={hoverRef} key={roleId}>
-				<button
-					className="button-edit"
-					title="Expand"
-					onClick={() => toggleRole(roleId)}
-					style={{ marginLeft: '5px' }}
-				>
-					<FontAwesomeIcon icon={isExpanded ? faCaretDown : faCaretRight} color={color} size='lg' />
+		<div ref={hoverRef}>
+			<button
+				className="button-edit"
+				title="Expand"
+				onClick={() => toggleRole(roleId)}
+				style={{ marginLeft: '5px' }}
+			>
+				<FontAwesomeIcon icon={isExpanded ? faCaretDown : faCaretRight} color={color} size='lg' />
+			</button>
+			<Button
+				variant='link'
+				size="sm"
+				className="py-0 mx-1 text-decoration-none"
+			>
+				{title}
+			</Button>
+			<Button
+				variant={variant}
+				size="lg"
+				className="py-0 px-1"
+				style={{ backgroundColor: 'transparent', borderWidth: '0' }}
+				title="Add a new User"
+				onClick={() => add(roleId, '')}
+			>
+				<FontAwesomeIcon icon={faPlus} size='xs' color='orange' />
+			</Button>
+			{hoverProps.isHovered &&
+				<button className="button-edit" title="Edit Section" onClick={() => editRole(roleId)}>
+					<FontAwesomeIcon icon={faEdit} color='lightblue' />
 				</button>
-				<Button
-					variant='link'
-					size="sm"
-					className="py-0 mx-1 text-decoration-none"
-				>
-					{title}
-				</Button>
-				<Button
-					variant={variant}
-					size="lg"
-					className="py-0 px-1"
-					style={{ backgroundColor: 'transparent', borderWidth: '0' }}
-					title="Add a new User"
-					onClick={() => add(roleId, '')}
-				>
-					<FontAwesomeIcon icon={faPlus} size='xs' color='orange' />
-				</Button>
-				{hoverProps.isHovered &&
-					<button className="button-edit" title="Edit Section" onClick={() => editRole(roleId)}>
-						<FontAwesomeIcon icon={faEdit} color='lightblue' />
-					</button>
-				}
-				{hoverProps.isHovered && users.length === 0 &&
-					<button className="button-remove" title="Remove Section" onClick={() => removeRole(roleId)}>
-						<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
-					</button>
-				}
-			</div>
-		</ListGroup.Item>
+			}
+			{hoverProps.isHovered && users.length === 0 &&
+				<button className="button-remove" title="Remove Section" onClick={() => removeRole(roleId)}>
+					<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
+				</button>
+			}
+		</div>
 	)
 }
 

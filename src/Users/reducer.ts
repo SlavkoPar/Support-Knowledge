@@ -17,7 +17,7 @@ export const initialUser: IUser = {
 	pwd: '',
 	department: 'neki',
 	createdBy: 0,
-	created: new Date()
+	created: new Date(),
 };
 
 export const initialUserRole: IRole = {
@@ -34,14 +34,14 @@ export const initialUserRole: IRole = {
 // Define the initial state
 export const initialUsersState: IUsersState = {
 	roles: [],
-	user: undefined,
+	userEditing: undefined,
 	allUsers: [],
 	roleOptions: [],
 	userOptions: [],
 	loading: false,
 	formMode: 'display',
 	roleIdEditing: -1,
-	isDetail: false
+	ownerUserId: 101
 };
 
 
@@ -116,7 +116,7 @@ const myReducer: Reducer<IUsersState, UserActions> = (
 			}
 			return {
 				...state,
-				user
+				userEditing: user
 			};
 		}
 
@@ -130,7 +130,7 @@ const myReducer: Reducer<IUsersState, UserActions> = (
 			return {
 				...state,
 				formMode: 'add',
-				user: { 
+				userEditing: { 
 					...initialUser, 
 					createdBy: action.createdBy,
 					roleId: action.roleId, 
@@ -147,7 +147,7 @@ const myReducer: Reducer<IUsersState, UserActions> = (
 			return {
 				...state,
 				formMode: 'edit',
-				user
+				userEditing: user
 			};
 		}
 
@@ -222,6 +222,7 @@ const myReducer: Reducer<IUsersState, UserActions> = (
 			return {
 				...state,
 				formMode: 'display',
+				userEdited: undefined
 			};
 		}
 
@@ -229,20 +230,13 @@ const myReducer: Reducer<IUsersState, UserActions> = (
 			return {
 				...state,
 				formMode: 'display',
-				user: undefined,
+				userEdited: undefined,
 				roles: state.roles.map(g => g.roleId !== action.roleId ?
 					{ ...g, users: [...g.users] }
 					:
 					{ ...g, users: g.users.filter(q => q.userId !== action.userId) }
 				)
 			};
-		}
-
-		case UserActionTypes.SET_IS_DETAIL: {
-			return {
-				...state,
-				isDetail: action.isDetail
-			}
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////

@@ -32,7 +32,6 @@ const Page: React.FC<IProps> = (props: IProps) => {
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
 
-
 	// slug = ''
 	const { answers, answer, usedAnswers, formMode, add, edit, remove, cancel, saveForm } = props;
 	return (

@@ -10,32 +10,27 @@ import UserName from '../../common/containers/UserName';
 import { Button, Container, Row, Form } from "react-bootstrap";
 import { ThemeContext } from '../../ThemeContext';
 
-
 const UsrForm: React.FC<IFormProps> = (props: IFormProps) => {
+  const { userEditing } = props;
+  const { roleId, userId, userName, pwd, department, createdBy, created } = userEditing!;
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      roleId: props.user.roleId,
-      userId: props.user.userId,
-      userName: props.user.userName,
-      pwd: props.user.pwd,
-      department: props.user.department,
-      createdBy: props.user.createdBy,
-      created: props.user.created
+      roleId,
+      userId,
+      userName,
+      pwd,
+      department,
+      createdBy,
+      created
     },
     validationSchema: Yup.object({
-      name: Yup.string()
-        .max(150, 'Must be 150 characters or less')
-        .required('Required'),
-      /*answers: Yup.string()
-        .max(20, 'Must be 20 characters or less')
-        .required('Required'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('Required'),*/
+      userName: Yup.string()
+        .max(64, 'Must be 64 characters or less')
+        .required('Required'),    
     }),
     onSubmit: values => {
-      //alert(JSON.stringify(values, null, 2));
+      alert(JSON.stringify(values, null, 2));
       props.saveForm(values, props.formMode)
     }
   });
@@ -45,12 +40,10 @@ const UsrForm: React.FC<IFormProps> = (props: IFormProps) => {
   console.log('RENDERING user', formik.values)
 
   return (
-    <>
       <Form onSubmit={formik.handleSubmit}>
 
         <Form.Group controlId="userId">
-          <Form.Label htmlFor="userId">UserId: </Form.Label>
-          <span id="userId">{formik.values.userId}</span>
+          <Form.Label>UserId:</Form.Label><span id="userId">{' '}{formik.values.userId}</span>
         </Form.Group>
 
         <Form.Group controlId="categoryId">
@@ -90,18 +83,7 @@ const UsrForm: React.FC<IFormProps> = (props: IFormProps) => {
           </Form.Text>
         </Form.Group>
 
-
         {/* <button type="submit">Submit</button> */}
-
-        {!isEdit() &&
-          <div className="buttons">
-            {props.canEdit &&
-              <button onClick={() => props.cancel()}>Cancel</button>}
-            {props.canEdit &&
-              <button type="submit">Save</button>}
-          </div>
-        }
-
         <Form.Group controlId="createdBy">
           <Form.Label>Created by:</Form.Label>
           <UserName id={formik.values.createdBy} />
@@ -112,14 +94,33 @@ const UsrForm: React.FC<IFormProps> = (props: IFormProps) => {
           <Form.Label className="id">Created:</Form.Label>
           <span>{formik.values.created.toLocaleDateString()}</span>
         </Form.Group>
-      </Form>
 
-    </>
+        {!isEdit() &&
+          <div className="buttons">
+            {props.canEdit &&
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => {
+                  props.cancel();
+                  // props.handleClose()
+                }}>
+                Cancel
+              </Button>}
+            {props.canEdit &&
+              <Button
+                variant="primary"
+                size="sm"
+                type="submit"
+              >
+                Save
+              </Button>}
+          </div>
+        }
+      </Form>
   );
 };
 
-
-const color = 'blue';
 
 export const UserForm: React.FC<IFormProps> = (props: IFormProps) => {
   const theme = useContext(ThemeContext);

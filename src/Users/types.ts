@@ -28,14 +28,14 @@ export interface IRole {
 // Define the User State
 export interface IUsersState {
 	readonly roles: IRole[];
-	readonly user: IUser | undefined;
+	readonly userEditing: IUser | undefined;
 	allUsers: IUser[],
 	roleOptions: IOption<number>[];
 	userOptions: IOption<number>[];
 	loading: boolean,
 	formMode: string;
 	roleIdEditing: number;
-	isDetail: boolean
+	ownerUserId: number;
 }
 
 
@@ -46,8 +46,7 @@ export interface IRoleJson extends Omit<IRole, 'created' | 'users'> {
 
 export interface IRolesProps {
 	roles: IRole[];
-	//groupOptions: IOption<number>[],
-	user?: IUser;
+	userEditing: IUser | undefined;
 	formMode: string,
 	roleIdEditing: number,
 	canEdit: boolean,
@@ -61,12 +60,10 @@ export interface IRolesProps {
 	editRole: (roleId: number) => void;
 	removeRole: (removeId: number) => void;
 	storeRole: (role: IRole) => void;
-	isDetail: boolean;
-	setIsDetail: (isDetail: boolean) => void;
 }
 
 export interface IFormProps {
-	user: IUser;
+	userEditing: IUser | undefined;
 	formMode: string;
 	canEdit: boolean,
 	cancel: () => void;

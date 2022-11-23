@@ -39,7 +39,6 @@ interface IProps {
 	store: Store<IAppState>;
 }
 
-// coolColors();
 
 // Generate the store
 //localStorage.clear(); // !!!!!!!!!!!!
@@ -110,7 +109,6 @@ window.addEventListener("PassToBackground", function (evt: any) {
 }, false);
 
 
-const userIdOwner = 101;
 const state = store.getState();
 
 ReactDOM.render(

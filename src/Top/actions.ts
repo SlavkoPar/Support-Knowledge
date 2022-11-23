@@ -165,7 +165,7 @@ export const register: ActionCreator<
 					else {
 						const user: IUser = {
 							roleId:  usersState.allUsers.length === 0 ? RoleId.OWNER : RoleId.VIEWERS,
-							userId: -1,
+							userId: usersState.ownerUserId, // owner userId would be 101
 							userName: loginUser.userName,
 							pwd: loginUser.pwd,
 							department: "dept1",
