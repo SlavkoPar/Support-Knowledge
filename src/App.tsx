@@ -102,9 +102,9 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	// );
 
 	return (
-		<div className="App">
+		<Container fluid className="App">
 			{app}
-		</div>
+		</Container>
 	);
 }
 

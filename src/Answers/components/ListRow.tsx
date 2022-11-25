@@ -9,12 +9,13 @@ import { IQuestionAnswer } from '../../Categories/types';
 interface IProps {
 	answer: IAnswer,
 	usedAnswers: IQuestionAnswer[],
+	getCategoryQuestion: (categoryId: number, questionId: number) => string,
 	edit: (answerId: number) => void;
 	remove: (answerId: number) => void;
 }
 
 export const ListRow: React.FC<IProps> = (props: IProps) => {
-	const { answer, usedAnswers, edit, remove } = props;
+	const { answer, usedAnswers, getCategoryQuestion, edit, remove } = props;
 	return (
 		<tr key={answer.answerId} >
 			<td>
@@ -28,19 +29,25 @@ export const ListRow: React.FC<IProps> = (props: IProps) => {
 					className="button-edit"
 					title="Add a new Answer"
 					onClick={() => edit(answer.answerId)}>
-						<FontAwesomeIcon icon={faEdit} color='lightblue' />
+					<FontAwesomeIcon icon={faEdit} color='lightblue' />
 				</button>
 			</td>
 			<td>
-				<button 
-					disabled={usedAnswers.map(a=>a.answerId).includes(answer.answerId)}
+				<button
 					className="button-remove"
 					title="Remove Answer"
-					onClick={() => remove(answer.answerId)}>
-						<FontAwesomeIcon icon={faWindowClose}  color='lightblue' />
+					onClick={() => {
+						const qa = usedAnswers.find(a => a.answerId === answer.answerId);
+						if (qa)
+							alert(`Answer is assigned to the question: \n"${getCategoryQuestion(qa.categoryId!, qa.questionId!)}". \nFirst unassign answer from question!`)
+						else
+							remove(answer.answerId)
+					}
+					}>
+					<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
 				</button>
 			</td>
 		</tr>
 	);
-  }
+}
 

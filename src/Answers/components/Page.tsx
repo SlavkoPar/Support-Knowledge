@@ -7,13 +7,14 @@ import { AnswerForm } from './Form'
 import List from './List';
 import { COLORS } from '../../formik/theme';
 import { IQuestionAnswer } from '../../Categories/types';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 const color = 'blue';
 
 interface IProps {
 	answers: IAnswer[],
 	answer: IAnswer,
 	usedAnswers: IQuestionAnswer[],
-
+	getCategoryQuestion: (categoryId: number, questionId: number) => string,
 	formMode: string,
 	add: () => void;
 	edit: (answerId: number) => void;
@@ -24,7 +25,7 @@ interface IProps {
 
 type MyParams = {
 	slug: string;
-  };
+};
 
 const Page: React.FC<IProps> = (props: IProps) => {
 	let { slug } = useParams<MyParams>();
@@ -33,36 +34,37 @@ const Page: React.FC<IProps> = (props: IProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	// slug = ''
-	const { answers, answer, usedAnswers, formMode, add, edit, remove, cancel, saveForm } = props;
+	const { answers, answer, usedAnswers, getCategoryQuestion, formMode, add, edit, remove, cancel, saveForm } = props;
 	return (
-		<div className={`${darkMode ? "dark" : ""}`}>
-			{slug}
-			{ answers.length === 0 && 
-				<div>
-					No answers at all
-				</div>
-			}
-			{ answers.length > 0 && 
-				<div className="two-columns">
-					<div className="a">
-						<List answers={answers} usedAnswers={usedAnswers} edit={edit} remove={remove} />
-						<button onClick={() => add()}>Add new</button>
-					</div>
-					<div className="b">
-						{formMode === 'add' &&
-							<div style={{border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5]}}>
-								<h4 style={{marginTop: 0, color: 'white'}}>New Answer</h4>
-								<AnswerForm 
-									answer={answer}
-									formMode={formMode}
-									cancel={cancel}
-									saveForm={(answer: IAnswer) => saveForm(answer, formMode)} 
-									/>
+		<Container fluid>
+			<Row className={`${darkMode ? "dark" : "light"}`}>
+				<Col md={7}>
+					<div className={`${darkMode ? "dark" : ""}`}>
+						<Button variant="primary" onClick={() => add()} className="mb-1">Add new</Button>
+						{answers.length === 0 ? (
+							<div>
+								{'No answers at all  '}
 							</div>
-						}
-						{formMode === 'edit' &&
-							<div style={{border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px', background: COLORS[color][5]}}>
-								<h4 style={{marginTop: 0, color: 'white'}}>Edit Answer</h4>
+						)
+						: (
+							<div>
+								<List
+									answers={answers}
+									usedAnswers={usedAnswers}
+									getCategoryQuestion={getCategoryQuestion}
+									edit={edit}
+									remove={remove} />
+							</div>
+						)}
+					</div>
+				</Col>
+				<Col md={5}>
+					<div className={`${darkMode ? "dark" : "light"}`}>
+						{answer &&
+							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
+								<h4>
+									{formMode === 'add' ? 'New Answer' : 'Answer'}
+								</h4>
 								<AnswerForm
 									answer={answer}
 									formMode={formMode}
@@ -70,15 +72,14 @@ const Page: React.FC<IProps> = (props: IProps) => {
 									saveForm={(answer: IAnswer) => saveForm(answer, formMode)}
 								/>
 							</div>
-						}					
+						}
 					</div>
-				</div>
-		
-			}
 
-		</div>
+				</Col>
+			</Row>
+		</Container>
 	);
-  }
+}
 
 export default Page
 

@@ -54,7 +54,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
     <Form onSubmit={formik.handleSubmit}>
       {isEdit() &&
         <Form.Group controlId="questionId">
-          <Form.Label htmlFor="questionId">QuestionId: </Form.Label>
+          <Form.Label>QuestionId: </Form.Label>
           <span> {formik.values.questionId}</span>
         </Form.Group>
       }

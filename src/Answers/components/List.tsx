@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { useContext } from 'react';
+import { Table } from 'react-bootstrap';
 import { IQuestionAnswer } from '../../Categories/types';
+import { ThemeContext } from '../../ThemeContext';
 
 import { IAnswer } from '../types';
 import { ListRow } from './ListRow';
@@ -7,14 +10,19 @@ import { ListRow } from './ListRow';
 interface IProps {
 	answers: IAnswer[],
 	usedAnswers: IQuestionAnswer[],
+	getCategoryQuestion: (categoryId: number, questionId: number) => string,
 	edit: (answerId: number) => void;
 	remove: (answerId: number) => void;
 }
 
 const List: React.FC<IProps> = (props: IProps) => {
-	const { answers, usedAnswers, edit, remove } = props;
+	const { answers, usedAnswers, getCategoryQuestion, edit, remove } = props;
+
+	const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
+
 	return (
-		<table width="100%">
+		<Table variant={variant} responsive striped bordered hover size="sm">
 			<thead>
 				<tr>
 					<th>Id</th>
@@ -29,12 +37,13 @@ const List: React.FC<IProps> = (props: IProps) => {
 						key={answer.answerId}
 						answer={answer}
 						usedAnswers={usedAnswers}
+						getCategoryQuestion={getCategoryQuestion}
 						edit={edit}
 						remove={remove}
 					/>
 				)}
 			</tbody>
-		</table>
+		</Table>
 	);
   }
 

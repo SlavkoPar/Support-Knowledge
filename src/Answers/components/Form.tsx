@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Button, Container, Form } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import { IAnswer } from '../types';
-import { COLORS } from '../../formik/theme';
-import { Select } from '../../common/Select';
-import { IOption } from '../../common/types';
 import UserName from '../../common/containers/UserName'
+import { ThemeContext } from '../../ThemeContext';
 
 interface IProps {
 	answer: IAnswer;
@@ -16,7 +15,7 @@ interface IProps {
 }
 
 
-const Form: React.FC<IProps> = (props: IProps) => {
+const AnsForm: React.FC<IProps> = (props: IProps) => {
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: {
@@ -40,148 +39,78 @@ const Form: React.FC<IProps> = (props: IProps) => {
 	console.log('RENDERING', formik.values)
 
 	return (
-		<form onSubmit={formik.handleSubmit}>
-			{props.formMode !== 'add' &&
-				<>
-					<label className="id" htmlFor="answerId">Answer Id: </label>
-					{/* <input
-						id="answerId"
-						name="answerId"
-						type="text"
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
-						value={formik.values.answerId}
-						disabled
-						style={{ width: '50px' }}
-					/> */}
-					<span id="answerId">{formik.values.answerId}</span>
-					{/* {formik.touched.answerId && formik.errors.answerId ? (
-						<div>{formik.errors.answerId}</div>
-					) : null} */}
-				</>
+		<Form onSubmit={formik.handleSubmit}>
+			{isEdit() &&
+				<Form.Group controlId="answerId">
+					<Form.Label>Id: </Form.Label>
+					<span> {formik.values.answerId}</span>
+				</Form.Group>
 			}
 
-			<label htmlFor="text">Answer</label>
-			<textarea
-				id="text"
-				name="text"
-				onChange={formik.handleChange}
-				onBlur={(e: React.FormEvent<HTMLTextAreaElement>): void => {
-					if (isEdit()) formik.submitForm();
-				}}
-				value={formik.values.text}
-				rows={2}
-				style={{ width: '100%' }}
-			/>
-			{formik.touched.text && formik.errors.text ? (
-				<div>{formik.errors.text}</div>
-			) : null}
 
-			<label className="id" htmlFor="createdBy">Created by:</label>
-			{/* <span>{formik.values.createdBy.toLocaleDateString()}</span> */}
-			<UserName id={formik.values.createdBy} />
-			<br/>
-			{/* <Select
-				id="createdBy"
-				name="createdBy"
-				options={props.userOptions}
-				//onChange={formik.handleChange}
-				onChange={(e, value) => {
-					formik.setFieldValue("createdBy", value)
-					if (isEdit()) formik.submitForm();
-				}}
-				value={formik.values.createdBy}
-			// onChange={(gradeId: number) =>
-			// 	dispatch({
-			// 		type: StudentActionTypes.STUDENT_ASSIGN_GRADE,
-			// 		studentGradeIds: {
-			// 			studentId: student!.id,
-			// 			gradeId: gradeId,
-			// 			gradeName: gradesAll[gradeId].name
-			// 		}
-			// 	})
-			// }
-			/> */}
+			<Form.Group controlId="text">
+				<Form.Label>Answer</Form.Label>
+				<Form.Control
+					as="textarea"
+					name="text"
+					onChange={formik.handleChange}
+					//onBlur={formik.handleBlur}
+					onBlur={(e: React.FocusEvent<HTMLTextAreaElement>): void => {
+						if (isEdit() && formik.initialValues.text !== formik.values.text)
+							formik.submitForm();
+					}}
+					value={formik.values.text}
+					style={{ width: '100%' }}
+					rows={2}
+				/>
+				<Form.Text className="text-danger">
+					{formik.touched.text && formik.errors.text ? (
+						<div className="text-danger">{formik.errors.text}</div>
+					) : null}
+				</Form.Text>
+			</Form.Group>
 
-			<label className="id" htmlFor="created">Created:</label>
-			{/* <input
-				id="created"
-				name="text"
-				type="text"
-				onChange={formik.handleChange}
-				onBlur={formik.handleBlur}
-				value={formik.values.created.toLocaleDateString()}
-				disabled={true}
-			/>
-			{formik.touched.created && formik.errors.created ? (
-				<div>{formik.errors.created}</div>
-			) : null} */}
-			<span>{formik.values.created.toLocaleDateString()}</span>
-
-			{/* 
-      <label htmlFor="answers">Answers</label>
-      <input
-        id="answers"
-        name="answers"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.answers}
-      />
-      {formik.touched.answers && formik.errors.answers ? (
-        <div>{formik.errors.answers}</div>
-      ) : null}
-
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.email}
-      />
-      {formik.touched.email && formik.errors.email ? (
-        <div>{formik.errors.email}</div>
-      ) : null} */}
+			<Form.Group controlId="createdBy">
+				<Form.Label>Created by:</Form.Label>
+				<UserName id={formik.values.createdBy} />
+			</Form.Group>
+			{/* <br /> */}
+			<Form.Group controlId="created">
+				<Form.Label className="id">Created:</Form.Label>
+				<span>{formik.values.created.toLocaleDateString()}</span>
+			</Form.Group>
 
 			{!isEdit() &&
 				<div className="buttons">
-					<button onClick={() => props.cancel()}>Cancel</button>
-					<button type="submit">Save</button>
+					<Button
+						variant="secondary"
+						size="sm"
+						onClick={() => {
+							props.cancel();
+							//props.handleClose()
+						}}>
+						Cancel
+					</Button>
+					<Button
+						variant="primary"
+						size="sm"
+						type="submit"
+					>
+						Save
+					</Button>
 				</div>
 			}
-		</form>
+		</Form>
 	);
 };
 
-const color = 'blue';
-
 export const AnswerForm: React.FC<IProps> = (props: IProps) => {
+	const theme = useContext(ThemeContext);
+	const { darkMode, variant, bg } = theme.state;
+
 	return (
-		<div style={{ height: '100%' }}>
-			<div
-				style={{
-					height: '100%',
-					background: COLORS[color][5],
-					padding: '0.1rem 0.1rem',
-				}}
-			>
-				<div
-					style={{
-						borderRadius: '4px',
-						boxShadow: '0 8px 16px rgba(0,0,0,.2)',
-						background: '#fff',
-						maxWidth: '90%',
-						margin: '0 auto',
-						padding: '0.5rem',
-					}}
-				>
-					<div>
-						<Form {...props} />
-					</div>
-				</div>
-			</div>
-		</div>
+		<Container className={`${darkMode ? "dark" : ""}`}>
+			<AnsForm {...props} />
+		</Container>
 	)
 }

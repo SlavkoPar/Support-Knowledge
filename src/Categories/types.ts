@@ -6,6 +6,8 @@ import { IAuth } from "../Top/types";
 // Define the Question type
 
 export interface IQuestionAnswer {
+	categoryId?: number;
+	questionId?: number;
 	answerId: number,
 	assignedBy: number,
 	assigned: Date,

@@ -9,14 +9,32 @@ import { AnswerActions,  addAnswer, editAnswer, removeAnswer, storeAnswer, cance
 import { IAnswer } from '../types'
 
 import Page from '../components/Page'
-import { IQuestionAnswer, ICategory } from '../../Categories/types';
+import { IQuestionAnswer, ICategory, ICategoriesState } from '../../Categories/types';
 
-const getUsedAnswers = (categories: ICategory[]) : IQuestionAnswer[]=> {
+const getUsedAnswers = (categoriesState: ICategoriesState) : IQuestionAnswer[]=> {
+	const { categories, categoryQuestions } = categoriesState;
 	let questionAnswers: IQuestionAnswer[] = [];
-	for (let category of categories)
-		for (let question of category.questions)
-		questionAnswers = questionAnswers.concat(question.answers)
+	for (let category of categories) {
+		const categoryState = categoryQuestions.get(category.categoryId)!;
+		for (let question of categoryState.questions) {
+			const arr = question.answers.map(a => ({
+				...a,
+				categoryId: category.categoryId,
+				questionId: question.questionId
+			}))
+			questionAnswers = questionAnswers.concat(arr)
+		}
+	}
 	return questionAnswers;
+}
+
+const getCategoryQuestion = (categoriesState: ICategoriesState, categoryId: number, questionId: number) : string => {
+	const { categories, categoryQuestions } = categoriesState;
+	const category = categories.find( g => g.categoryId === categoryId);
+	const categoryState = categoryQuestions.get(category!.categoryId)!;
+	const question = categoryState.questions.find(q => q.questionId === questionId);
+	return `${category!.title}/${question!.text}`;
+
 }
 
 const mapStateToProps = (store: IAppState) => {
@@ -24,7 +42,8 @@ const mapStateToProps = (store: IAppState) => {
 	answers: store.answerState.answers,
 	answer: store.answerState.answer!,
 	formMode: store.answerState.formMode,
-	usedAnswers: getUsedAnswers(store.categoriesState.categories),
+	usedAnswers: getUsedAnswers(store.categoriesState),
+	getCategoryQuestion: (categoryId: number, questionId: number): string => getCategoryQuestion(store.categoriesState, categoryId, questionId),
 	who: store.topState.top.auth!.who
   };
 };
