@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Button, Container, Form } from "react-bootstrap";
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 
@@ -8,10 +10,9 @@ import { IFormProps } from '../types';
 import { useNavigate } from "react-router-dom";
 
 
-const Form: React.FC<IFormProps> = (props: IFormProps) => {
+const LogForm: React.FC<IFormProps> = (props: IFormProps) => {
 
-  let { who, formMode, authError } = props;
-  const { userName, pwd } = who;
+  let { formMode, authError } = props;
 
   let navigate = useNavigate();
   if (props.isAuthenticated) {
@@ -21,15 +22,13 @@ const Form: React.FC<IFormProps> = (props: IFormProps) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      userName,
-      pwd
-      //createdBy: props.top.createdBy,
-      //created: props.top.created
+      userName: '',
+      pwd: ''
     },
     validationSchema: Yup.object({
       userName: Yup
         .string()
-        .max(20, 'Must be 20 characters or less')
+        .max(32, 'Must be 32 characters or less')
         .required('Required'),
       pwd: Yup
         .string()
@@ -37,12 +36,6 @@ const Form: React.FC<IFormProps> = (props: IFormProps) => {
         .max(16)
         //.matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[a-zA-Zd]$/)
         .required()
-      /*answers: Yup.string()
-        .max(20, 'Must be 20 characters or less')
-        .required('Required'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('Required'),*/
     }),
     onSubmit: values => {
       // alert(JSON.stringify(values, null, 2));
@@ -55,12 +48,13 @@ const Form: React.FC<IFormProps> = (props: IFormProps) => {
   console.log('RENDERING LoginForm', formik.values)
 
   return (
-    <>
-      <form onSubmit={formik.handleSubmit}>
+    <Form onSubmit={formik.handleSubmit}>
 
-        {/* <label htmlFor="name">User name</label> */}
-        <input
-          id="userName"
+      {/* <label htmlFor="name">User name</label> */}
+      <Form.Group controlId="userName">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          as="input"
           name="userName"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -71,17 +65,16 @@ const Form: React.FC<IFormProps> = (props: IFormProps) => {
           value={formik.values.userName}
           placeholder="User name"
           maxLength={16}
-          size={16}
-        // style={{ width: '40%' }}
         />
         {formik.touched.userName && formik.errors.userName ? (
           <div>{formik.errors.userName}</div>
         ) : null}
+      </Form.Group>
 
-        {/* <label htmlFor="username">Password</label> */}
-        <br />
-        <input
-          id="pwd"
+      <Form.Group controlId="pwd">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          as="input"
           name="pwd"
           type="password"
           onChange={formik.handleChange}
@@ -90,32 +83,38 @@ const Form: React.FC<IFormProps> = (props: IFormProps) => {
           placeholder="password"
           // style={{ width: '40%' }}
           maxLength={16}
-          size={16}
         />
         {formik.touched.pwd && formik.errors.pwd ? (
           <div>{formik.errors.pwd}</div>
         ) : null}
+      </Form.Group>
 
-        {authError &&
-          <div>{authError}</div>
-        }
+      {authError &&
+        <div>{authError}</div>
+      }
 
+      <br/>
 
-        {/* <button type="submit">Submit</button> */}
+      <div className="buttons">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => {
+            props.cancel();
+            // props.handleClose()
+          }}>
+          Cancel
+        </Button>
+        <Button
+          variant="primary"
+          size="sm"
+          type="submit"
+        >
+          Submit
+        </Button>
+      </div>
 
-        <div className="buttons">
-          {props.canEdit &&
-            <button onClick={() => props.cancel()}>Cancel</button>}
-          {props.canEdit &&
-            <button type="submit">Save</button>}
-        </div>
-
-      </form>
-
-      {/* <label className="id" htmlFor="created">Created:</label>
-      <span>{formik.values.created.toLocaleDateString()}</span> */}
-
-    </>
+    </Form>
   );
 };
 
@@ -123,9 +122,16 @@ const Form: React.FC<IFormProps> = (props: IFormProps) => {
 const color = 'blue';
 
 export const LoginForm: React.FC<IFormProps> = (props: IFormProps) => {
-
   return (
-    <div style={{ height: '100%', padding: '5%', display: 'flex', alignItems: 'center', justifyContent: 'center'  }} >
+    <div style={{ height: '100%', padding: '5%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }} >
+      <div>
+        {props.isRegister ? (
+          <span>Register</span>
+        ) : (
+          <span>Sign In</span>
+        )}
+      </div>
+      <br />
       <div
         style={{
           height: '100%',
@@ -145,14 +151,7 @@ export const LoginForm: React.FC<IFormProps> = (props: IFormProps) => {
             width: '250px'
           }}
         >
-          <div>
-            {props.isRegister ? (
-              <span>Register</span>
-            ) : (
-              <span>Register</span>
-            )}
-            <Form {...props} />
-          </div>
+          <LogForm {...props} />
         </div>
       </div>
     </div>

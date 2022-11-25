@@ -43,7 +43,6 @@ export interface ITopState {
 export interface IFormProps {
 	isAuthenticated: boolean | null;
 	uuid: string | null;
-	who: ILogin,
 	authError?: string,
 	formMode: string;
 	canEdit: boolean,

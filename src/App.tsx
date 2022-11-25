@@ -57,14 +57,6 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 		document.body.classList.add(bg)
 	}, []);
 
-	const signIn = () => {
-		// const login = {
-		// 	userName: 'Jack',
-		// 	pwd: 'Daniels'
-		// }
-		// checkAuthentication(login);
-	}
-
 	const [open, setOpen] = useState(false);
 	const handleClose = () => {
 		setOpen(false);
@@ -74,8 +66,7 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	const app = //isAuthenticated !== null ? (  
 
 		<Router>
-			{/* <Header open={open} setOpen={setOpen} signIn={signIn} signOut={signOut} /> */}
-			<SideBar open={open} handleClose={handleClose} signIn={signIn} signOut={signOut} />
+			<SideBar handleClose={handleClose} signOut={signOut} />
 			<Container fluid>
 				<Row className={`${darkMode ? "dark" : ""}`}>
 					{/* <Col id="main" md={mainMd} lg={mainLg} className="ms-sm-auto px-md-4"> */}

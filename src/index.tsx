@@ -22,7 +22,7 @@ import './App.css';
 //import './dashboard.css';
 
 //import './formik/formikStyles.css';
-import { getAllUsers, storeUser } from './Users/actions';
+import { getAllUsers } from './Users/actions';
 import { authenticate } from './Top/actions'
 import { getAllTags } from './roleTags/actions';
 import { loadTop } from './Top/actions';
@@ -38,7 +38,6 @@ import { useContext } from 'react'
 interface IProps {
 	store: Store<IAppState>;
 }
-
 
 // Generate the store
 //localStorage.clear(); // !!!!!!!!!!!!

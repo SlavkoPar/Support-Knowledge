@@ -1,5 +1,6 @@
 // Define the User State
 import { IOption } from '../common/types';
+import { IAuth } from '../Top/types';
 
 export interface IUser {
 	roleId: number,
@@ -7,8 +8,8 @@ export interface IUser {
 	userName: string;
 	pwd: string,
 	department: string,
-	createdBy: number,
-	created: Date
+		createdBy: number,
+		created: Date
 }
 
 export interface IUserJson extends Omit<IUser, 'created'> {
@@ -45,6 +46,7 @@ export interface IRoleJson extends Omit<IRole, 'created' | 'users'> {
 }
 
 export interface IRolesProps {
+	who: IUser, 
 	roles: IRole[];
 	userEditing: IUser | undefined;
 	formMode: string,
@@ -63,6 +65,7 @@ export interface IRolesProps {
 }
 
 export interface IFormProps {
+	auth?: IAuth;
 	userEditing: IUser | undefined;
 	formMode: string;
 	canEdit: boolean,

@@ -306,11 +306,6 @@ export const storeUser: ActionCreator<
 					user,
 					formMode
 				});
-				// dodao na Zlataru
-				//dispatch({
-				//	type: TopActionTypes.AUTHENTICATE,
-				//	user
-				//});
 				return user;
 			}
 			else {

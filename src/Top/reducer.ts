@@ -35,7 +35,10 @@ const myReducer: Reducer<ITopState, TopActions> = (
 		case TopActionTypes.LOAD_TOP: {
 			return {
 				...state,
-				top: action.top
+				top: { 
+					...action.top, 
+					authError: ''
+				}
 			};
 		}
 

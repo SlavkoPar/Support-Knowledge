@@ -12,6 +12,7 @@ import { userReducer } from '../reducer';
 
 
 interface IRowProps {
+	who: IUser;
 	user: IUser;
 	onSelectUser: (userId: number) => IUser;
 	edit: (roleId: number, userId: number) => void;
@@ -22,7 +23,7 @@ const UserRow: React.FC<IRowProps> = (props: IRowProps) => {
 
 	const [hoverRef, hoverProps] = useHover();
 
-	const { user, onSelectUser, edit, remove } = props;
+	const { who, user, onSelectUser, edit, remove } = props;
 	const { roleId, userId, userName } = user;
 
 	const theme = React.useContext(ThemeContext);
@@ -41,31 +42,31 @@ const UserRow: React.FC<IRowProps> = (props: IRowProps) => {
 					size="sm"
 					className="py-0 px-1 text-decoration-none"
 					onClick={() => onSelectUser(userId)}>
-					{userName}
+					{userName} {userId}
 				</Button>
 				{hoverProps.isHovered &&
-					<>
-						<Button
-							variant={variant}
-							size="sm"
-							className="py-0 px-1"
-							style={{ backgroundColor: 'transparent', borderWidth: '0' }}
-							title="Edit"
-							onClick={() => edit(roleId, userId)}
-						>
-							<FontAwesomeIcon icon={faEdit} color='lightblue' />
-						</Button>
-						<Button
-							variant={variant}
-							size="sm"
-							className="py-0 px-1"
-							style={{ backgroundColor: 'transparent', borderWidth: '0' }}
-							title="Remove"
-							onClick={() => remove(roleId, userId)}
-						>
-							<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
-						</Button>
-					</>
+					<Button
+						variant={variant}
+						size="sm"
+						className="py-0 px-1"
+						style={{ backgroundColor: 'transparent', borderWidth: '0' }}
+						title="Edit"
+						onClick={() => edit(roleId, userId)}
+					>
+						<FontAwesomeIcon icon={faEdit} color='lightblue' />
+					</Button>
+				}
+				{hoverProps.isHovered && who.roleId === 11 &&
+					<Button
+						variant={variant}
+						size="sm"
+						className="py-0 px-1"
+						style={{ backgroundColor: 'transparent', borderWidth: '0' }}
+						title="Remove"
+						onClick={() => remove(roleId, userId)}
+					>
+						<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
+					</Button>
 				}
 			</div>
 		</ListGroup.Item>

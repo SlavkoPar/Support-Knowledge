@@ -31,12 +31,12 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	const { usersState,  topState} = store;
 	const { roles, userEditing, formMode, roleIdEditing } = usersState; 
 	return {
+		who: topState.top.auth!.who,
 		roles,
 		userEditing,
 		formMode,
 		roleIdEditing,
-		canEdit: ownProps.canEdit,
-		auth: topState.top.auth
+		canEdit: ownProps.canEdit
 	};
 };
 

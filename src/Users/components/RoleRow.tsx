@@ -3,15 +3,16 @@ import * as React from 'react';
 import { useHover } from '../../common/useHover'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWindowClose, faEdit, faCaretRight, faCaretDown, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Button, ListGroup } from 'react-bootstrap'
+import { faWindowClose, faEdit, faCaretRight, faCaretDown, faPlus, faAppleWhole } from '@fortawesome/free-solid-svg-icons'
+import { Badge, Button, ListGroup } from 'react-bootstrap'
 
 
-import { IRole } from '../types';
+import { IRole, IUser } from '../types';
 import { ThemeContext } from '../../ThemeContext';
 
 
 interface IUserRowProps {
+	who: IUser;
 	userRole: IRole;
 	toggleRole: (roleId: number) => void;
 	editRole: (roleId: number) => void;
@@ -22,7 +23,7 @@ interface IUserRowProps {
 const RoleRow: React.FC<IUserRowProps> = (props: IUserRowProps) => {
 
 	const [hoverRef, hoverProps] = useHover();
-	const { userRole, toggleRole, editRole, removeRole, add } = props;
+	const { who, userRole, toggleRole, editRole, removeRole, add } = props;
 	const { roleId, title, users, isExpanded, color } = userRole;
 
 	const theme = React.useContext(ThemeContext);
@@ -52,19 +53,23 @@ const RoleRow: React.FC<IUserRowProps> = (props: IUserRowProps) => {
 				style={{ backgroundColor: 'transparent', borderWidth: '0' }}
 				title="Add a new User"
 				onClick={() => add(roleId, '')}
+				disabled={roleId === 11}
 			>
 				<FontAwesomeIcon icon={faPlus} size='xs' color='orange' />
 			</Button>
-			{hoverProps.isHovered &&
+			{hoverProps.isHovered && who.roleId === 11 &&
 				<button className="button-edit" title="Edit Section" onClick={() => editRole(roleId)}>
 					<FontAwesomeIcon icon={faEdit} color='lightblue' />
 				</button>
 			}
-			{hoverProps.isHovered && users.length === 0 &&
+			{hoverProps.isHovered && users.length === 0 && who.roleId === 11 &&
 				<button className="button-remove" title="Remove Section" onClick={() => removeRole(roleId)}>
 					<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
 				</button>
 			}
+			<Badge bg="primary" pill>
+				{users.length}
+			</Badge>
 		</div>
 	)
 }

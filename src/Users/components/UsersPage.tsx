@@ -24,7 +24,7 @@ type SupportParams = {
 const UserPage: React.FC<IRolesProps> = (props: IRolesProps) => {
 
 	//let { tekst } = useParams<SupportParams>();
-	const { roles, userEditing,
+	const { who, roles, userEditing,
 		formMode, roleIdEditing,
 		onSelectUser, add, edit, remove, canEdit,
 		addRole, toggleRole, editRole, removeRole, storeRole } = props;
@@ -81,6 +81,7 @@ const UserPage: React.FC<IRolesProps> = (props: IRolesProps) => {
 												}
 												{roleIdEditing !== roleId && (
 													<RoleRow
+														who={who}
 														userRole={role}
 														toggleRole={toggleRole}
 														editRole={editRole}
@@ -104,6 +105,7 @@ const UserPage: React.FC<IRolesProps> = (props: IRolesProps) => {
 												>
 													{users.map(user =>
 														<UserRow
+															who={who}
 															key={user.userId}
 															user={user}
 															onSelectUser={onSelectUser}

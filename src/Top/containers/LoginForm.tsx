@@ -18,13 +18,9 @@ interface IProps {
 const mapStateToProps = (store: IAppState, ownProps: IProps) => {
 	const { topState } = store;
 	const { top } = topState;
-	const { auth } = top
 	return {
 		isAuthenticated: top.isAuthenticated,
 		uuid: top.uuid,
-		who: !auth
-			? { userName: '', pwd:'' } 
-			: { userName: '', pwd:'' },  //{ userName: auth.who.userName, pwd: auth.who.pwd },
 		authError: top.authError,
 		canEdit: ownProps.canEdit,
 		isRegister: ownProps.isRegister,
@@ -35,7 +31,9 @@ const mapStateToProps = (store: IAppState, ownProps: IProps) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<TopActions>) => {
 	return {
-		saveForm: (login: ILogin, formMode: string, isRegister: boolean) => dispatch<any>(isRegister?register(login):authenticate(login)),
+		saveForm: (login: ILogin, formMode: string, isRegister: boolean) => 
+			dispatch<any>(isRegister ? 
+				register(login)	: authenticate(login)),
 		cancel: () => dispatch<any>(cancelLogin())
 	}
 }

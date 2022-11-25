@@ -24,9 +24,10 @@ interface IProps {
 
 // Grab the users from the store and make them available on props
 const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
-	const {usersState, tagState} = store;
+	const {usersState, tagState, topState} = store;
 	const { roles, userEditing, roleOptions, formMode, roleIdEditing } = usersState; 
 	return {
+		auth: topState.top.auth,
 		roles,
 		roleOptions,
 		userEditing,

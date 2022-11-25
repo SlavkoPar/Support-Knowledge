@@ -27,17 +27,15 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { toggleMode, TopActions } from "./Top/actions";
 
 interface ISideBarProps {
-  open: boolean,
   isAuthenticated: boolean | null;
   uuid: string | null;
   auth?: IAuth,
-  signIn: () => void;
   signOut: () => void;
   handleClose: () => void;
   toggleMode: () => void;
 }
 
-function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClose, toggleMode }: ISideBarProps) {
+function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode }: ISideBarProps) {
 
   const theme = useContext(ThemeContext);
   const { darkMode, variant, bg } = theme.state;
@@ -105,7 +103,7 @@ function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClo
                   <FontAwesomeIcon icon={faAnchor} color='lightblue' />{' '}Answers
                 </Nav.Link>
               }
-              {isAuthenticated &&
+              {isAuthenticated && auth && auth!.who.roleId === 11 &&
                 <Nav.Link href="#/users/2">
                   <FontAwesomeIcon icon={faUserFriends} color='lightblue' />{' '}Users
                 </Nav.Link>
@@ -183,8 +181,6 @@ function SideBar({ isAuthenticated, uuid, auth, signIn, signOut, open, handleClo
   );
 }
 interface IOwnProps {
-  open: boolean,
-  signIn: () => void;
   signOut: () => void;
   handleClose: () => void;
 }
@@ -193,8 +189,6 @@ const mapStateToProps = (store: IAppState, ownProps: IOwnProps) => ({
   isAuthenticated: store.topState.top.isAuthenticated,
   uuid: store.topState.top.uuid,
   auth: store.topState.top.auth,
-  open: ownProps.open,
-  signIn: ownProps.signIn,
   signOut: ownProps.signOut,
   handleClose: ownProps.handleClose
 });

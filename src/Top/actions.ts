@@ -6,7 +6,7 @@ import { ILogin, ITop, ITopJson, ITopState } from './types';
 
 import { IAppState } from '../store/Store';
 import { IUser, RoleId, IUsersState } from '../Users/types';
-import { findUser, getUser, storeUser } from '../Users/actions';
+import { findUser, getUser, storeUser, UserActionTypes } from '../Users/actions';
 import { ThemeContext } from '../ThemeContext';
 import { useContext } from 'react';
 
@@ -155,6 +155,7 @@ export const register: ActionCreator<
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
 			const { usersState } = getState();
+			const { allUsers } = usersState;
 			dispatch<any>(findUser(loginUser.userName))
 				.then((user: IUser) => {
 					if (user) {
@@ -163,13 +164,22 @@ export const register: ActionCreator<
 						});
 					}
 					else {
+						let roleId = RoleId.VIEWERS;
+						let userId = 0;
+						if (allUsers.length === 0) {
+							roleId = RoleId.OWNER;
+							userId = usersState.ownerUserId; // owner userId would be 101
+						}
+						else {
+							userId = Math.max(...allUsers.map(u => u.userId)) + 1;
+						}
 						const user: IUser = {
-							roleId:  usersState.allUsers.length === 0 ? RoleId.OWNER : RoleId.VIEWERS,
-							userId: usersState.ownerUserId, // owner userId would be 101
+							roleId,
+							userId, 
 							userName: loginUser.userName,
 							pwd: loginUser.pwd,
 							department: "dept1",
-							createdBy: 0,
+							createdBy: userId, // registered user is treated as creator
 							created: new Date()
 						}
 
@@ -180,6 +190,7 @@ export const register: ActionCreator<
 									user
 								});
 								dispatch<any>(authenticate(loginUser));
+								dispatch({type: UserActionTypes.CREATE_OPTIONS})
 							});
 					}
 				});
