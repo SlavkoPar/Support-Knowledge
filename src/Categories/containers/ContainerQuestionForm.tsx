@@ -24,6 +24,7 @@ import { QuestionForm } from '../components/QuestionForm';
 const joinQuestionAnswers = (question: IQuestion | undefined, answers: IAnswer[]) : IQuestionAnswer[]=> {
 	if (question === undefined || question.answers.length === 0 || answers === undefined)
 		return [];
+	console.log("question.answers", question.answers)
 	const questionAnswers = question.answers.map(qa => ({
 			...qa, text: answers.find(a => a.answerId === qa.answerId)!.text
 		})

@@ -28,6 +28,7 @@
     "formik": "^2.2.9",
     "gh-pages": "^3.2.3",
     "glamor": "^2.20.40",
+    "ismobilejs": "^1.1.1",
     "palx": "^1.0.3",
     "react": "^17.0.2",
     "react-autosuggest": "^10.1.0",

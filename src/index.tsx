@@ -40,7 +40,7 @@ interface IProps {
 }
 
 // Generate the store
-//localStorage.clear(); // !!!!!!!!!!!!
+// localStorage.clear(); // !!!!!!!!!!!!
 
 interface IEvt {
 	type: string;

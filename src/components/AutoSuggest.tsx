@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { createRef } from 'react'
+import { createRef, forwardRef } from 'react'
 
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from "autosuggest-highlight/match";
 import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 
-
 import { IQuestion, ICategory, ICategoryState } from '../Categories/types'
 import './AutoSuggest.css'
-import './AutoSuggestDark.css'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expression
 // s#Using_Special_Characters
@@ -21,11 +19,13 @@ let inputAutosuggest = createRef<HTMLInputElement>();
 
 const QuestionAutosuggestMulti = Autosuggest as { new(): Autosuggest<IQuestion, ICategory> };
 
-export class AutoSuggest extends React.Component<{ 
-	categories: ICategory[], 
+export class AutoSuggest extends React.Component<{
+	categories: ICategory[],
 	categoryQuestions: Map<number, ICategoryState>,
-	tekst: string|undefined, 
-	onSelectQuestion: (categoryId: number, questionId: number) => void }, any> {
+	tekst: string | undefined,
+	onSelectQuestion: (categoryId: number, questionId: number) => void
+}, any
+> {
 	// region Fields
 
 	state: any;
@@ -42,6 +42,7 @@ export class AutoSuggest extends React.Component<{
 	}
 
 	componentDidMount() {
+
 		setTimeout(() => {
 			//inputAutosuggest!.current!.focus();
 			setTimeout(() => {
@@ -72,15 +73,16 @@ export class AutoSuggest extends React.Component<{
 			getSectionSuggestions={this.getSectionSuggestions}
 			// onSuggestionHighlighted={this.onSuggestionHighlighted} (sl)
 			onSuggestionHighlighted={this.onSuggestionHighlighted.bind(this)}
-			highlightFirstSuggestion={true}
+			highlightFirstSuggestion={false}
 			renderInputComponent={this.renderInputComponent}
 			renderSuggestionsContainer={this.renderSuggestionsContainer}
+			focusInputOnSuggestionClick={false}
 			inputProps={{
 				placeholder: `Type 'promocode'`,
 				value,
 				onChange: (e, changeEvent) => this.onChange(e, changeEvent),
+				autoFocus: true
 			}}
-
 		/>;
 	}
 
@@ -143,12 +145,14 @@ export class AutoSuggest extends React.Component<{
 		const { ref, ...restInputProps } = inputProps;
 		// if (ref !== undefined)
 		// 	this.inputAutosuggest = ref as React.RefObject<HTMLInputElement>;
+
 		return (
 			<div>
 				<input {...restInputProps} ref={inputAutosuggest} />
 			</div>
 		);
 	}
+
 
 	protected renderSuggestionsContainer({ containerProps, children, query }: Autosuggest.RenderSuggestionsContainerParams): JSX.Element {
 		return (
@@ -200,7 +204,7 @@ export class AutoSuggest extends React.Component<{
 		// 			};
 		// 		})
 		// 		.filter(section => section.questions.length > 0);
-        const {categories, categoryQuestions} = this.props;
+		const { categories, categoryQuestions } = this.props;
 		return categories
 			.map(group => {
 				console.log('categoryId:', group.categoryId, categoryQuestions.get(group.categoryId)!.questions)
