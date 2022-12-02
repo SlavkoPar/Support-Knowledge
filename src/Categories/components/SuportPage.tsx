@@ -40,7 +40,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 		<Container fluid>
 			<Row className={`${darkMode ? "dark" : ""}`}>
 				<Col md={open ? 6 : 12} lg={open ? 6 : 12}>
-					<div style={{ display: 'flex' }}>
+					<div style={{ display: 'flex', alignItems: 'center' }}>
 						{/* Support Page tekst: {tekst} */}
 						<AutoSuggest
 							categories={categories}
@@ -49,7 +49,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId)}
 						/>
 						<Button
-							variant="primary"
+							variant={variant}
 							className="button-edit"
 							title="Create a new Question"
 							onClick={() => { add(0, tekst ?? '', true); handleShow(); }}

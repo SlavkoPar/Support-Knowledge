@@ -311,6 +311,7 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			return {
 				...state,
 				category,
+				formMode: 'edit',
 				categoryCopy: { ...category },
 				categoryIdEditing: category.categoryId,
 				showCategoryForm,

@@ -28,7 +28,7 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	return (
-		<ListGroup.Item className="py-0" variant={variant}>
+		<ListGroup.Item className="py-0" variant={variant} action>
 			<div ref={hoverRef} className="d-flex justify-content-start align-items-center">
 				<Button
 					style={{fontSize: '13px'}}

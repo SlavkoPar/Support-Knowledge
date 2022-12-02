@@ -9,7 +9,7 @@ const initialTop: ITop = {
 	navbarOpen: true,
 	isAuthenticated: null,
 	uuid: null,
-	darkMode: false
+	darkMode: true
 };
 
 const initialTopState: ITopState = {

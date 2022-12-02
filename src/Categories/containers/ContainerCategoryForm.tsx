@@ -16,8 +16,6 @@ import {
 
 import { CategoryForm } from '../components/CategoryForm';
 
-
-
 interface IProps {
 	canEdit: boolean
 }
