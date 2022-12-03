@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Button, Container, Form } from "react-bootstrap";
+import React, { useContext, useState } from 'react';
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 
-import { COLORS } from '../../formik/theme';
+import { ThemeContext } from '../../ThemeContext';
+
 import { IFormProps } from '../types';
 //import { number } from 'yup/lib/locale';
 import { useNavigate } from "react-router-dom";
@@ -66,10 +67,13 @@ const LogForm: React.FC<IFormProps> = (props: IFormProps) => {
           placeholder="User name"
           maxLength={16}
         />
-        {formik.touched.userName && formik.errors.userName ? (
-          <div>{formik.errors.userName}</div>
-        ) : null}
+        <Form.Text className="text-danger">
+          {formik.touched.userName && formik.errors.userName ? (
+            <div className="text-danger">{formik.errors.userName}</div>
+          ) : null}
+        </Form.Text>
       </Form.Group>
+      <br/>
 
       <Form.Group controlId="pwd">
         <Form.Label>Password</Form.Label>
@@ -84,16 +88,18 @@ const LogForm: React.FC<IFormProps> = (props: IFormProps) => {
           // style={{ width: '40%' }}
           maxLength={16}
         />
-        {formik.touched.pwd && formik.errors.pwd ? (
-          <div>{formik.errors.pwd}</div>
-        ) : null}
+        <Form.Text className="text-danger">
+          {formik.touched.pwd && formik.errors.pwd ? (
+            <div className="text-danger">{formik.errors.pwd}</div>
+          ) : null}
+        </Form.Text>
       </Form.Group>
 
       {authError &&
         <div>{authError}</div>
       }
 
-      <br/>
+      <br />
 
       <div className="buttons">
         <Button
@@ -101,6 +107,7 @@ const LogForm: React.FC<IFormProps> = (props: IFormProps) => {
           size="sm"
           onClick={() => {
             props.cancel();
+            navigate('/landing');
             // props.handleClose()
           }}>
           Cancel
@@ -118,42 +125,27 @@ const LogForm: React.FC<IFormProps> = (props: IFormProps) => {
   );
 };
 
-
-const color = 'blue';
-
 export const LoginForm: React.FC<IFormProps> = (props: IFormProps) => {
+  const theme = useContext(ThemeContext);
+  const { darkMode, variant, bg } = theme.state;
   return (
-    <div style={{ height: '100%', padding: '5%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }} >
-      <div>
-        {props.isRegister ? (
-          <span>Register</span>
-        ) : (
-          <span>Sign In</span>
-        )}
-      </div>
-      <br />
-      <div
-        style={{
-          height: '100%',
-          background: COLORS[color][5],
-          padding: '1rem 1rem',
-          width: '300px'
-        }}
-      >
-        <div
-          style={{
-            borderRadius: '4px',
-            boxShadow: '0 8px 16px rgba(0,0,0,.2)',
-            background: '#fff',
-            maxWidth: '90%',
-            margin: '0 auto',
-            padding: '1rem',
-            width: '250px'
-          }}
-        >
+    <Container className={`${darkMode ? "dark" : ""}`} >
+      <Row className="py-2">
+        <Col md="4" className="mx-auto">
+          <h4 style={{textAlign: 'center'}}>
+            {props.isRegister ? (
+              'Register'
+            ) : (
+              'Sign In'
+            )}
+          </h4>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6" className="mx-auto">
           <LogForm {...props} />
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   )
 }
