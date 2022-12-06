@@ -126,13 +126,6 @@ export interface IStoreRole {
 }
 
 
-export interface ISetIsDetail {
-	type: UserActionTypes.SET_IS_DETAIL;
-	isDetail: boolean
-}
-
-
-
 // Combine the action types with a union (we assume there are more)
 export type UserActions = IGetAll | IGet | IAdd | IEdit | IRemove | IStore | ICancel |
 	IAddRole | IToggleRole | IEditRole | IRemoveRole | IStoreRole |
@@ -270,22 +263,6 @@ export const removeUser: ActionCreator<
 	};
 };
 
-
-export const setIsDetail: ActionCreator<
-	ThunkAction<Promise<any>, IUsersState, null, ISetIsDetail>
-> = (isDetail: boolean) => {
-	return async (dispatch: Dispatch) => {
-		try {
-			dispatch({
-				type: UserActionTypes.SET_IS_DETAIL,
-				isDetail
-			});
-		}
-		catch (err) {
-			console.error(err);
-		}
-	};
-};
 
 export const storeUser: ActionCreator<
 	ThunkAction<Promise<any>, IAppState, null, IStore>

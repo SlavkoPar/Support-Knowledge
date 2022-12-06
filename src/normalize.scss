@@ -3,7 +3,13 @@
 $body-bg: rgb(248, 249, 250);
 $offcanvas-horizontal-width: 250px !default;
 
+$line-height-base: 1.25 !default;
+$font-size-base: 1rem !default; 
+
+$form-label-margin-bottom: .1rem !default;
+
 @import "~bootstrap/scss/variables";
+
 @import "~bootstrap/scss/mixins";
 
 
@@ -11,8 +17,17 @@ $offcanvas-horizontal-width: 250px !default;
     .btn-link {
          --bs-btn-color: #000;
     }
+    .btn-link.answer {
+        --bs-btn-color: teal;
+    }
     ul.inner-list .btn-link {
         --bs-btn-color: #343a40;
+    }
+    --bs-link-hover-color: blue;
+    --bs-body-font-size: 0.75rem;
+    --bs-body-line-height: 1rem;
+    .form-control {
+        font-size: 0.75rem;
     }
 }
 
@@ -76,8 +91,19 @@ $offcanvas-horizontal-width: 250px !default;
         --bs-btn-color: orange;
     }
 
+    .btn-link.answer {
+        --bs-btn-color: lightblue;
+    }
+
     ul.inner-list .btn-link {
         --bs-btn-color: #eee;
+    }
+
+    --bs-link-hover-color: white;
+
+    --bs-body-font-size: 0.75rem;
+    .form-control {
+        font-size: 0.75rem;
     }
 }
 

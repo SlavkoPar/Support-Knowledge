@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import { IQuestionFormProps } from '../types';
 
-import QuestionAnswers from './QuestionAnswers'
 import { Select } from '../../common/Select';
 import UserName from '../../common/containers/UserName';
 //import { number } from 'yup/lib/locale';
@@ -13,6 +12,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import { sourceOptions } from '../sourceOptions'
 import { statusOptions } from '../statusOptions'
 import { initialQuestion } from '../categoriesReducer';
+import ContainerQuestionAnswers from '../containers/ContainerQuestionAnswers';
 
 const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
@@ -48,13 +48,14 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
   });
 
   const isEdit = () => props.formMode === 'edit';
+  const isDisabled = props.formMode === 'display';
 
   console.log('RENDERING', formik.values)
   return (
-    <Form onSubmit={formik.handleSubmit}>
+    <Form onSubmit={formik.handleSubmit} >
       {isEdit() &&
         <Form.Group controlId="questionId">
-          <Form.Label>QuestionId: </Form.Label>
+          <Form.Label>Id:</Form.Label>
           <span> {formik.values.questionId}</span>
         </Form.Group>
       }
@@ -71,6 +72,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
             if (isEdit()) formik.submitForm();
           }}
           value={formik.values.categoryId}
+          disabled={isDisabled}
         />
         <Form.Text className="text-danger">
           {formik.touched.categoryId && formik.errors.categoryId ? (
@@ -82,6 +84,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
       <Form.Group controlId="text">
         <Form.Label>Text</Form.Label>
         <Form.Control
+          size="sm"
           as="textarea"
           name="text"
           onChange={formik.handleChange}
@@ -92,7 +95,9 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           }}
           value={formik.values.text}
           style={{ width: '100%' }}
+          className="py-0"
           rows={2}
+          disabled={isDisabled}
         />
         <Form.Text className="text-danger">
           {formik.touched.text && formik.errors.text ? (
@@ -113,6 +118,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
             if (isEdit()) formik.submitForm();
           }}
           value={formik.values.source}
+          disabled={isDisabled}
         />
         <Form.Text className="text-danger">
           {formik.touched.source && formik.errors.source ? (
@@ -122,19 +128,19 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
       </Form.Group>
 
       <br />
-      <QuestionAnswers
-        question={question}
-        questionAnswers={props.questionAnswers}
-        answers={props.answers}
+      <ContainerQuestionAnswers
+        // question={question}
+        // questionAnswers={props.questionAnswers}
+        // answers={props.answers}
         canEdit={props.canEdit}
-        formMode={props.formMode}
-        selectQuestionAnswer={props.selectQuestionAnswer}
-        copyQuestionAnswer={props.copyQuestionAnswer}
-        removeQuestionAnswer={props.removeQuestionAnswer}
-        assignQuestionAnswer={props.assignQuestionAnswer}
-        setIsDetail={props.setIsDetail}
+        // selectQuestionAnswer={props.selectQuestionAnswer}
+        // copyQuestionAnswer={props.copyQuestionAnswer}
+        // removeQuestionAnswer={props.removeQuestionAnswer}
+        // assignQuestionAnswer={props.assignQuestionAnswer}
+        // addAnswer={props.addAnswer}
+	      // saveAnswerForm={props.saveAnswerForm}
+	      // cancelAnswer={cancelAnswer}
       />
-      <br />
 
       <Form.Group controlId="status">
         <Form.Label>Status</Form.Label>
@@ -148,6 +154,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
             if (isEdit()) formik.submitForm();
           }}
           value={formik.values.status}
+          disabled={isDisabled}
         />
         <Form.Text className="text-danger">
           {formik.touched.status && formik.errors.status ? (
@@ -156,17 +163,18 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         </Form.Text>
       </Form.Group>
 
+      <br />
       <Form.Group controlId="createdBy">
         <Form.Label>Created by:</Form.Label>
-        <UserName id={formik.values.createdBy} />
-      </Form.Group>
-      {/* <br /> */}
-      <Form.Group controlId="created">
-        <Form.Label className="id">Created:</Form.Label>
-        <span>{formik.values.created.toLocaleDateString()}</span>
+        {' '}<UserName id={formik.values.createdBy} />
       </Form.Group>
 
-      {!isEdit() &&
+      <Form.Group controlId="created">
+        <Form.Label className="id">Created:</Form.Label>
+        <span>{' '}{formik.values.created.toLocaleDateString()}</span>
+      </Form.Group>
+
+      {!isEdit() && !isDisabled &&
         <div className="buttons">
           {props.canEdit &&
             <Button
@@ -186,6 +194,18 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
             >
               Save
             </Button>}
+        </div>
+      }
+      {isDisabled && props.canEdit &&
+        <div className="buttons">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => {
+              props.editForm(question, props.formMode);
+            }}>
+            Edit
+          </Button>
         </div>
       }
     </Form>

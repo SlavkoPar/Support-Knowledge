@@ -14,7 +14,11 @@ setTimeout(() => {
     div!.setAttribute('style', 'display:none') 
 }, 10000)
 
-const Support: React.FC<{}> = () => { 
+interface IMyProps {
+  canEdit: boolean;
+}
+
+const Support: React.FC<IMyProps> = (props: IMyProps) => { 
   return (
     <>
       <h2 style={{textAlign: 'center', marginBlockStart: '0.66rem', marginBlockEnd: '0.1rem' }}>Questions &amp; Answers</h2>
@@ -23,7 +27,7 @@ const Support: React.FC<{}> = () => {
           <br/>When you record your experiences and insights, <br/>other members of your team can share info.
           </i></h5>
       </div>
-      <containers.supporter canEdit={true} />
+      <containers.supporter canEdit={props.canEdit} />
     </>
   );
 };

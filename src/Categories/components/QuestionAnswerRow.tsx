@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose, faEdit, faCopy } from '@fortawesome/free-solid-svg-icons'
 
 import { IQuestion, IQuestionAnswer } from '../types';
+import { Button } from 'react-bootstrap';
 
 
 interface IQuestionAnswerRowProps {
@@ -23,19 +24,22 @@ const QuestionAnswerRow: React.FC<IQuestionAnswerRowProps> = (props: IQuestionAn
 	const { question, questionAnswer, selectQuestionAnswer, copyQuestionAnswer, removeQuestionAnswer } = props;
 	const { categoryId, questionId } = question;
 	const { answerId, text } = questionAnswer;
-	const id = `inputQuestionAnswer${answerId}`;
 
 	return (
-		<div ref={hoverRef}>
+		<div ref={hoverRef}  className="d-flex justify-content-start align-items-center">
 			{/* <input id={id} type="hidden" value={questionAnswer.text}></input> */}
-			<button
+			<Button
+				style={{ fontSize: '13px' }}
+				variant='link'
+				size="sm"
+				className="answer py-0 px-1 text-decoration-none"
 				onClick={() => {
 					// selectQuestionAnswer(categoryId, questionId, answerId)}
 					alert('No action for the time being')
 				}}
 			>
-				{questionAnswer.text}
-			</button>
+				{text}
+			</Button>
 			{hoverProps.isHovered &&
 				<button className="button-edit" title="Copy Answer to Cliboard"
 					onClick={(e) => {

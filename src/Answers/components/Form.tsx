@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { IAnswer } from '../types';
 import UserName from '../../common/containers/UserName'
 import { ThemeContext } from '../../ThemeContext';
+import { initialAnswer } from '../../Answers/reducer'
 
 interface IProps {
 	answer: IAnswer;
@@ -14,15 +15,19 @@ interface IProps {
 	saveForm: (answer: IAnswer, formMode: string) => void;
 }
 
-
 const AnsForm: React.FC<IProps> = (props: IProps) => {
+
+	let { answer } = props;
+	if (!answer) // it is still view in modal, although hidden
+    	answer = { ...initialAnswer };
+
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: {
-			answerId: props.answer.answerId,
-			text: props.answer.text,
-			createdBy: props.answer.createdBy,
-			created: props.answer.created,
+			answerId: answer.answerId,
+			text: answer.text,
+			createdBy: answer.createdBy,
+			created: answer.created
 		},
 		validationSchema: Yup.object({
 			text: Yup.string()
@@ -46,7 +51,6 @@ const AnsForm: React.FC<IProps> = (props: IProps) => {
 					<span> {formik.values.answerId}</span>
 				</Form.Group>
 			}
-
 
 			<Form.Group controlId="text">
 				<Form.Label>Answer</Form.Label>

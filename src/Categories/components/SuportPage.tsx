@@ -1,21 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom' // useRouteMatch
 
-import { IQuestion, ICategoriesProps, initialQuestion } from '../types';
+import { ICategoriesProps } from '../types';
 
 import { AutoSuggest } from '../../components/AutoSuggest';
 import ContainerQuestionForm from '../containers/ContainerQuestionForm'
 import { ThemeContext } from "../../ThemeContext";
 
-import { COLORS } from '../../formik/theme';
-import { faPlus, faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { Select } from '../../common/Select';
 import { Col, Container, Row } from 'react-bootstrap';
-
-const color = 'blue';
 
 type SupportParams = {
 	tekst: string;
@@ -25,23 +21,21 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	let { tekst } = useParams<SupportParams>();
 	const { categories, categoryQuestions, category, question, showQuestionForm, onSelectQuestion, add, closeQuestionForm, canEdit } = props;
 	console.log('tekst:', tekst)
+
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 	const open = categories && (category || question)
 
+
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
 
-	// if (showQuestionForm)
-	// 	closeQuestionForm();
-	
 	return (
 		<Container fluid>
 			<Row className={`${darkMode ? "dark" : ""}`}>
 				<Col md={open ? 6 : 12} lg={open ? 6 : 12}>
 					<div style={{ display: 'flex', alignItems: 'center' }}>
-						{/* Support Page tekst: {tekst} */}
 						<AutoSuggest
 							categories={categories}
 							categoryQuestions={categoryQuestions}
@@ -57,10 +51,12 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							<FontAwesomeIcon icon={faPlus} size="lg" />
 						</Button>
 					</div>
-					<div className="b">
+				</Col>
+				<Col>
+					<div>
 						{categories && question && showQuestionForm &&
-							<div>
-								<h4>Question</h4>
+							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
+								<h4 style={{ textAlign: 'center' }}>Question</h4>
 								<ContainerQuestionForm canEdit={canEdit} handleClose={() => { }} />
 							</div>
 						}

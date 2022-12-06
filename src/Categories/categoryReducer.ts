@@ -5,7 +5,6 @@ import {
 	QuestionActions,
 	QuestionActionTypes
 } from './actions';
-import { initialCategory } from './categoriesReducer';
 
 import { IQuestion, ICategoryState, initialQuestion } from './types'
 
@@ -16,9 +15,16 @@ export const initialCategoryState: ICategoryState = {
 	questions: []
 };
 
+const storeToStorage: string[] = [
+	QuestionActionTypes.STORE_QUESTION,
+	QuestionActionTypes.UPDATE_QUESTION,
+	QuestionActionTypes.REMOVE_QUESTION,
+	QuestionActionTypes.REMOVE_QUESTION_ANSWER,
+	QuestionActionTypes.ASSIGN_QUESTION_ANSWER
+]
 
-const aTypesToStore = Object.keys(QuestionActionTypes);
-	//.filter(a => a !== QuestionActionTypes.LOAD_CATEGORY);
+const aTypesToStore = Object.keys(QuestionActionTypes)
+	.filter(a => storeToStorage.includes(a));
 
 export const reduceQuestions = (
 	categoryQuestions: Map<number, ICategoryState>,
@@ -28,8 +34,11 @@ export const reduceQuestions = (
 ): {categoryQuestions: Map<number, ICategoryState>, question: IQuestion|undefined} => {
 	const categoryState = categoryQuestions.get(categoryId)!;
 	const newState: ICategoryState = myReducer(categoryState, action);
+
 	if (aTypesToStore.includes(action.type)) {
+		newState.questions.forEach(q => q.words = []);
 		localStorage.setItem(`CATEGORY_${categoryId}`, JSON.stringify(newState.questions));
+		newState.questions.forEach(q => q.words = q.text.split(' '));
 	}
 	categoryQuestions.set(categoryId, newState);
 	const question = newState.questions.find(q => q.questionId === questionId);
@@ -64,7 +73,8 @@ const myReducer: Reducer<ICategoryState, QuestionActions> = (
 					createdBy: action.createdBy,
 					categoryId: action.categoryId,
 					questionId: questionIdMax + 1,
-					text: action.text
+					text: action.text,
+					words: action.text.split(' ')
 				}
 			};
 		}
@@ -82,20 +92,15 @@ const myReducer: Reducer<ICategoryState, QuestionActions> = (
 		case QuestionActionTypes.STORE_QUESTION: {
 			const { question } = action;
 			question.words = question.text.split(' ');
-			const { questionId } = question;
 			return {
 				...state,
 				questions: [...state.questions, {...question}]
-				// questions: state.questions
-				// 	.map(q => q.questionId !== questionId
-				// 		? q
-				// 		: { ...question }
-				// 	)
 			};
 		}
 
 		case QuestionActionTypes.UPDATE_QUESTION: {
 			const { question } = action;
+			question.words = question.text.split(' ');
 			const { questionId } = question;
 			return {
 				...state,
@@ -142,14 +147,6 @@ const myReducer: Reducer<ICategoryState, QuestionActions> = (
 				)
 			}
 		}
-
-		case QuestionActionTypes.SET_IS_DETAIL: {
-			return {
-				...state,
-				isDetail: action.isDetail
-			}
-		}
-
 
 		default:
 			return state;

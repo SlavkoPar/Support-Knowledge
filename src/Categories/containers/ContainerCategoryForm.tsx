@@ -10,7 +10,6 @@ import {
 	storeCategory,
 	updateCategory,
 	cancelCategory,
-	setIsDetail,
 	QuestionActions
 } from '../actions'
 
@@ -37,10 +36,6 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 		saveForm: (category: ICategory, formMode: string) => 
 			dispatch<any>(formMode==='add'?storeCategory(true, category):updateCategory(true, category)),
 		cancel: () => dispatch<any>(cancelCategory()),
-		setIsDetail: (isDetail: boolean) => {
-			dispatch<any>(setIsDetail(isDetail))
-		},
-
 	}
 }
 

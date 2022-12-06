@@ -23,11 +23,12 @@ const parseFromJson = (): ICategory[] => {
 
 const parseQuestionsFromLocalStorage = (questions: IQuestionJson[]): IQuestion[] => {
 	return questions.map(q => ({
-		...q,
-		categoryId: q.categoryId!,
-		answers: q.answers.map(a => ({ ...a, assigned: new Date(a.assigned) })),
-		created: new Date(q.created)
-	})
+			...q,
+			categoryId: q.categoryId!,
+			words: q.text.split(' '),
+			answers: q.answers.map(a => ({ ...a, assigned: new Date(a.assigned) })),
+			created: new Date(q.created)
+		})
 	)
 }
 
@@ -74,7 +75,6 @@ export enum QuestionActionTypes {
 	REMOVE_QUESTION_ANSWER = 'REMOVE_QUESTION_ANSWER',
 	ASSIGN_QUESTION_ANSWER = 'ASSIGN_QUESTION_ANSWER',
 	// localSTorage
-	SET_IS_DETAIL = 'SET_IS_DETAIL',
 	SET_LAST_ANSWER_ID = 'SET_LAST_ANSWER_ID'
 }
 
@@ -205,11 +205,6 @@ export interface IAssignQuestionAnswer {
 	tekst?: string
 }
 
-export interface ISetIsDetail {
-	type: QuestionActionTypes.SET_IS_DETAIL;
-	isDetail: boolean
-}
-
 export interface IAddAndAssignNewAnswer {
 	type: AnswerActionTypes.STORE_ANSWER;
 	categoryId: number,
@@ -219,11 +214,10 @@ export interface IAddAndAssignNewAnswer {
 
 
 // Combine the action types with a union (we assume there are more)
-export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | IUpdate | ICancel | 
-	IGetCategory | IAddCategory | IToggleCategory | IEditCategory | IRemoveCategory | 
+export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | IUpdate | ICancel |
+	IGetCategory | IAddCategory | IToggleCategory | IEditCategory | IRemoveCategory |
 	IStoreCategory | IUpdateCategory | ICancelCategory |
 	IRemoveQuestionAnswer | IAssignQuestionAnswer |
-	ISetIsDetail |
 	IAddAndAssignNewAnswer |
 	ICloseQuestionForm | IOpenQuestionForm;
 
@@ -254,16 +248,15 @@ export const loadCategories: ActionCreator<
 					loadedFromStorage = true;
 				}
 			}
+			console.log({categories})
 
 			if (!loadedFromStorage) {
 				// load from data
 				categories = parseFromJson();
 				for (let category of categories) {
-					category.questions.forEach(q => {
-						q.categoryId = category.categoryId;
-						q.words = q.text.split(' ');
-					})
+					category.questions.forEach(q => q.categoryId = category.categoryId);
 					localStorage.setItem(`CATEGORY_${category.categoryId}`, JSON.stringify(category.questions));
+					category.questions.forEach(q => q.words = q.text.split(' '));
 				}
 			}
 
@@ -367,7 +360,7 @@ export const removeQuestion: ActionCreator<
 				questionId
 			});
 			if (doSync)
-				syncWithOthers(QuestionActionTypes.REMOVE_QUESTION, {categoryId, questionId});
+				syncWithOthers(QuestionActionTypes.REMOVE_QUESTION, { categoryId, questionId });
 		} catch (err) {
 			console.error(err);
 		}
@@ -460,23 +453,9 @@ export const assignQuestionAnswer: ActionCreator<
 	};
 };
 
-export const setIsDetail: ActionCreator<
-	ThunkAction<Promise<any>, ICategoriesState, null, ISetIsDetail>
-> = (isDetail: boolean) => {
-	return async (dispatch: Dispatch) => {
-		try {
-			dispatch({
-				type: QuestionActionTypes.SET_IS_DETAIL,
-				isDetail
-			});
-		}
-		catch (err) {
-			console.error(err);
-		}
-	};
-};
 
 const syncWithOthers = (type: string, entity: any) => {
+	/*
 	const btnSync = document.getElementById('btnSync');
 	localStorage.setItem('syncAction', JSON.stringify({
 			type,
@@ -485,6 +464,7 @@ const syncWithOthers = (type: string, entity: any) => {
 		})
 	);
 	btnSync!.click();
+	*/
 };
 
 export const storeQuestion: ActionCreator<
@@ -616,7 +596,7 @@ export const openQuestionForm: ActionCreator<any> = () => {
 
 export const getCategory: ActionCreator<
 	ThunkAction<Promise<any>, ICategoriesState, string, IGet>
-> = (categoryId: number, showCategoryForm:boolean) => {
+> = (categoryId: number, showCategoryForm: boolean) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			dispatch({
@@ -730,7 +710,7 @@ export const updateCategory: ActionCreator<
 			});
 			if (doSync)
 				syncWithOthers(QuestionActionTypes.UPDATE_CATEGORY, category);
-		} 
+		}
 		catch (err) {
 			console.error(err);
 		}

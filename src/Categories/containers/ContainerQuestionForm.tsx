@@ -11,26 +11,10 @@ import { QuestionActions,
 	storeQuestion,
 	updateQuestion,
 	cancelQuestion,
-	removeQuestionAnswer,
-	assignQuestionAnswer,
-	setIsDetail,
-	addAndAssignNewAnswer,
-	selectQuestionAnswer,
-	copyQuestionAnswer
+	editQuestion
 } from '../actions'
 
 import { QuestionForm } from '../components/QuestionForm';
-
-const joinQuestionAnswers = (question: IQuestion | undefined, answers: IAnswer[]) : IQuestionAnswer[]=> {
-	if (question === undefined || question.answers.length === 0 || answers === undefined)
-		return [];
-	console.log("question.answers", question.answers)
-	const questionAnswers = question.answers.map(qa => ({
-			...qa, text: answers.find(a => a.answerId === qa.answerId)!.text
-		})
-	);
-	return questionAnswers.sort((a,b) => a.assigned < b.assigned ? 1 : -1);
-}
 
 interface IProps {
 	canEdit: boolean,
@@ -45,7 +29,6 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	return {
 		categoryOptions,
 		question: question!,
-		questionAnswers: joinQuestionAnswers(question, answers),
 		answers,
 		formMode,
 		canEdit: ownProps.canEdit,
@@ -56,28 +39,12 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
+		editForm: (question: IQuestion, formMode: string) => 
+			dispatch<any>(editQuestion(question.categoryId, question.questionId, true)),
 		saveForm: (question: IQuestion, formMode: string) => 
 			dispatch<any>(formMode==='add'?storeQuestion(true, question):updateQuestion(true, question)),
 		cancel: () => dispatch<any>(cancelQuestion()),
-
-		// question answers
-		selectQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => 
-			dispatch<any>(selectQuestionAnswer(categoryId, questionId, answerId)),
-		copyQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => 
-			dispatch<any>(copyQuestionAnswer(categoryId, questionId, answerId)),
-		removeQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => 
-			dispatch<any>(removeQuestionAnswer(categoryId, questionId, answerId)),
-
-		assignQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => 
-			dispatch<any>(assignQuestionAnswer(categoryId, questionId, answerId)),
-		
-		setIsDetail: (isDetail: boolean) => {
-			dispatch<any>(setIsDetail(isDetail))
-		},
-
-		addAndAssignNewAnswer: (categoryId: number, questionId: number, answer: IAnswer, formMode: string) => {
-			dispatch<any>(addAndAssignNewAnswer(categoryId, questionId, answer, formMode))
-		}
+	
 	}
 }
 

@@ -42,6 +42,9 @@
  	overflow-y: auto;
  	z-index: 2;
  }
+ .question-answers .react-autosuggest__suggestions-container--open {
+	width: 35vw;
+ }
 
  .react-autosuggest__suggestions-list {
  	margin: 0;

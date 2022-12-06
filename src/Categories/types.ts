@@ -133,25 +133,19 @@ export interface ICategoriesState {
 	loading: boolean,
 	formMode: string;
 	categoryIdEditing: number;
-	isDetail: boolean;
 }
 
 
 export interface IQuestionFormProps {
 	question: IQuestion;
-	questionAnswers: IQuestionAnswer[];
 	answers: IAnswer[];
 	formMode: string;
 	canEdit: boolean,
+	categoryOptions: IOption<number>[],
 	handleClose: () => void;
 	cancel: () => void;
-	saveForm: (question: IQuestion, formMode: string) => void;
-	selectQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => void;
-	copyQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => void;
-	removeQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => void;
-	assignQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => void;
-	setIsDetail: (isDetail: boolean) => void;
-	categoryOptions: IOption<number>[];
+	editForm: (question: IQuestion, formMode: string) => void;
+ 	saveForm: (question: IQuestion, formMode: string) => void;
   }
 
   export interface ICategoryFormProps {
@@ -160,7 +154,6 @@ export interface IQuestionFormProps {
 	canEdit: boolean,
 	cancel: () => void;
 	saveForm: (category: ICategory, formMode: string) => void;
-	setIsDetail: (isDetail: boolean) => void;
   }
 
  

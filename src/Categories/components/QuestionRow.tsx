@@ -28,10 +28,10 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	return (
-		<ListGroup.Item className="py-0" variant={variant} action>
+		<ListGroup.Item className="py-0" variant={variant}>
 			<div ref={hoverRef} className="d-flex justify-content-start align-items-center">
 				<Button
-					style={{fontSize: '13px'}}
+					style={{ fontSize: '13px' }}
 					variant='link'
 					size="sm"
 					className="py-0 px-1 text-decoration-none"
@@ -39,28 +39,28 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 					{question.text}
 				</Button>
 				{hoverProps.isHovered &&
-					<>
 					<Button
 						variant={variant}
 						size="sm"
 						className="py-0 px-1"
-						style={{backgroundColor: 'transparent', borderWidth:'0'}}
+						style={{ backgroundColor: 'transparent', borderWidth: '0' }}
 						title="Edit"
 						onClick={() => edit(categoryId, questionId, true)}
 					>
-						<FontAwesomeIcon icon={faEdit} color='lightblue' />
+						<FontAwesomeIcon icon={faEdit} color={darkMode?'lightblue':'lightblue'} />
 					</Button>
+				}
+				{hoverProps.isHovered &&
 					<Button
 						variant={variant}
 						size="sm"
 						className="py-0 px-1"
-						style={{backgroundColor: 'transparent', borderWidth: '0'}}
+						style={{ backgroundColor: 'transparent', borderWidth: '0' }}
 						title="Remove"
 						onClick={() => remove(categoryId, questionId)}
 					>
-						<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
+						<FontAwesomeIcon icon={faWindowClose} color={darkMode?'lightblue':'lightblue'} />
 					</Button>
-					</>
 				}
 			</div>
 		</ListGroup.Item>

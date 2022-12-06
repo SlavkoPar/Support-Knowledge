@@ -8,7 +8,7 @@ import {
 
 import { IAnswer, IAnswerState } from './types'
 
-const initialAnswer: IAnswer = {
+export const initialAnswer: IAnswer = {
 	answerId: 0,
 	text: '',
 	words: [],

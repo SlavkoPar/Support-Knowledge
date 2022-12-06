@@ -8,18 +8,15 @@ import { Dispatch } from 'redux';
 
 import { useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 import { IAppState } from "./store/Store";
 import { IAuth } from "./Top/types";
 
 import logo from './logo.svg'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestion, faHome, faPlus, faSurprise, faUser, faUserFriends, faSignOutAlt, faSignInAlt, faRegistered, faAnchor, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faQuestion, faSurprise, faUser, faUserFriends, faAnchor } from '@fortawesome/free-solid-svg-icons'
 
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';

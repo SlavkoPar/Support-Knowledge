@@ -43,8 +43,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		question,
 		categoryOptions,
 		formMode,
-		categoryIdEditing,
-		isDetail
+		categoryIdEditing
 	} = categoriesState;
 
 	return {
@@ -58,7 +57,6 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		formMode,
 		categoryIdEditing,
 		canEdit: ownProps.canEdit,
-		isDetail,
 		tagOptions: tagState.tags.map(f => ({ label: f.name, value: f.tagId, color: f.color })),
 		auth: topState.top.auth,
 		navbarOpen: topState.top.navbarOpen

@@ -4,8 +4,8 @@ import React, { useCallback, useRef, useState, useContext, useEffect } from 'rea
 
 import { HashRouter as Router, Route, Routes } from 'react-router-dom' // useRouteMatch
 
-import { connect, Provider } from 'react-redux';
-import { Store, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { IAppState } from './store/Store';
 import { ThemeContext } from "./ThemeContext";
@@ -47,11 +47,6 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 	const { darkMode, variant, bg } = theme.state;
 
 	useEffect(() => {
-		// const login = {
-		// 	userName: 'Jack',
-		// 	pwd: 'Daniels'
-		// }
-		// checkAuthentication(login);
 		document.body.classList.add(bg)
 	}, []);
 
@@ -60,9 +55,10 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 		setOpen(false);
 	}
 
-	// null is the third state false/true/null in reducer
-	const app = //isAuthenticated !== null ? (  
+	const canEdit = isAuthenticated === true && auth!.who.roleId < 44;
 
+	// null is the third state false/true/null in reducer
+	const app = 
 		<Router>
 			<SideBar handleClose={handleClose} signOut={signOut} />
 			<Container fluid>
@@ -81,8 +77,8 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 								<Route path="/register" element={
 									<LoginForm canEdit={true} isRegister={true} />
 								} />
-								<Route path="/supporter/:tekst" element={<Support />} />
-								<Route path="/questions" element={<containers.categories canEdit={true} />} />
+								<Route path="/supporter/:tekst" element={<Support canEdit={canEdit} />} />
+								<Route path="/questions" element={<containers.categories canEdit={canEdit} />} />
 								<Route path="/answers/:slug" element={<AnswersPage />} />
 								<Route path="/users/:slug" element={<UsersPage canEdit={true} />} />
 							</Routes>
@@ -90,9 +86,7 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 
 					</Col>
 				</Row>
-
 			</Container>
-
 		</Router>
 	// )
 	// : (

@@ -71,7 +71,6 @@ export interface IFormProps {
 	canEdit: boolean,
 	cancel: () => void;
 	saveForm: (user: IUser, formMode: string) => void;
-	setIsDetail: (isDetail: boolean) => void;
 	roleOptions: IOption<number>[];
   }
  

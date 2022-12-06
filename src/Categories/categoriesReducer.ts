@@ -45,8 +45,7 @@ export const initialCategoriesState: ICategoriesState = {
 	categoryOptions: [],
 	loading: false,
 	formMode: 'display',
-	categoryIdEditing: -1,
-	isDetail: false
+	categoryIdEditing: -1
 };
 
 const storeToStorage: string[] = [
@@ -229,13 +228,6 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 				...state,
 				categoryQuestions,
 				question
-			}
-		}
-
-		case QuestionActionTypes.SET_IS_DETAIL: {
-			return {
-				...state,
-				isDetail: action.isDetail
 			}
 		}
 

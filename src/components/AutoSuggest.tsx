@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createRef, forwardRef } from 'react'
+import { createRef } from 'react'
 
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from "autosuggest-highlight/match";
@@ -207,7 +207,8 @@ export class AutoSuggest extends React.Component<{
 		const { categories, categoryQuestions } = this.props;
 		return categories
 			.map(group => {
-				console.log('categoryId:', group.categoryId, categoryQuestions.get(group.categoryId)!.questions)
+				console.log('categoryId:', group.categoryId);
+				console.log('questions:', categoryQuestions.get(group.categoryId)!.questions)
 				return {
 					...group,
 					questions: //.group.questions

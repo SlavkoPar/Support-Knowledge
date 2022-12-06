@@ -12,8 +12,7 @@ import { UserActions,
 	editUser,
 	removeUser,
 	storeUser,
-	cancelUser,
-	setIsDetail
+	cancelUser
 } from '../actions'
 
 import {UserForm}  from '../components/UserForm'
@@ -44,11 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch<UserActions>) => {
 		edit: (userRoleId: number, userId: number) => dispatch<any>(editUser(userRoleId, userId)),
 		remove: (userRoleId: number, userId: number) => dispatch<any>(removeUser(userRoleId, userId)),
 		saveForm: (user: IUser, formMode: string) => dispatch<any>(storeUser(user, formMode)),
-		cancel: () => dispatch<any>(cancelUser()),
-		
-		setIsDetail: (isDetail: boolean) => {
-			dispatch<any>(setIsDetail(isDetail))
-		}
+		cancel: () => dispatch<any>(cancelUser()),	
 	}
 }
 
