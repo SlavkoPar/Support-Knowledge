@@ -12,6 +12,7 @@ import { QuestionActions,
 	addQuestion, 
 	closeQuestionForm,
 	openQuestionForm,
+	editQuestion,
 } from '../actions'
 
 import CategoriesPage from '../components/CategoriesPage'
@@ -49,16 +50,14 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		categoryIdEditing,
 		canEdit: ownProps.canEdit,
 		tagOptions: tagState.tags.map(f => ({ label: f.name, value: f.tagId, color: f.color })),
-		//who: topState.top.auth!.who,
-		auth: topState.top.auth,
-		navbarOpen: topState.top.navbarOpen
+		auth: topState.top.auth
 	};
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
-		onSelectQuestion: (categoryId: number, questionId: number) => {
-			dispatch<any>(getQuestion(categoryId, questionId));
+		onSelectQuestion: (categoryId: number, questionId: number, canEdit: boolean) => {
+			dispatch<any>(canEdit?editQuestion(categoryId, questionId):getQuestion(categoryId, questionId));
 			dispatch<any>(openQuestionForm());
 		},
 		add: (categoryId: number, text: string, canEdit?: boolean) => dispatch<any>(addQuestion(categoryId, text, canEdit)),

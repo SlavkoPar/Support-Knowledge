@@ -60,7 +60,7 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 								categories={categories}
 								categoryQuestions={categoryQuestions}
 								tekst={tekst}
-								onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId)}
+								onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId, canEdit)}
 							/>
 							<hr />
 							{/* <h3>Categories</h3> */}

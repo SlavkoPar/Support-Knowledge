@@ -9,7 +9,7 @@ import { AutoSuggestAnswer } from '../../components/AutoSuggestAnswer';
 import QuestionAnswerRow from './QuestionAnswerRow';
 import { ThemeContext } from '../../ThemeContext';
 import { useContext, useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { AnswerForm } from '../../Answers/components/Form';
 
@@ -23,7 +23,7 @@ interface IProps {
 	selectQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => void,
 	copyQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => void,
 	removeQuestionAnswer: (categoryId: number, questionId: number, answerId: number) => void,
-	assignQuestionAnswer?: (categoryId: number, questionId: number, answerId: number, tekst?: string) => void,
+	assignQuestionAnswer: (categoryId: number, questionId: number, answerId: number, tekst?: string) => void,
 	setAnswerText?: (val: string) => void;
 	add: (categoryId: number, questionId: number) => void,
 	saveForm: (categoryId: number, questionId: number, answer: IAnswer) => void,
@@ -61,9 +61,19 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 		}
 	}
 
+	const assignQA = (categoryId: number, questionId: number, answerId: number) => {
+		assignQuestionAnswer(
+			categoryId,
+			questionId,
+			answerId
+		);
+		setShowAssign(false);
+	}
+
+
 	const addAnswer = () => {
-		 add(question.categoryId, question.questionId);
-		 handleShow();
+		add(question.categoryId, question.questionId);
+		handleShow();
 	}
 
 	const saveAnswerForm = (answer: IAnswer, formMode: string) => {
@@ -83,19 +93,21 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	const [showAssign, setShowAssign] = useState(false);
+
 	return (
-		<div className="name-container question-answers">
+		<div className="name-container">
 			{/* { questionAnswers.length === 0 && 
 				<div>
 					No answers yet
 				</div>
 			} */}
 			{questionAnswers.length > -1 &&
-				<>
+				<div style={{ height: '100px', overflowY: 'auto' }}>
 					<Table variant={variant} responsive striped bordered hover size="sm">
 						<thead>
 							<tr>
-								<th className="py0 px-5" style={{color:'lightblue'}}>{questionAnswers.length === 0 ? 'No answers yet' : 'Answers'}</th>
+								<th className="py0 px-5" style={{ color: 'lightblue' }}>{questionAnswers.length === 0 ? 'No answers yet' : 'Answers'}</th>
 								{canEdit && formMode !== 'display' && <th></th>}
 							</tr>
 						</thead>
@@ -135,43 +147,61 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 							)}
 							{canEdit && formMode !== 'display' &&
 								<tr>
-									<td className="question-answers">
-										<AutoSuggestAnswer
-											question={question}
-											answersUnassigned={answersUnassigned!}
-											assignQuestionAnswer={assignQuestionAnswer!}
-											setAnswerText={setAnswerText}
-										/>
+									<td className="py-0">
+										<Button size="sm" className="button-edit" title="Assign a new Answer" onClick={
+											(e) => {
+												setShowAssign(true);
+												e.preventDefault()
+											}
+										}>
+											Assign a new answer
+										</Button>
+
 									</td>
-									<td width="35px">
-										<button className="button-edit" title="Add a new Answer" onClick={
+									<td className="py-0" style={{textAlign:'right'}}>
+										<Button size="sm" className="button-edit" title="Add a new Answer" onClick={
 											(e) => {
 												addAnswer();
 												e.preventDefault()
 											}
 										}>
-											<FontAwesomeIcon icon={faPlus} color='lightblue' />
-										</button>
+											Create a new answer{/* <FontAwesomeIcon icon={faPlus} color='lightblue' /> */}
+										</Button>
 									</td>
 								</tr>}
 						</tbody>
 					</Table>
-				</>
+				</div>
 			}
-		<Modal show={show} onHide={handleClose} animation={true} size="sm" centered 
+			<Modal show={show} onHide={handleClose} animation={true} size="sm" centered
 				className={`${darkMode ? "dark" : ""}`}
 				contentClassName={`${darkMode ? "dark" : ""}`}>
 				<Modal.Header closeButton>
 					<Modal.Title>Add answer</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<AnswerForm 
+					<AnswerForm
 						answer={answer!}
 						formMode='add'
 						cancel={cancelAnswer}
 						saveForm={saveAnswerForm} />
 				</Modal.Body>
-			</Modal>    
+			</Modal>
+			<Modal show={showAssign} onHide={() => setShowAssign(false)} animation={true} size="sm" centered
+				className={`${darkMode ? "dark" : ""}`}
+				contentClassName={`${darkMode ? "dark" : ""}`}>
+				<Modal.Header closeButton>
+					<Modal.Title>Add answer</Modal.Title>
+				</Modal.Header>
+				<Modal.Body style={{height:'40vh', width:'50hw'}} className="question-answers">
+					<AutoSuggestAnswer
+						question={question}
+						answersUnassigned={answersUnassigned!}
+						assignQuestionAnswer={assignQA}
+						setAnswerText={setAnswerText}
+					/>
+				</Modal.Body>
+			</Modal>
 		</div>
 	);
 }

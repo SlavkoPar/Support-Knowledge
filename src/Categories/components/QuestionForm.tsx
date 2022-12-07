@@ -128,19 +128,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
       </Form.Group>
 
       <br />
-      <ContainerQuestionAnswers
-        // question={question}
-        // questionAnswers={props.questionAnswers}
-        // answers={props.answers}
-        canEdit={props.canEdit}
-        // selectQuestionAnswer={props.selectQuestionAnswer}
-        // copyQuestionAnswer={props.copyQuestionAnswer}
-        // removeQuestionAnswer={props.removeQuestionAnswer}
-        // assignQuestionAnswer={props.assignQuestionAnswer}
-        // addAnswer={props.addAnswer}
-	      // saveAnswerForm={props.saveAnswerForm}
-	      // cancelAnswer={cancelAnswer}
-      />
+      <ContainerQuestionAnswers  canEdit={props.canEdit} />
 
       <Form.Group controlId="status">
         <Form.Label>Status</Form.Label>
@@ -219,7 +207,7 @@ export const QuestionForm: React.FC<IQuestionFormProps> = (props: IQuestionFormP
   const { darkMode, variant, bg } = theme.state;
 
   return (
-    <Container className={`${darkMode ? "dark" : ""}`}>
+    <Container className={`mb-1 ${darkMode ? "dark" : ""}`}>
       <QuestForm {...props} />
     </Container>
   )

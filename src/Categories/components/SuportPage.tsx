@@ -27,7 +27,6 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	const handleShow = () => setShow(true);
 	const open = categories && (category || question)
 
-
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
 
@@ -40,7 +39,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							categories={categories}
 							categoryQuestions={categoryQuestions}
 							tekst={tekst}
-							onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId)}
+							onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId, canEdit)}
 						/>
 						<Button
 							variant={variant}

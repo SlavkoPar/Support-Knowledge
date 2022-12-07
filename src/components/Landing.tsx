@@ -5,8 +5,10 @@ interface ILanding {
 
 const Landing: React.FC<ILanding> = (props: ILanding) => {
   return (
-    <p>Landing page</p>
-   )
+    <div>
+      Landing Page
+    </div>
+  )
 }
 
 export default Landing;

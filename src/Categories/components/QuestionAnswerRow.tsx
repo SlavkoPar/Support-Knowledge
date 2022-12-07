@@ -21,9 +21,9 @@ const QuestionAnswerRow: React.FC<IQuestionAnswerRowProps> = (props: IQuestionAn
 
 	const [hoverRef, hoverProps] = useHover();
 
-	const { question, questionAnswer, selectQuestionAnswer, copyQuestionAnswer, removeQuestionAnswer } = props;
+	const { question, questionAnswer, removeQuestionAnswer } = props;
 	const { categoryId, questionId } = question;
-	const { answerId, text } = questionAnswer;
+	const { answerId, text, assigned } = questionAnswer;
 
 	return (
 		<div ref={hoverRef}  className="d-flex justify-content-start align-items-center">
@@ -33,9 +33,10 @@ const QuestionAnswerRow: React.FC<IQuestionAnswerRowProps> = (props: IQuestionAn
 				variant='link'
 				size="sm"
 				className="answer py-0 px-1 text-decoration-none"
+				title={`AnswerId:${answerId}\nAssigned: ${assigned.toLocaleDateString()} ${assigned.toLocaleTimeString()}`}
 				onClick={() => {
 					// selectQuestionAnswer(categoryId, questionId, answerId)}
-					alert('No action for the time being')
+					// alert('No action for the time being')
 				}}
 			>
 				{text}

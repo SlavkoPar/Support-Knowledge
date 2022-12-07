@@ -58,8 +58,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		categoryIdEditing,
 		canEdit: ownProps.canEdit,
 		tagOptions: tagState.tags.map(f => ({ label: f.name, value: f.tagId, color: f.color })),
-		auth: topState.top.auth,
-		navbarOpen: topState.top.navbarOpen
+		auth: topState.top.auth
 	};
 };
 

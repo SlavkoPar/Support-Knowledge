@@ -23,9 +23,9 @@ import { ILogin, IAuth } from './Top/types';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import SideBar from './SideBar';
+import About from './components/About';
 
 interface IProps {
-	navbarOpen: boolean,
 	isAuthenticated: boolean | null;
 	uuid: string | null;
 	auth?: IAuth,
@@ -34,12 +34,10 @@ interface IProps {
 	signOut: () => void;
 }
 
-const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, signOut }: IProps) => {
+const App = ({ isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, signOut }: IProps) => {
 
-	//const [navbarOpen, setNavbarOpen] = useState(true);
 	let main: null | HTMLDivElement = null;
 
-	//const [open, setOpen] = useState(navbarOpen);
 	const [mainMd, setMainMd] = useState(9);
 	const [mainLg, setMainLg] = useState(10);
 
@@ -81,6 +79,8 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 								<Route path="/questions" element={<containers.categories canEdit={canEdit} />} />
 								<Route path="/answers/:slug" element={<AnswersPage />} />
 								<Route path="/users/:slug" element={<UsersPage canEdit={true} />} />
+								<Route path="/about" element={<About />} />
+								<Route path="/landing" element={<Landing />} />
 							</Routes>
 						</div>
 
@@ -101,7 +101,6 @@ const App = ({ navbarOpen, isAuthenticated, uuid, auth, toggleNavbar, checkAuthe
 }
 
 const mapStateToProps = (store: IAppState) => ({
-	navbarOpen: store.topState.top.navbarOpen,
 	isAuthenticated: store.topState.top.isAuthenticated,
 	auth: store.topState.top.auth,
 	uuid: store.topState.top.uuid

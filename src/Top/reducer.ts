@@ -6,7 +6,6 @@ import {
 import { ITop, ITopState } from './types';
 
 const initialTop: ITop = {
-	navbarOpen: true,
 	isAuthenticated: null,
 	uuid: null,
 	darkMode: true
@@ -46,7 +45,6 @@ const myReducer: Reducer<ITopState, TopActions> = (
 			return {
 				...state,
 				top: {
-					navbarOpen: true,
 					isAuthenticated: true,
 					uuid: "placeholder-uuid",
 					auth: {
@@ -73,8 +71,7 @@ const myReducer: Reducer<ITopState, TopActions> = (
 			return {
 				...state,
 				top: {
-					...state.top,
-					navbarOpen: !state.top.navbarOpen		
+					...state.top
 				}
 			};
 		}	
@@ -94,7 +91,6 @@ const myReducer: Reducer<ITopState, TopActions> = (
 				...state,
 				top: {
 					...state.top,
-					navbarOpen: true,
 					isAuthenticated: true,
 					uuid: "placeholder-uuid",
 					auth: {
