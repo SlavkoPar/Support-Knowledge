@@ -135,7 +135,7 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 							)}
 							{canEdit && formMode !== 'display' &&
 								<tr>
-									<td className="question-answers" style={{border:"1px solid red"}}>
+									<td className="question-answers">
 										<AutoSuggestAnswer
 											question={question}
 											answersUnassigned={answersUnassigned!}

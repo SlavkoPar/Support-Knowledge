@@ -52,7 +52,9 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 						</Button>
 					</div>
 				</Col>
-				<Col>
+			</Row>
+			<Row>
+				<Col md={open ? 6 : 12} lg={open ? 6 : 12}>
 					<div>
 						{categories && question && showQuestionForm &&
 							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
@@ -63,7 +65,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					</div>
 				</Col>
 			</Row>
-			<Modal show={show} onHide={handleClose} animation={true} size="sm" centered 
+			<Modal show={show} onHide={handleClose} animation={true} size="sm" centered
 				className={`${darkMode ? "dark" : ""}`}
 				contentClassName={`${darkMode ? "dark" : ""}`}>
 				<Modal.Header closeButton>
