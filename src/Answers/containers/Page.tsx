@@ -1,4 +1,3 @@
-// import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -9,7 +8,7 @@ import { AnswerActions,  addAnswer, editAnswer, removeAnswer, storeAnswer, cance
 import { IAnswer } from '../types'
 
 import Page from '../components/Page'
-import { IQuestionAnswer, ICategory, ICategoriesState } from '../../Categories/types';
+import { IQuestionAnswer, ICategoriesState } from '../../Categories/types';
 
 const getUsedAnswers = (categoriesState: ICategoriesState) : IQuestionAnswer[]=> {
 	const { categories, categoryQuestions } = categoriesState;

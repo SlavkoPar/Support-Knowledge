@@ -5,12 +5,12 @@ import {
   TagActionTypes
 } from './actions';
 
-import {ITag, ITagState } from './types'
+import { ITagState } from './types'
 
-const initialTag: ITag = {
-	tagId: 0,
-	name: ''
-};
+// const initialTag: ITag = {
+// 	tagId: 0,
+// 	name: ''
+// };
 
 const initialTagState: ITagState = {
 	tags: [],

@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-import { IUser } from '../types';
 
 import { Select } from '../../common/Select';
 import { IFormProps } from '../types'
 import UserName from '../../common/containers/UserName';
 
-import { Button, Container, Row, Form } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import { ThemeContext } from '../../ThemeContext';
 
 const UsrForm: React.FC<IFormProps> = (props: IFormProps) => {

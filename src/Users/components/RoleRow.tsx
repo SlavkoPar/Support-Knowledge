@@ -3,13 +3,11 @@ import * as React from 'react';
 import { useHover } from '../../common/useHover'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWindowClose, faEdit, faCaretRight, faCaretDown, faPlus, faAppleWhole } from '@fortawesome/free-solid-svg-icons'
-import { Badge, Button, ListGroup } from 'react-bootstrap'
-
+import { faWindowClose, faEdit, faCaretRight, faCaretDown, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { Badge, Button } from 'react-bootstrap'
 
 import { IRole, IUser } from '../types';
 import { ThemeContext } from '../../ThemeContext';
-
 
 interface IUserRowProps {
 	who: IUser;

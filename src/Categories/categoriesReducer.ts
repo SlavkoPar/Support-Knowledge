@@ -8,7 +8,6 @@ import {
 
 import { IQuestion, ICategory, ICategoriesState, ICategoryState } from './types'
 import { reduceQuestions } from './categoryReducer'
-import { createWatchCompilerHost } from 'typescript';
 
 export const SUPPORT_CATEGORIES = 'SUPPORT_CATEGORIES';
 
@@ -142,7 +141,7 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 
 		case QuestionActionTypes.STORE_QUESTION: {
 			const { question } = action;
-			const { categoryId, questionId } = question;
+			const { categoryId } = question;
 			const { categoryQuestions } = reduceQuestions(state.categoryQuestions, action, categoryId);
 			return {
 				...state,
@@ -285,7 +284,7 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 		}
 
 		case QuestionActionTypes.TOGGLE_CATEGORY: {
-			const group = state.categories.find(g => g.categoryId === action.categoryId);
+			// const group = state.categories.find(g => g.categoryId === action.categoryId);
 			return {
 				...state,
 				categories: state.categories.map(g => g.categoryId !== action.categoryId

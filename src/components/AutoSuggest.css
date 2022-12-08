@@ -43,7 +43,7 @@
  	z-index: 2;
  }
  .question-answers .react-autosuggest__suggestions-container--open {
-	width: 35vw;
+	width: 45vw;
  }
 
  .react-autosuggest__suggestions-list {
@@ -69,7 +69,6 @@
 	font-size: 13px;
  }
 
-
  .react-autosuggest__suggestion-match {
  	color: cyan;
  	font-weight: bold;
@@ -81,6 +80,8 @@
 	color: #212529;
 	background-color: #eff;
  }
+
+ .light .react-autosuggest__suggestion:hover { background-color: #ddd; }
 
  .light .react-autosuggest__suggestions-container {
 	border: 1px solid #aaa;
@@ -105,6 +106,8 @@
 	color: #fff;
 	background-color: #343a40;
  }
+
+ .dark .react-autosuggest__suggestion:hover { background-color: #adb5bd; }
 
 /*
 .react-autosuggest__container',

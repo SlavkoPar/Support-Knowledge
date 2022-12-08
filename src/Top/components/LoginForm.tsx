@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
 import { useFormik } from 'formik';
@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 const LogForm: React.FC<IFormProps> = (props: IFormProps) => {
 
-  let { formMode, authError } = props;
+  let { authError } = props;
 
   let navigate = useNavigate();
   if (props.isAuthenticated) {

@@ -5,10 +5,8 @@ import { ThemeContext } from "../../ThemeContext";
 import { IAnswer } from '../types';
 import { AnswerForm } from './Form'
 import List from './List';
-import { COLORS } from '../../formik/theme';
 import { IQuestionAnswer } from '../../Categories/types';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-const color = 'blue';
 
 interface IProps {
 	answers: IAnswer[],
@@ -28,7 +26,7 @@ type MyParams = {
 };
 
 const Page: React.FC<IProps> = (props: IProps) => {
-	let { slug } = useParams<MyParams>();
+	// let { slug } = useParams<MyParams>();
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
@@ -46,16 +44,16 @@ const Page: React.FC<IProps> = (props: IProps) => {
 								{'No answers at all  '}
 							</div>
 						)
-						: (
-							<div>
-								<List
-									answers={answers}
-									usedAnswers={usedAnswers}
-									getCategoryQuestion={getCategoryQuestion}
-									edit={edit}
-									remove={remove} />
-							</div>
-						)}
+							: (
+								<div>
+									<List
+										answers={answers}
+										usedAnswers={usedAnswers}
+										getCategoryQuestion={getCategoryQuestion}
+										edit={edit}
+										remove={remove} />
+								</div>
+							)}
 					</div>
 				</Col>
 				<Col md={5}>

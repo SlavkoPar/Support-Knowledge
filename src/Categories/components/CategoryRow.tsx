@@ -28,7 +28,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 	const [hoverRef, hoverProps] = useHover();
 	const { category, questions, toggleCategory, editCategory, removeCategory, onSelectCategory,
 		onSelectQuestion, add, edit, remove } = props;
-	const { categoryId, title, questions: categories, isExpanded } = category;
+	const { categoryId, title, isExpanded } = category;
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;

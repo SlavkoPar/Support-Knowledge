@@ -1,7 +1,6 @@
 import { useContext } from "react";
 
 import { ThemeContext } from "./ThemeContext";
-import SwitchButton from "./SwitchButton";
 
 import { connect } from "react-redux";
 import { Dispatch } from 'redux';
@@ -11,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { IAppState } from "./store/Store";
 import { IAuth } from "./Top/types";
 
-import logo from './logo.svg'
+// import logo from './logo.svg'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion, faSurprise, faUser, faUserFriends, faAnchor } from '@fortawesome/free-solid-svg-icons'
@@ -22,6 +21,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { toggleMode, TopActions } from "./Top/actions";
+import { closeQuestionForm } from "./Categories/actions";
 
 interface ISideBarProps {
   isAuthenticated: boolean | null;
@@ -30,9 +30,10 @@ interface ISideBarProps {
   signOut: () => void;
   handleClose: () => void;
   toggleMode: () => void;
+  closeQuestionForm: () => void;
 }
 
-function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode }: ISideBarProps) {
+function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode, closeQuestionForm }: ISideBarProps) {
 
   const theme = useContext(ThemeContext);
   const { darkMode, variant, bg } = theme.state;
@@ -86,7 +87,9 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
               }
             >
               {isAuthenticated &&
-                <Nav.Link href="#/supporter/promo">
+                <Nav.Link href="#/supporter/promo" onClick={()=>{
+                  closeQuestionForm();
+                }}>
                   <FontAwesomeIcon icon={faSurprise} color='lightblue' />{' '}Supporter
                 </Nav.Link>
               }
@@ -166,11 +169,8 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
                     <NavDropdown.Item href="#" onClick={otkaciMe}>Sign out</NavDropdown.Item>
                   }
                 </NavDropdown>
-
               }
-
             </Nav>
-
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
@@ -192,7 +192,8 @@ const mapStateToProps = (store: IAppState, ownProps: IOwnProps) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<TopActions>) => {
   return {
-    toggleMode: () => dispatch<any>(toggleMode())
+    toggleMode: () => dispatch<any>(toggleMode()),
+    closeQuestionForm: () => dispatch<any>(closeQuestionForm())
   }
 };
 

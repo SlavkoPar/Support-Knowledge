@@ -8,7 +8,7 @@ import { Dispatch } from 'redux';
 import { register, authenticate, cancelLogin, TopActions } from '../actions'
 
 import { LoginForm } from '../components/LoginForm';
-import { ILogin, ITop } from '../types';
+import { ILogin } from '../types';
 
 interface IProps {
 	canEdit: boolean,

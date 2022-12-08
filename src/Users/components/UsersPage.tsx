@@ -5,21 +5,16 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { IRole, IRolesProps } from '../types'
 
-import { IUser } from '../types';
-
 import UserForm from '../containers/UserForm'
 import UserRow from './UserRow';
 import RoleRow from './RoleRow';
-import { useParams } from 'react-router-dom' // useRouteMatch
 import { ThemeContext } from "../../ThemeContext";
 
-import { COLORS } from '../../formik/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-const color = 'blue';
 
-type SupportParams = {
-	tekst: string;
-};
+// type SupportParams = {
+// 	tekst: string;
+// };
 
 const UserPage: React.FC<IRolesProps> = (props: IRolesProps) => {
 

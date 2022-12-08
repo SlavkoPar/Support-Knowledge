@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 
 import { IAppState } from '../../store/Store';
-import { IUser, IRole } from '../types'
+import { IUser } from '../types'
 
 import { Dispatch } from 'redux';  // ActionCreatorsMapObject, 
 
@@ -23,7 +23,7 @@ interface IProps {
 
 // Grab the users from the store and make them available on props
 const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
-	const {usersState, tagState, topState} = store;
+	const {usersState, topState} = store;
 	const { roles, userEditing, roleOptions, formMode, roleIdEditing } = usersState; 
 	return {
 		auth: topState.top.auth,

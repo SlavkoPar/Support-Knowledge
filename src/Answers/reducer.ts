@@ -21,7 +21,8 @@ const initialAnswerState: IAnswerState = {
 	answers: [],
 	answer: undefined,
 	loading: false,
-	formMode: 'display'
+	formMode: 'display',
+	showAnswerForm: false
 };
 
 const aTypesToStore = Object.keys(AnswerActionTypes).filter(a => a !== AnswerActionTypes.GET_ALL_ANSWERS);
@@ -54,7 +55,8 @@ const myReducer: Reducer<IAnswerState, AnswerActions> = (
 			const answer = state.answers.find(a => a.answerId === action.answerId);
 			return {
 				...state,
-				answer
+				answer,
+				showAnswerForm: true
 			};
 		}
 
@@ -77,7 +79,8 @@ const myReducer: Reducer<IAnswerState, AnswerActions> = (
 			return {
 				...state,
 				formMode: 'edit',
-				answer: { ...answer!, words: answer!.text.split(' ') }
+				answer: { ...answer!, words: answer!.text.split(' ') },
+				showAnswerForm: true
 			};
 		}
 
@@ -118,6 +121,14 @@ const myReducer: Reducer<IAnswerState, AnswerActions> = (
 				...state,
 				formMode: 'display',
 				answers: state.answers.filter(a => a.answerId !== action.answerId)
+			};
+		}
+
+		case AnswerActionTypes.CLOSE_ANSWER_FORM: {
+			return {
+				...state,
+				formMode: 'display',
+				showAnswerForm: false
 			};
 		}
 

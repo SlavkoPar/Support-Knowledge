@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import { IQuestionFormProps } from '../types';
@@ -129,6 +129,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
       <br />
       <ContainerQuestionAnswers  canEdit={props.canEdit} />
+      <br />
 
       <Form.Group controlId="status">
         <Form.Label>Status</Form.Label>

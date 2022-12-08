@@ -1,9 +1,7 @@
-// import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { IAppState } from '../../store/Store';
-import { IQuestion, IQuestionAnswer, ICategory } from '../types'
-import { IAnswer } from '../../Answers/types'
+import { IQuestion } from '../types'
 
 import { Dispatch } from 'redux';
 

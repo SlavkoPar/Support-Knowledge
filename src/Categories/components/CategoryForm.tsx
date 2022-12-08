@@ -26,13 +26,7 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
     validationSchema: Yup.object({
       title: Yup.string()
         .max(150, 'Must be 150 characters or less')
-        .required('Required'),
-      /*answers: Yup.string()
-        .max(20, 'Must be 20 characters or less')
-        .required('Required'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('Required'),*/
+        .required('Required')
     }),
     onSubmit: values => {
       // alert(JSON.stringify(values, null, 2));

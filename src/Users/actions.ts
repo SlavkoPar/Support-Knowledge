@@ -1,11 +1,9 @@
 // Import redux types
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-// import axios from 'axios';
 
 // Import User Typing
 import { IUser, IRole, IRoleJson, IUsersState } from './types';
-
 
 ///////////////////////////////////////////////////
 // localStorage
@@ -13,7 +11,6 @@ import { SUPPORT_USERS } from './reducer';
 
 import data from "./data.json"
 import { IAppState } from '../store/Store';
-import { TopActionTypes } from '../Top/actions';
 
 const parseFromJson = (): IRole[] => {
 	return data.map(g => {

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useHover } from '../../common/useHover'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWindowClose, faEdit, faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faWindowClose, faCopy } from '@fortawesome/free-solid-svg-icons'
 
 import { IQuestion, IQuestionAnswer } from '../types';
 import { Button } from 'react-bootstrap';
@@ -27,7 +27,6 @@ const QuestionAnswerRow: React.FC<IQuestionAnswerRowProps> = (props: IQuestionAn
 
 	return (
 		<div ref={hoverRef}  className="d-flex justify-content-start align-items-center">
-			{/* <input id={id} type="hidden" value={questionAnswer.text}></input> */}
 			<Button
 				style={{ fontSize: '13px' }}
 				variant='link'

@@ -19,8 +19,7 @@ type SupportParams = {
 
 const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	let { tekst } = useParams<SupportParams>();
-	const { categories, categoryQuestions, category, question, showQuestionForm, onSelectQuestion, add, closeQuestionForm, canEdit } = props;
-	console.log('tekst:', tekst)
+	const { categories, categoryQuestions, category, question, showQuestionForm, onSelectQuestion, add, canEdit } = props;
 
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
@@ -29,7 +28,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
-
+	console.log(1111111111111)
 	return (
 		<Container fluid>
 			<Row className={`${darkMode ? "dark" : ""}`}>

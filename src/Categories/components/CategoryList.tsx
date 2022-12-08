@@ -1,17 +1,14 @@
 import { useRef, useContext } from 'react'
-import { faPlus, faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ThemeContext } from "../../ThemeContext";
 
 import { ICategoryListProps } from '../types'
 
-import QuestionRow from './QuestionRow';
 import CategoryRow from './CategoryRow';
 
-import { COLORS } from '../../formik/theme';
 import { ListGroup } from 'react-bootstrap';
-const color = 'blue';
 
 const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) => {
 
@@ -19,8 +16,8 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 	const { darkMode, variant, bg } = theme.state;
 
 	const { categories, categoryQuestions,
-		categoryIdEditing, onSelectCategory, onSelectQuestion, add, edit, remove, canEdit,
-		addCategory, toggleCategory, editCategory, removeCategory, updateCategory, auth } = props;
+		onSelectCategory, onSelectQuestion, add, edit, remove, 
+		addCategory, toggleCategory, editCategory, removeCategory } = props;
 
 
 	const inputEl = useRef<HTMLInputElement>(null);

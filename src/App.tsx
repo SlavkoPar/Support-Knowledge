@@ -1,6 +1,4 @@
-
-
-import React, { useCallback, useRef, useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import { HashRouter as Router, Route, Routes } from 'react-router-dom' // useRouteMatch
 
@@ -36,10 +34,10 @@ interface IProps {
 
 const App = ({ isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, signOut }: IProps) => {
 
-	let main: null | HTMLDivElement = null;
+	// let main: null | HTMLDivElement = null;
 
-	const [mainMd, setMainMd] = useState(9);
-	const [mainLg, setMainLg] = useState(10);
+	// const [mainMd, setMainMd] = useState(9);
+	// const [mainLg, setMainLg] = useState(10);
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;

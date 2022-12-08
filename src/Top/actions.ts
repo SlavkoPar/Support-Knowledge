@@ -2,13 +2,11 @@
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 // Import Top Typing
-import { ILogin, ITop, ITopJson, ITopState } from './types';
+import { ILogin, ITop, ITopJson } from './types';
 
 import { IAppState } from '../store/Store';
-import { IUser, RoleId, IUsersState } from '../Users/types';
-import { findUser, getUser, storeUser, UserActionTypes } from '../Users/actions';
-import { ThemeContext } from '../ThemeContext';
-import { useContext } from 'react';
+import { IUser, RoleId } from '../Users/types';
+import { findUser, storeUser, UserActionTypes } from '../Users/actions';
 
 // localStorage
 export const SUPPORT_TOP = 'SUPPORT_TOP';

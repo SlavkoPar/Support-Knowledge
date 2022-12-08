@@ -19,4 +19,5 @@ export interface IAnswerState {
 	readonly answer?: IAnswer;
 	loading: boolean;
 	formMode: string;
+	showAnswerForm: boolean;
 }

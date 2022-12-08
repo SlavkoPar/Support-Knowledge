@@ -8,8 +8,6 @@ import { faWindowClose, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { IUser } from '../types';
 import { Button, ListGroup } from 'react-bootstrap';
 import { ThemeContext } from '../../ThemeContext';
-import { userReducer } from '../reducer';
-
 
 interface IRowProps {
 	who: IUser;

@@ -1,8 +1,7 @@
-// import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { IAppState } from '../../store/Store';
-import { IUser, IRole } from '../types'
+import { IRole } from '../types'
 
 import { Dispatch } from 'redux';  // ActionCreatorsMapObject, 
 
@@ -11,8 +10,6 @@ import { UserActions,
 	addUser, 
 	editUser,
 	removeUser,
-	storeUser,
-	cancelUser,
 	addRole,
 	editRole,
 	removeRole,

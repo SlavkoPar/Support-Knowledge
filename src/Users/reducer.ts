@@ -93,7 +93,7 @@ const myReducer: Reducer<IUsersState, UserActions> = (
 		case UserActionTypes.CREATE_OPTIONS: {
 			const {roles} = state;
 			let allUsers: IUser[] = [];
-			roles.map(g => {
+			roles.forEach(g => {
 				//console.log('g', g)
 				allUsers = allUsers.concat(g.users)
 			});
@@ -185,7 +185,7 @@ const myReducer: Reducer<IUsersState, UserActions> = (
 			else {
 				const { roles } = state;
 				const {user} = action;
-				const userId: number = user.roleId;
+				//const userId: number = user.roleId;
 				const g = roles.find(g => g.roleId === user.roleId);
 				const q = g!.users.find(q => q.userId === user.userId);
 				if (q) { // change user
@@ -253,7 +253,7 @@ const myReducer: Reducer<IUsersState, UserActions> = (
 
 		case UserActionTypes.TOGGLE_ROLE: {
 			console.log(action)
-			const group = state.roles.find(g => g.roleId === action.roleId);
+			//const group = state.roles.find(g => g.roleId === action.roleId);
 			return {
 				...state,
 				roles: state.roles.map(g => g.roleId !== action.roleId

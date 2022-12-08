@@ -1,8 +1,5 @@
 import * as React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faWindowClose } from '@fortawesome/free-solid-svg-icons'
-
 import { IQuestion, IQuestionAnswer } from '../types';
 import { IAnswer } from '../../Answers/types';
 import { AutoSuggestAnswer } from '../../components/AutoSuggestAnswer';
@@ -49,17 +46,17 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 		setTekst(val);
 	}
 
-	const assignQuestionAnswerTekst = () => {
-		if (assignQuestionAnswer) {
-			//storeAnswer({ answerId: -1, text: tekst }, 'add')
-			assignQuestionAnswer(
-				question.categoryId,
-				question.questionId,
-				-1,
-				tekst
-			);
-		}
-	}
+	// const assignQuestionAnswerTekst = () => {
+	// 	if (assignQuestionAnswer) {
+	// 		//storeAnswer({ answerId: -1, text: tekst }, 'add')
+	// 		assignQuestionAnswer(
+	// 			question.categoryId,
+	// 			question.questionId,
+	// 			-1,
+	// 			tekst
+	// 		);
+	// 	}
+	// }
 
 	const assignQA = (categoryId: number, questionId: number, answerId: number) => {
 		assignQuestionAnswer(
@@ -104,11 +101,10 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 			} */}
 			{questionAnswers.length > -1 &&
 				<div style={{ height: '100px', overflowY: 'auto' }}>
-					<Table variant={variant} responsive striped bordered hover size="sm">
+					<Table variant={variant} responsive striped bordered hover size="sm" className="mb-0">
 						<thead>
 							<tr>
-								<th className="py0 px-5" style={{ color: 'lightblue' }}>{questionAnswers.length === 0 ? 'No answers yet' : 'Answers'}</th>
-								{canEdit && formMode !== 'display' && <th></th>}
+								<th colSpan={2} className="py-0 px-5" style={{ color: 'lightblue' }}>{questionAnswers.length === 0 ? 'No answers yet' : 'Answers'}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -145,41 +141,42 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 								} */}
 								</tr>
 							)}
-							{canEdit && formMode !== 'display' &&
-								<tr>
-									<td className="py-0">
-										<Button size="sm" className="button-edit" title="Assign a new Answer" onClick={
-											(e) => {
-												setShowAssign(true);
-												e.preventDefault()
-											}
-										}>
-											Assign a new answer
-										</Button>
 
-									</td>
-									<td className="py-0" style={{textAlign:'right'}}>
-										<Button size="sm" className="button-edit" title="Add a new Answer" onClick={
-											(e) => {
-												addAnswer();
-												e.preventDefault()
-											}
-										}>
-											Create a new answer{/* <FontAwesomeIcon icon={faPlus} color='lightblue' /> */}
-										</Button>
-									</td>
-								</tr>}
 						</tbody>
 					</Table>
 				</div>
 			}
-			<Modal show={show} onHide={handleClose} animation={true} size="sm" centered
+			{canEdit && formMode !== 'display' &&
+				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+					<Button size="sm" className="button-edit py-0" title="Assign a new Answer" style={{border:'1px solid silver', fontSize: '12px'}}
+						variant={variant}
+						onClick={
+							(e) => {
+								setShowAssign(true);
+								e.preventDefault()
+							}
+						}>
+						Assign a new answer
+					</Button>
+					<Button size="sm" className="button-edit py-0" title="Add a new Answer" style={{border:'1px solid silver', fontSize: '12px'}}
+						variant={variant}
+						onClick={
+							(e) => {
+								addAnswer();
+								e.preventDefault()
+							}
+						}>
+						Create a new answer{/* <FontAwesomeIcon icon={faPlus} color='lightblue' /> */}
+					</Button>
+				</div>
+			}
+			<Modal show={show} onHide={handleClose} animation={true} centered size="lg"
 				className={`${darkMode ? "dark" : ""}`}
 				contentClassName={`${darkMode ? "dark" : ""}`}>
 				<Modal.Header closeButton>
 					<Modal.Title>Add answer</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
+				<Modal.Body style={{ height: '40vh', width: '50vw' }} >
 					<AnswerForm
 						answer={answer!}
 						formMode='add'
@@ -187,13 +184,13 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 						saveForm={saveAnswerForm} />
 				</Modal.Body>
 			</Modal>
-			<Modal show={showAssign} onHide={() => setShowAssign(false)} animation={true} size="sm" centered
+			<Modal show={showAssign} onHide={() => setShowAssign(false)} animation={true} size="lg" centered
 				className={`${darkMode ? "dark" : ""}`}
 				contentClassName={`${darkMode ? "dark" : ""}`}>
 				<Modal.Header closeButton>
 					<Modal.Title>Add answer</Modal.Title>
 				</Modal.Header>
-				<Modal.Body style={{height:'40vh', width:'50hw'}} className="question-answers">
+				<Modal.Body style={{ height: '40vh', width: '50vw' }} className="question-answers">
 					<AutoSuggestAnswer
 						question={question}
 						answersUnassigned={answersUnassigned!}

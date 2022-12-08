@@ -7,7 +7,7 @@ import { ThunkAction } from 'redux-thunk';
 import { IQuestion, ICategory, ICategoryJson, ICategoriesState, IQuestionJson, ICategoryState } from './types';
 
 import { addAnswer, AnswerActionTypes, storeAnswer } from '../Answers/actions'
-import { IAnswer, IAnswerState } from '../Answers/types';
+import { IAnswer } from '../Answers/types';
 
 ///////////////////////////////////////////////////
 // localStorage
@@ -15,7 +15,6 @@ import { initialCategory, SUPPORT_CATEGORIES } from './categoriesReducer';
 
 import data from "./data.json"
 import { IAppState } from '../store/Store';
-import { reduceQuestions } from './categoryReducer';
 
 const parseFromJson = (): ICategory[] => {
 	return data.map(g => parseDates(g));
@@ -580,6 +579,9 @@ export const closeQuestionForm: ActionCreator<any> = () => {
 		}
 	};
 };
+
+
+
 
 export const openQuestionForm: ActionCreator<any> = () => {
 	return (dispatch: Dispatch) => {
