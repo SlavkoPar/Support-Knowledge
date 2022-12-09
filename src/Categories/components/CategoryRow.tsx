@@ -4,7 +4,7 @@ import { useHover } from '../../common/useHover'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose, faEdit, faCaretRight, faCaretDown, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { ThemeContext } from "../../ThemeContext";
-import { Button, ListGroup } from 'react-bootstrap'
+import { Badge, Button, ListGroup } from 'react-bootstrap'
 
 import { ICategory, IQuestion } from '../types';
 import QuestionRow from './QuestionRow';
@@ -59,6 +59,9 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 					>
 						{title}
 					</Button>
+					<Badge bg="primary" pill>
+						{questions.length}
+					</Badge>
 					<Button
 						variant={variant}
 						size="lg"
