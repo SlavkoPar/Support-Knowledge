@@ -91,7 +91,6 @@ export const getAllAnswers: ActionCreator<
 			let answers: IAnswer[] = [];
 			if (isWebStorageSupported()) {
 				const sAnswers = localStorage.getItem(SUPPORT_ANSWERS);
-				console.log('SAnswers',  sAnswers)
 				if (sAnswers !== null) {
 					const parsed = JSON.parse(sAnswers);
 					answers = parseFromLocalStorage(parsed);

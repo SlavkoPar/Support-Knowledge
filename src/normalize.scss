@@ -9,8 +9,12 @@ $font-size-base: 1rem !default;
 $form-label-margin-bottom: .1rem !default;
 
 @import "~bootstrap/scss/variables";
+.dropdown-item {
+    font-size: .875rem;
+}
 
 @import "~bootstrap/scss/mixins";
+
 
 
 .light {

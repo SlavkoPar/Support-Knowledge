@@ -11,9 +11,10 @@ import { IAppState } from "./store/Store";
 import { IAuth } from "./Top/types";
 
 // import logo from './logo.svg'
+import JSZip from 'jszip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestion, faSurprise, faUser, faUserFriends, faAnchor } from '@fortawesome/free-solid-svg-icons'
+import { faQuestion, faSurprise, faUser, faUserFriends, faAnchor, faDatabase } from '@fortawesome/free-solid-svg-icons'
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -87,7 +88,7 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
               }
             >
               {isAuthenticated &&
-                <Nav.Link href="#/supporter/promo" onClick={()=>{
+                <Nav.Link href="#/supporter/promo" onClick={() => {
                   closeQuestionForm();
                 }}>
                   <FontAwesomeIcon icon={faSurprise} color='lightblue' />{' '}Supporter
@@ -149,13 +150,13 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
                   menuVariant={variant}
                   align="end"
                 >
-                <NavDropdown.Item eventKey="DARKMODE">
-                  Dark mode
-                </NavDropdown.Item>
-                <NavDropdown.Item eventKey="LIGHTMODE">
-                  Light mode
-                </NavDropdown.Item>
-                {/* <Form className="d-flex">
+                  <NavDropdown.Item eventKey="DARKMODE">
+                    Dark mode
+                  </NavDropdown.Item>
+                  <NavDropdown.Item eventKey="LIGHTMODE">
+                    Light mode
+                  </NavDropdown.Item>
+                  {/* <Form className="d-flex">
                   <Form.Control
                     type="search"
                     placeholder="Search"
@@ -164,12 +165,35 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
                   />
                   <Button variant="outline-success">Search</Button>
                 </Form> */}
-                   <NavDropdown.Divider />
-                  {isAuthenticated &&
-                    <NavDropdown.Item href="#" onClick={otkaciMe}>Sign out</NavDropdown.Item>
-                  }
+
+                  <NavDropdown.Divider />
+                  <NavDropdown
+                    title={<span style={{ padding: "0", fontSize: '0.75rem' }}><FontAwesomeIcon icon={faDatabase} />{' '}Local Storage</span>}
+                    id={`offcanvasNavbarDropdown-expand2`}
+                    menuVariant={variant}
+                    align="end"
+                    
+                  >
+                    <NavDropdown.Item href="#" onClick={() => displayLocalStorage()}>
+                      Display
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#" onClick={() => clearLocalStorage}>
+                      Clear
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#" onClick={() => exportLocalStorage()}>
+                      Export
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#" onClick={() => importLocalStorage()}>
+                      Import
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#" onClick={otkaciMe}>
+                    Sign out
+                  </NavDropdown.Item>
                 </NavDropdown>
               }
+
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
@@ -203,3 +227,62 @@ export default connect(
   mapDispatchToProps
 )(SideBar);
 
+
+function expLocalStorage(data: any, zip?: boolean, filename?: string) {
+
+  if (!data) {
+    console.error('Console.save: No data')
+    return;
+  }
+
+  if (!filename) filename = 'SupportKnowlegde' + (zip ? '.zip' : '.json')
+
+  if (typeof data === "object") {
+    data = JSON.stringify(data, undefined, 4)
+  }
+
+
+  var blob = new Blob([data], { type:  'text/json' }),
+    e = document.createEvent('MouseEvents'),
+    a = document.createElement('a')
+
+  a.download = filename
+  a.href = window.URL.createObjectURL(blob)
+  a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
+  e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+  a.dispatchEvent(e)
+  return false
+}
+
+function displayLocalStorage() {
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    console.log("========================================================");
+    console.log(key);
+    console.log("========================================================");
+    console.log(key ? localStorage.getItem(key!) : "null");
+  }
+  return false
+}
+
+function clearLocalStorage() {
+  if (window.confirm('Are you sure?') === true) {
+    const top = localStorage.getItem('SUPPORT_TOP')
+    const users = localStorage.getItem('SUPPORT_USERS')
+
+    localStorage.clear();
+    if (top)
+      localStorage.setItem('SUPPORT_TOP', top!)
+    if (users)
+      localStorage.setItem('SUPPORT_USERS', users!)
+  }
+  return false
+}
+
+function exportLocalStorage() {
+  expLocalStorage(JSON.stringify(localStorage));
+}
+
+
+function importLocalStorage() {
+}
