@@ -363,6 +363,11 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			};
 		}
 
+		case QuestionActionTypes.CLEAR: {
+			return {
+				...initialCategoriesState
+			};
+		}
 
 		default:
 			return state;

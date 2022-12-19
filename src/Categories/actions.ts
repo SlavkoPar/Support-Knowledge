@@ -74,7 +74,8 @@ export enum QuestionActionTypes {
 	REMOVE_QUESTION_ANSWER = 'REMOVE_QUESTION_ANSWER',
 	ASSIGN_QUESTION_ANSWER = 'ASSIGN_QUESTION_ANSWER',
 	// localSTorage
-	SET_LAST_ANSWER_ID = 'SET_LAST_ANSWER_ID'
+	SET_LAST_ANSWER_ID = 'SET_LAST_ANSWER_ID',
+	CLEAR = 'CLEAR'
 }
 
 
@@ -211,6 +212,17 @@ export interface IAddAndAssignNewAnswer {
 	answer: IAnswer;
 }
 
+export interface IAddAndAssignNewAnswer {
+	type: AnswerActionTypes.STORE_ANSWER;
+	categoryId: number,
+	questionId: number,
+	answer: IAnswer;
+}
+
+export interface IClear {
+	type: QuestionActionTypes.CLEAR;
+}
+
 
 // Combine the action types with a union (we assume there are more)
 export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | IUpdate | ICancel |
@@ -218,7 +230,7 @@ export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | I
 	IStoreCategory | IUpdateCategory | ICancelCategory |
 	IRemoveQuestionAnswer | IAssignQuestionAnswer |
 	IAddAndAssignNewAnswer |
-	ICloseQuestionForm | IOpenQuestionForm;
+	ICloseQuestionForm | IOpenQuestionForm | IClear;
 
 const isWebStorageSupported = () => 'localStorage' in window
 
@@ -746,6 +758,18 @@ export const addAndAssignNewAnswer: ActionCreator<
 				});
 		}
 		catch (err) {
+			console.error(err);
+		}
+	};
+};
+
+export const clearQuestions: ActionCreator<any> = () => {
+	return (dispatch: Dispatch) => {
+		try {
+			dispatch({
+				type: QuestionActionTypes.CLEAR
+			});
+		} catch (err) {
 			console.error(err);
 		}
 	};

@@ -24,6 +24,10 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { toggleMode, TopActions } from "./Top/actions";
 import { closeQuestionForm } from "./Categories/actions";
 
+import { clearAnswers } from "./Answers/actions"
+import { clearQuestions } from "./Categories/actions"
+
+
 interface ISideBarProps {
   isAuthenticated: boolean | null;
   uuid: string | null;
@@ -32,9 +36,14 @@ interface ISideBarProps {
   handleClose: () => void;
   toggleMode: () => void;
   closeQuestionForm: () => void;
+  clearAnswers: () => void;
+  clearQuestions: () => void;
 }
 
-function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode, closeQuestionForm }: ISideBarProps) {
+function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode, closeQuestionForm,
+  clearAnswers, 
+  clearQuestions 
+}: ISideBarProps) {
 
   const theme = useContext(ThemeContext);
   const { darkMode, variant, bg } = theme.state;
@@ -46,6 +55,24 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
     navigate('/landing');
   }
 
+  function clearLocalStorage() {
+    if (window.confirm('Are you sure?') === true) {
+      const top = localStorage.getItem('SUPPORT_TOP')
+      const users = localStorage.getItem('SUPPORT_USERS')
+  
+      localStorage.clear();
+  
+      clearAnswers();
+      clearQuestions();
+
+      if (top)
+        localStorage.setItem('SUPPORT_TOP', top!)
+
+      if (users)
+        localStorage.setItem('SUPPORT_USERS', users!)
+    }
+    return false
+  }
   // className="mb-3" 
 
   return (
@@ -168,7 +195,7 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
 
                   <NavDropdown.Divider />
                   <NavDropdown
-                    title={<span style={{ padding: "0", fontSize: '0.75rem' }}><FontAwesomeIcon icon={faDatabase} />{' '}Local Storage</span>}
+                    title={<span style={{ padding: "0px 5px", fontSize: '0.9rem' }}><FontAwesomeIcon icon={faDatabase} />{' '}Local Storage</span>}
                     id={`offcanvasNavbarDropdown-expand2`}
                     menuVariant={variant}
                     align="end"
@@ -177,7 +204,7 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
                     <NavDropdown.Item href="#" onClick={() => displayLocalStorage()}>
                       Display
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#" onClick={() => clearLocalStorage}>
+                    <NavDropdown.Item href="#" onClick={() => clearLocalStorage()}>
                       Clear
                     </NavDropdown.Item>
                     <NavDropdown.Item href="#" onClick={() => exportLocalStorage()}>
@@ -201,6 +228,7 @@ function SideBar({ isAuthenticated, uuid, auth, signOut, handleClose, toggleMode
     </Navbar >
   );
 }
+
 interface IOwnProps {
   signOut: () => void;
   handleClose: () => void;
@@ -217,7 +245,9 @@ const mapStateToProps = (store: IAppState, ownProps: IOwnProps) => ({
 const mapDispatchToProps = (dispatch: Dispatch<TopActions>) => {
   return {
     toggleMode: () => dispatch<any>(toggleMode()),
-    closeQuestionForm: () => dispatch<any>(closeQuestionForm())
+    closeQuestionForm: () => dispatch<any>(closeQuestionForm()),
+    clearAnswers: () => dispatch<any>(clearAnswers()),
+    clearQuestions: () => dispatch<any>(clearQuestions())
   }
 };
 
@@ -265,19 +295,7 @@ function displayLocalStorage() {
   return false
 }
 
-function clearLocalStorage() {
-  if (window.confirm('Are you sure?') === true) {
-    const top = localStorage.getItem('SUPPORT_TOP')
-    const users = localStorage.getItem('SUPPORT_USERS')
 
-    localStorage.clear();
-    if (top)
-      localStorage.setItem('SUPPORT_TOP', top!)
-    if (users)
-      localStorage.setItem('SUPPORT_USERS', users!)
-  }
-  return false
-}
 
 function exportLocalStorage() {
   expLocalStorage(JSON.stringify(localStorage));
@@ -286,3 +304,4 @@ function exportLocalStorage() {
 
 function importLocalStorage() {
 }
+

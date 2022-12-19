@@ -32,7 +32,8 @@ export enum AnswerActionTypes {
   REMOVE_ANSWER = 'REMOVE_ANSWER',
   STORE_ANSWER = 'STORE_ANSWER',
   CANCEL_ANSWER = 'CANCEL_ANSWER',
-  CLOSE_ANSWER_FORM = 'CLOSE_ANSWER_FORM'
+  CLOSE_ANSWER_FORM = 'CLOSE_ANSWER_FORM',
+  CLEAR = 'CLEAR'
 }
 
 // Interface for Get All Action Type
@@ -75,9 +76,12 @@ export interface ICloseAnswerForm {
 	type: AnswerActionTypes.CLOSE_ANSWER_FORM;
 }
 
+interface IClear {
+	type: AnswerActionTypes.CLEAR;
+}
 
 // Combine the action types with a union (we assume there are more)
-export type AnswerActions = IGetAll | IGet | IAdd | IEdit | IRemove | IStore | ICancel | ICloseAnswerForm;
+export type AnswerActions = IGetAll | IGet | IAdd | IEdit | IRemove | IStore | ICancel | ICloseAnswerForm | IClear;
 
 const isWebStorageSupported = () => 'localStorage' in window
 
@@ -223,6 +227,17 @@ export const cancelAnswer: ActionCreator<any> = () => {
 	};
 };
 
+export const clearAnswers: ActionCreator<any> = () => {
+	return (dispatch: Dispatch) => {
+		try {
+			dispatch({
+				type: AnswerActionTypes.CLEAR
+			});
+		} catch (err) {
+			console.error(err);
+		}
+	};
+};
  
 
 // const addAnswerToLocalStorage = (answer: IAnswer): Promise<any> => {

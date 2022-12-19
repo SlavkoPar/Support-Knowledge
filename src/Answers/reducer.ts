@@ -132,6 +132,12 @@ const myReducer: Reducer<IAnswerState, AnswerActions> = (
 			};
 		}
 
+		case AnswerActionTypes.CLEAR: {
+			return {
+				...initialAnswerState
+			};
+		}
+
 		// case AnswerActionTypes.STORE_ANSWERS_TO_LOCAL_STORAGE: {
 		// 	localStorage.setItem(SUPPORT_ANSWERS, JSON.stringify(state.answers));
 		// 	return state;
