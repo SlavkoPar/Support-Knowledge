@@ -1,7 +1,6 @@
 // Import redux types
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-// import axios from 'axios';
 
 // Import Question Typing
 import { IQuestion, ICategory, ICategoryJson, ICategoriesState, IQuestionJson, ICategoryState } from './types';
@@ -245,6 +244,7 @@ export const loadCategories: ActionCreator<
 			let loadedFromStorage = false;
 			if (isWebStorageSupported()) {
 				const sCategories = localStorage.getItem(SUPPORT_CATEGORIES);
+				console.log("sCategories", sCategories)
 				if (sCategories !== null) {
 					// load from storage
 					const categoriesJson = JSON.parse(sCategories);
@@ -360,7 +360,7 @@ export const editQuestion: ActionCreator<
 
 export const removeQuestion: ActionCreator<
 	ThunkAction<Promise<any>, ICategoriesState, null, IRemove>
-> = (doSync: boolean, categoryId: number, questionId: number) => {
+> = (categoryId: number, questionId: number) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			await delay()
@@ -370,8 +370,6 @@ export const removeQuestion: ActionCreator<
 				categoryId,
 				questionId
 			});
-			if (doSync)
-				syncWithOthers(QuestionActionTypes.REMOVE_QUESTION, { categoryId, questionId });
 		} catch (err) {
 			console.error(err);
 		}
@@ -480,7 +478,7 @@ const syncWithOthers = (type: string, entity: any) => {
 
 export const storeQuestion: ActionCreator<
 	ThunkAction<Promise<any>, IAppState, null, IStore>
-> = (doSync: boolean, question: IQuestion) => {
+> = (question: IQuestion) => {
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		const { categoryId } = question;
 		try {
@@ -498,8 +496,6 @@ export const storeQuestion: ActionCreator<
 					question
 				});
 			}
-			if (doSync)
-				syncWithOthers(QuestionActionTypes.STORE_QUESTION, question);
 		}
 		catch (err) {
 			console.error(err);
@@ -524,7 +520,7 @@ const addCategoryUnknown = async (state: IAppState, dispatch: Dispatch) => {
 
 export const updateQuestion: ActionCreator<
 	ThunkAction<Promise<any>, IAppState, null, IUpdate>
-> = (doSync: boolean, question: IQuestion) => {
+> = (question: IQuestion) => {
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
 			const { categoryId } = question;
@@ -542,10 +538,10 @@ export const updateQuestion: ActionCreator<
 					question
 				});
 			}
-			if (doSync) {
-				question.categoryIdWas = getState().categoriesState.questionCopy!.categoryId;
-				syncWithOthers(QuestionActionTypes.UPDATE_QUESTION, question);
-			}
+			// if (doSync) {
+			// 	question.categoryIdWas = getState().categoriesState.questionCopy!.categoryId;
+			// 	syncWithOthers(QuestionActionTypes.UPDATE_QUESTION, question);
+			// }
 		}
 		catch (err) {
 			console.error(err);
@@ -674,7 +670,7 @@ export const editCategory: ActionCreator<
 
 export const removeCategory: ActionCreator<
 	ThunkAction<Promise<any>, ICategoriesState, null, IRemoveCategory>
-> = (doSync: boolean, categoryId: number) => {
+> = (categoryId: number) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			await delay()
@@ -683,8 +679,6 @@ export const removeCategory: ActionCreator<
 				type: QuestionActionTypes.REMOVE_CATEGORY,
 				categoryId
 			});
-			if (doSync)
-				syncWithOthers(QuestionActionTypes.REMOVE_CATEGORY, categoryId);
 		} catch (err) {
 			console.error(err);
 		}
@@ -693,7 +687,7 @@ export const removeCategory: ActionCreator<
 
 export const storeCategory: ActionCreator<
 	ThunkAction<Promise<any>, IAppState, null, IStoreCategory>
-> = (doSync: boolean, category: ICategory) => {
+> = (category: ICategory) => {
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
 			// await updateCategoryFromLocalStorage(group);
@@ -701,8 +695,6 @@ export const storeCategory: ActionCreator<
 				type: QuestionActionTypes.STORE_CATEGORY,
 				category
 			});
-			if (doSync)
-				syncWithOthers(QuestionActionTypes.STORE_CATEGORY, category);
 			return Promise.resolve(category.categoryId) //getState().categoriesState.categories.length)
 		}
 		catch (err) {
@@ -714,7 +706,7 @@ export const storeCategory: ActionCreator<
 
 export const updateCategory: ActionCreator<
 	ThunkAction<Promise<any>, ICategoriesState, null, IStoreCategory>
-> = (doSync: boolean, category: ICategory) => {
+> = (category: ICategory) => {
 	return async (dispatch: Dispatch) => {
 		try {
 			// await updateCategoryFromLocalStorage(group);
@@ -722,8 +714,6 @@ export const updateCategory: ActionCreator<
 				type: QuestionActionTypes.UPDATE_CATEGORY,
 				category
 			});
-			if (doSync)
-				syncWithOthers(QuestionActionTypes.UPDATE_CATEGORY, category);
 		}
 		catch (err) {
 			console.error(err);

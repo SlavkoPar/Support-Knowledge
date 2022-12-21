@@ -8,7 +8,8 @@ import { ITop, ITopState } from './types';
 const initialTop: ITop = {
 	isAuthenticated: null,
 	uuid: null,
-	darkMode: true
+	darkMode: true,
+	showModalJSON: false
 };
 
 const initialTopState: ITopState = {
@@ -52,7 +53,8 @@ const myReducer: Reducer<ITopState, TopActions> = (
 						authenticated: new Date(),
 						visited: new Date()
 					},
-					darkMode: false
+					darkMode: false,
+					showModalJSON: false
 				}
 			};
 		}
@@ -67,15 +69,25 @@ const myReducer: Reducer<ITopState, TopActions> = (
 			};
 		}		
 
-		case TopActionTypes.NAVBAR_TOGGLE: {
+		// case TopActionTypes.NAVBAR_TOGGLE: {
+		// 	return {
+		// 		...state,
+		// 		top: {
+		// 			...state.top
+		// 		}
+		// 	};
+		// }	
+
+		case TopActionTypes.SHOW_MODAL_JSON: {
 			return {
 				...state,
 				top: {
-					...state.top
+					...state.top,
+					showModalJSON: action.show
 				}
 			};
 		}	
-
+		
 		case TopActionTypes.TOGGLE_MODE: {
 			return {
 				...state,

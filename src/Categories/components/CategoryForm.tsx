@@ -51,7 +51,7 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
         <Form.Label>Title</Form.Label>
         <Form.Control
           as="textarea"
-          name="text"
+          name="title"
           onChange={formik.handleChange}
           //onBlur={formik.handleBlur}
           onBlur={(e: React.FocusEvent<HTMLTextAreaElement>): void => {

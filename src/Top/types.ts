@@ -28,6 +28,7 @@ export interface ITop {
 	authError?: string,
 	auth?: IAuth;
 	darkMode: boolean;
+	showModalJSON: boolean; // when displaying localStorage
 }
 
 export interface ITopJson extends Omit<ITop, 'auth'> {

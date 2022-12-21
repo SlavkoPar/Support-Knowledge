@@ -148,6 +148,7 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 			}
 			{canEdit && formMode !== 'display' &&
 				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
+					{answers && answers.length > 0 && 
 					<Button size="sm" className="button-edit py-0" title="Assign a new Answer" style={{border:'1px solid silver', fontSize: '12px'}}
 						variant={variant}
 						onClick={
@@ -157,7 +158,7 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 							}
 						}>
 						Assign a new answer
-					</Button>
+					</Button>}
 					<Button size="sm" className="button-edit py-0" title="Add a new Answer" style={{border:'1px solid silver', fontSize: '12px'}}
 						variant={variant}
 						onClick={

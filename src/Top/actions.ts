@@ -22,7 +22,8 @@ export enum TopActionTypes {
 	AUTHENTICATE_WRONG_USERNAME = 'AUTHENTICATE_WRONG_USERNAME',
 	AUTHENTICATE_WRONG_PWD = 'AUTHENTICATE_WRONG_PWD',
 	CANCEL = 'CANCEL',
-	TOGGLE_MODE = 'TOGGLE_MODE'
+	TOGGLE_MODE = 'TOGGLE_MODE',
+	SHOW_MODAL_JSON = 'SHOW_MODAL_JSON'
 }
 
 
@@ -69,6 +70,11 @@ export interface IToggleMode {
 	type: TopActionTypes.TOGGLE_MODE;
 }
 
+export interface IShowModalJSON {
+	type: TopActionTypes.SHOW_MODAL_JSON;
+	show: boolean
+}
+
 
 // Combine the action types with a union (we assume there are more)
 export type TopActions = ILoadTop |
@@ -80,7 +86,8 @@ export type TopActions = ILoadTop |
 	IAuthenticateWrongPwd |
 	IUnAuthenticate |
 	ICancel |
-	IToggleMode;
+	IToggleMode |
+	IShowModalJSON;
 
 const isWebStorageSupported = () => 'localStorage' in window
 
@@ -278,6 +285,20 @@ export const navbarToggle: ActionCreator<any> = () => {
 		try {
 			dispatch({
 				type: TopActionTypes.NAVBAR_TOGGLE
+			});
+		}
+		catch (err) {
+			console.error(err);
+		}
+	};
+};
+
+export const setShowModalJSON: ActionCreator<any> = (show: boolean) => {
+	return (dispatch: Dispatch) => {
+		try {
+			dispatch({
+				type: TopActionTypes.SHOW_MODAL_JSON,
+				show
 			});
 		}
 		catch (err) {

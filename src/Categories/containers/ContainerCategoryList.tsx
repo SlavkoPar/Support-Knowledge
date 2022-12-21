@@ -86,9 +86,9 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 		addCategory: () => dispatch<any>(addCategory()),
 		toggleCategory: (categoryId: number) =>  dispatch<any>(toggleCategory(categoryId)),
 		editCategory: (categoryId: number) =>  dispatch<any>(editCategory(categoryId)),
-		removeCategory: (categoryId: number) => dispatch<any>(removeCategory(true, categoryId)),
-		storeCategory: (group: ICategory) => dispatch<any>(storeCategory(true, group)),
-		updateCategory: (group: ICategory) => dispatch<any>(updateCategory(true, group)),
+		removeCategory: (categoryId: number) => dispatch<any>(removeCategory(categoryId)),
+		storeCategory: (group: ICategory) => dispatch<any>(storeCategory(group)),
+		updateCategory: (group: ICategory) => dispatch<any>(updateCategory(group)),
 	}
 }
 

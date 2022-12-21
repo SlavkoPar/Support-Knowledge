@@ -263,7 +263,7 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			// const group =  state.categories.find(g => g.categoryId === action.categoryId);
 			const { categoryQuestions } = state;
 			const { showCategoryForm } = action;
-			let categoryId = Math.max(...state.categories.map(g => g.categoryId)) + 1;
+			const categoryId = state.categories.length === 0 ? 11 : Math.max(...state.categories.map(g => g.categoryId)) + 1;
 			const categoryState: ICategoryState = {
 				questions: []
 			}

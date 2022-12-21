@@ -46,17 +46,13 @@ const App = ({ isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, s
 		document.body.classList.add(bg)
 	}, []);
 
-	const [open, setOpen] = useState(false);
-	const handleClose = () => {
-		setOpen(false);
-	}
 
 	const canEdit = isAuthenticated === true && auth!.who.roleId < 44;
 
 	// null is the third state false/true/null in reducer
 	const app = 
 		<Router>
-			<SideBar handleClose={handleClose} signOut={signOut} />
+			<SideBar signOut={signOut} />
 			<Container fluid>
 				<Row className={`${darkMode ? "dark" : ""}`}>
 					{/* <Col id="main" md={mainMd} lg={mainLg} className="ms-sm-auto px-md-4"> */}
