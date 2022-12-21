@@ -46,18 +46,6 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 		setTekst(val);
 	}
 
-	// const assignQuestionAnswerTekst = () => {
-	// 	if (assignQuestionAnswer) {
-	// 		//storeAnswer({ answerId: -1, text: tekst }, 'add')
-	// 		assignQuestionAnswer(
-	// 			question.categoryId,
-	// 			question.questionId,
-	// 			-1,
-	// 			tekst
-	// 		);
-	// 	}
-	// }
-
 	const assignQA = (categoryId: number, questionId: number, answerId: number) => {
 		assignQuestionAnswer(
 			categoryId,
@@ -149,7 +137,8 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 			{canEdit && formMode !== 'display' &&
 				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
 					{answers && answers.length > 0 && 
-					<Button size="sm" className="button-edit py-0" title="Assign a new Answer" style={{border:'1px solid silver', fontSize: '12px'}}
+					<Button size="sm" className="button-edit py-0" title="Assign a new Answer" 
+						style={{border:'1px solid silver', fontSize: '12px'}}
 						variant={variant}
 						onClick={
 							(e) => {

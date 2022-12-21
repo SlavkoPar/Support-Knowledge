@@ -272,9 +272,7 @@ function SideBar(props: ISideBarProps) {
           </Modal.Header>
           <Modal.Body>
             <pre style={{ whiteSpace: "pre-line"}}>
-            {
-              `${strJSON}`
-            }
+            { strJSON }
             </pre>
           </Modal.Body>
           <Modal.Footer>

@@ -221,8 +221,17 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 		}
 
 		case QuestionActionTypes.ASSIGN_QUESTION_ANSWER: {
-			const { categoryId, questionId } = action;
-			const { categoryQuestions, question } = reduceQuestions(state.categoryQuestions, action, categoryId, questionId);
+			const { categoryId, questionId, answerId, assignedBy } = action;
+			if (state.formMode === 'add') { // use state.question, because question is still not added to categoryQuestions
+				return {
+					...state,
+					question: {
+						...state.question!,
+						answers: [...state.question!.answers, { answerId, assignedBy, assigned: new Date() }]
+					}
+				}
+			}
+			const { categoryQuestions, question } = reduceQuestions(state.categoryQuestions, action, categoryId, questionId)
 			return {
 				...state,
 				categoryQuestions,
@@ -274,7 +283,7 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 				categoryIdEditing: categoryId,
 				category: { 
 					...initialCategory,
-					title: "New Category",
+					title: '',
 					categoryId 
 				},
 				question: undefined,

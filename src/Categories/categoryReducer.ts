@@ -45,7 +45,6 @@ export const reduceQuestions = (
 	return { categoryQuestions, question }
 }
 
-
 const myReducer: Reducer<ICategoryState, QuestionActions> = (
 	state = initialCategoryState,
 	action

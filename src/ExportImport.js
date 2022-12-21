@@ -6,8 +6,8 @@ export const LocalStorage = {
     let s = "";
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      console.log("=================");
-      s += ("\n=================");
+      console.log("============");
+      s += ("\n============");
       console.log(key);
       s += '\n' + key;
       console.log("\n============");

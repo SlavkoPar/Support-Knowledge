@@ -442,7 +442,6 @@ export const removeQuestionAnswer: ActionCreator<
 export const assignQuestionAnswer: ActionCreator<
 	ThunkAction<Promise<any>, IAppState, null, IRemoveQuestionAnswer>
 > = (categoryId: number, questionId: number, answerId: number, tekst?: string) => {
-
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
 			await delay();
@@ -452,7 +451,7 @@ export const assignQuestionAnswer: ActionCreator<
 				categoryId,
 				questionId,
 				answerId,
-				assignedBy: getState().topState.top!.auth!.who!.userId,
+				assignedBy: getState().topState.top!.auth!.who!.userId
 			});
 			//dispatch<any>(getQuestion(questionId))	// refresh state of question
 		}
@@ -705,7 +704,7 @@ export const storeCategory: ActionCreator<
 
 
 export const updateCategory: ActionCreator<
-	ThunkAction<Promise<any>, ICategoriesState, null, IStoreCategory>
+	ThunkAction<Promise<any>, ICategoriesState, null, IUpdateCategory>
 > = (category: ICategory) => {
 	return async (dispatch: Dispatch) => {
 		try {

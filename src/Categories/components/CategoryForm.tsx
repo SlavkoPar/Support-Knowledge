@@ -61,6 +61,7 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
           value={formik.values.title}
           style={{ width: '100%' }}
           rows={2}
+          placeholder={'New Category'}
         />
         <Form.Text className="text-danger">
           {formik.touched.title && formik.errors.title ? (

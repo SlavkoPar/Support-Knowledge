@@ -34,8 +34,8 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
 		saveForm: (category: ICategory, formMode: string) => 
 			dispatch<any>(formMode==='add' 
-				? storeCategory(true, category)
-				: updateCategory(true, category)),
+				? storeCategory(category)
+				: updateCategory(category)),
 		cancel: () => dispatch<any>(cancelCategory()),
 	}
 }

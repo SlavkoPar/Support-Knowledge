@@ -68,7 +68,7 @@ const myReducer: Reducer<IAnswerState, AnswerActions> = (
 					...initialAnswer,
 					createdBy: action.createdBy,
 					answerId: state.answers.length === 0 
-						? 1
+						? 111
 						: Math.max(...state.answers.map(a => a.answerId)) + 1
 				}
 			};
@@ -91,7 +91,7 @@ const myReducer: Reducer<IAnswerState, AnswerActions> = (
 			if (state.formMode === 'add') {
 				if (answerId === -1) {
 					answer.answerId = state.answers.length === 0
-						? 1
+						? 111
 						: Math.max(...state.answers.map(a => a.answerId)) + 1;
 				}
 				answers = [...state.answers, { ...answer, words: answer.text.split(' ') }]
