@@ -146,7 +146,8 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			return {
 				...state,
 				formMode: 'edit',
-				categoryQuestions
+				categoryQuestions,
+				questionCopy: { ...question }
 			};
 		}
 
@@ -184,6 +185,14 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 					categoryQuestions,
 					formMode: 'edit'
 				};
+			}
+		}
+
+		case QuestionActionTypes.QUESTION_FORM_TO_STATE: {
+			console.log("QUESTION_FORM_TO_STATE", action.question)
+			return {
+				...state,
+				question: action.question
 			}
 		}
 

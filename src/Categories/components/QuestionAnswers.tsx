@@ -146,7 +146,7 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 								e.preventDefault()
 							}
 						}>
-						Assign a new answer
+						Assign answer
 					</Button>}
 					<Button size="sm" className="button-edit py-0" title="Add a new Answer" style={{border:'1px solid silver', fontSize: '12px'}}
 						variant={variant}

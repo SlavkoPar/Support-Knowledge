@@ -1,10 +1,8 @@
 import { IAnswer } from '../Answers/types'
 import { IOption } from '../common/types';
-import { IUser } from '../Users/types';
 import { IAuth } from "../Top/types";
 
 // Define the Question type
-
 export interface IQuestionAnswer {
 	categoryId?: number;
 	questionId?: number;
@@ -17,7 +15,6 @@ export interface IQuestionAnswer {
 export interface IQuestionAnswerJson extends Omit<IQuestionAnswer, 'assigned'> {
 	assigned: string
 }
-
 
 export interface IQuestion {
 	categoryId: number,
@@ -143,7 +140,7 @@ export interface IQuestionFormProps {
 	handleClose: () => void;
 	cancel: () => void;
 	editForm: (question: IQuestion, formMode: string) => void;
- 	saveForm: (question: IQuestion, formMode: string) => void;
+ 	saveForm: (question: IQuestion, formMode: string, fromSubmit: boolean) => void;
   }
 
   export interface ICategoryFormProps {

@@ -36,7 +36,7 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
 
   const isEdit = () => props.formMode === 'edit';
 
-  console.log('RENDERING', formik.values)
+  console.log('RENDERING category', formik.values)
   return (
     <Form onSubmit={formik.handleSubmit}>
 

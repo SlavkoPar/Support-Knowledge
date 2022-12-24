@@ -9,7 +9,8 @@ import { QuestionActions,
 	storeQuestion,
 	updateQuestion,
 	cancelQuestion,
-	editQuestion
+	editQuestion,
+	questionFormToState
 } from '../actions'
 
 import { QuestionForm } from '../components/QuestionForm';
@@ -39,10 +40,16 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
 		editForm: (question: IQuestion, formMode: string) => 
 			dispatch<any>(editQuestion(question.categoryId, question.questionId, true)),
-		saveForm: (question: IQuestion, formMode: string) => 
-			dispatch<any>(formMode==='add'?storeQuestion(question):updateQuestion(question)),
-		cancel: () => dispatch<any>(cancelQuestion()),
-	
+		saveForm: (question: IQuestion, formMode: string, fromSubmit: boolean) => 
+			dispatch<any>(formMode==='add'
+				? fromSubmit
+					? storeQuestion(question)
+					// During "add" we still don't have question stored, so we update state.question 
+					: questionFormToState(question)
+				: updateQuestion(question)
+		),
+		
+		cancel: () => dispatch<any>(cancelQuestion())
 	}
 }
 

@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { categoriesReducer } from '../Categories/categoriesReducer';
 import { answerReducer } from '../Answers/reducer';
@@ -30,8 +31,11 @@ const rootReducer = combineReducers<IAppState>({
   topState: topReducer
 });
 
+
 // Create a configure store function of type `IAppState`
 export default function configureStore(): Store<IAppState, any> {
-  const store = createStore(rootReducer, undefined, applyMiddleware(thunk));
+  const store = createStore(rootReducer, undefined, composeWithDevTools(
+    applyMiddleware(thunk)
+  ));
   return store;
 }

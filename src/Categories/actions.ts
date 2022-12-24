@@ -21,12 +21,12 @@ const parseFromJson = (): ICategory[] => {
 
 const parseQuestionsFromLocalStorage = (questions: IQuestionJson[]): IQuestion[] => {
 	return questions.map(q => ({
-			...q,
-			categoryId: q.categoryId!,
-			words: q.text.split(' '),
-			answers: q.answers.map(a => ({ ...a, assigned: new Date(a.assigned) })),
-			created: new Date(q.created)
-		})
+		...q,
+		categoryId: q.categoryId!,
+		words: q.text.split(' '),
+		answers: q.answers.map(a => ({ ...a, assigned: new Date(a.assigned) })),
+		created: new Date(q.created)
+	})
 	)
 }
 
@@ -59,6 +59,7 @@ export enum QuestionActionTypes {
 	CANCEL_QUESTION = 'CANCEL_QUESTION',
 	CLOSE_QUESTION_FORM = 'CLOSE_QUESTION_FORM',
 	OPEN_QUESTION_FORM = 'OPEN_QUESTION_FORM',
+	QUESTION_FORM_TO_STATE = 'QUESTION_FORM_TO_STATE',
 
 	// groups
 	GET_CATEGORY = 'GET_CATEGORY',
@@ -134,6 +135,12 @@ export interface ICloseQuestionForm {
 
 export interface IOpenQuestionForm {
 	type: QuestionActionTypes.OPEN_QUESTION_FORM;
+}
+
+
+export interface IQuestionFormToState {
+	type: QuestionActionTypes.QUESTION_FORM_TO_STATE;
+	question: IQuestion;
 }
 
 
@@ -229,7 +236,8 @@ export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | I
 	IStoreCategory | IUpdateCategory | ICancelCategory |
 	IRemoveQuestionAnswer | IAssignQuestionAnswer |
 	IAddAndAssignNewAnswer |
-	ICloseQuestionForm | IOpenQuestionForm | IClear;
+	ICloseQuestionForm | IOpenQuestionForm | IClear |
+	IQuestionFormToState;
 
 const isWebStorageSupported = () => 'localStorage' in window
 
@@ -259,7 +267,7 @@ export const loadCategories: ActionCreator<
 					loadedFromStorage = true;
 				}
 			}
-			console.log({categories})
+			console.log({ categories })
 
 			if (!loadedFromStorage) {
 				// load from data
@@ -516,6 +524,23 @@ const addCategoryUnknown = async (state: IAppState, dispatch: Dispatch) => {
 			return categoryId;
 		});
 }
+
+export const questionFormToState: ActionCreator<
+	ThunkAction<Promise<any>, IAppState, null, IUpdate>
+> = (question: IQuestion) => {
+	return async (dispatch: Dispatch, getState: () => IAppState) => {
+		try {
+			dispatch({
+				type: QuestionActionTypes.QUESTION_FORM_TO_STATE,
+				question
+			});
+		}
+		catch (err) {
+			console.error(err);
+		}
+	};
+};
+
 
 export const updateQuestion: ActionCreator<
 	ThunkAction<Promise<any>, IAppState, null, IUpdate>
