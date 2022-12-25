@@ -55,7 +55,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
   console.log('RENDERING question', formik.values)
   return (
-    <Form onSubmit={formik.handleSubmit} >
+    <Form onSubmit={formik.handleSubmit}>
       {isEdit() &&
         <Form.Group controlId="questionId">
           <Form.Label>Id:</Form.Label>

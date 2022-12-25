@@ -70,7 +70,7 @@
  }
 
  .react-autosuggest__suggestion-match {
- 	color: cyan;
+ 	color: rgb(20, 158, 202);
  	font-weight: bold;
  }
 

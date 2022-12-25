@@ -77,7 +77,7 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 						}
 
 						{categories && showQuestionForm && question &&
-							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
+							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px'}}> 
 								<h4 style={{ marginTop: 0 }}>Question</h4>
 								<ContainerQuestionForm canEdit={formMode === 'display' ? false : canEdit} handleClose={() => { }} />
 							</div>
