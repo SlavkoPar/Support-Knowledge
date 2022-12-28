@@ -23,6 +23,7 @@ export const LocalStorage = {
       const top = localStorage.getItem('SUPPORT_TOP')
       const users = localStorage.getItem('SUPPORT_USERS')
 
+      LocalStorage.export();
       localStorage.clear();
 
       clearAnswers();

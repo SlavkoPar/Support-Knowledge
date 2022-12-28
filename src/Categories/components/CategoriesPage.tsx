@@ -11,7 +11,6 @@ import { ThemeContext } from "../../ThemeContext";
 
 import { Col, Container, Row } from 'react-bootstrap';
 import ContainerCategoryList from '../containers/ContainerCategoryList';
-import { closeQuestionForm } from '../actions';
 
 type SupportParams = {
 	tekst: string;

@@ -20,10 +20,12 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
   if (!question) // it is still view in modal, although hidden
     question = { ...initialQuestion };
 
+  console.log('props.categoryOptions', props.categoryOptions)
+
   const [fromSubmit, setSubmit] = useState(false);
 
   const formik = useFormik({
-    enableReinitialize: false,
+    enableReinitialize: true,
     initialValues: { 
       categoryId: question.categoryId,
       questionId: question.questionId,
@@ -45,7 +47,8 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
       props.saveForm(values, props.formMode, fromSubmit);
-      props.handleClose();
+      if (props.formMode === 'add' && fromSubmit)
+        props.handleClose();
     }
   });
   
@@ -53,7 +56,8 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
   const isAdd = () => props.formMode === 'add';
   const isDisabled = props.formMode === 'display';
 
-  console.log('RENDERING question', formik.values)
+  console.log('RENDERING question formik.values', formik.values)
+  console.log('RENDERING question', question)
   return (
     <Form onSubmit={formik.handleSubmit}>
       {isEdit() &&
@@ -116,12 +120,15 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           id="source"
           name="source"
           options={sourceOptions}
-          // onChange={formik.handleChange}
-          onChange={(e, value) => {
-            formik.setFieldValue("source", value).then(() => {
-              formik.submitForm();
-            })
-          }}
+          onChange={formik.handleChange}
+          //onChange={(e, value) => {
+          //  formik.handleChange(e);
+            //formik.setFieldValue("source", value); //.then(() => {
+              //formik.submitForm();
+            //})
+          //  console.log('source', value)
+          //    console.log('formik.values', formik.values)
+          // }}
           value={formik.values.source}
           disabled={isDisabled}
         />

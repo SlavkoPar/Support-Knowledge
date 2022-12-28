@@ -43,7 +43,7 @@ interface ISideBarProps {
   clearQuestions: () => void;
   getAllAnswers: () => void;
   loadCategories: () => void;
-  setShowModalJSON: (show : boolean) => void;
+  setShowModalJSON: (show: boolean) => void;
 }
 
 function SideBar(props: ISideBarProps) {
@@ -234,6 +234,11 @@ function SideBar(props: ISideBarProps) {
                     </NavDropdown.Item>
                   </NavDropdown>
                   <NavDropdown.Divider />
+
+                  <NavDropdown.Item href="#/About">
+                    About
+                  </NavDropdown.Item>
+
                   <NavDropdown.Item href="#" onClick={otkaciMe}>
                     Sign out
                   </NavDropdown.Item>
@@ -271,8 +276,8 @@ function SideBar(props: ISideBarProps) {
             <Modal.Title>LOCAL STORAGE</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <pre style={{ whiteSpace: "pre-line"}}>
-            { strJSON }
+            <pre style={{ whiteSpace: "pre-line" }}>
+              {strJSON}
             </pre>
           </Modal.Body>
           <Modal.Footer>
@@ -303,7 +308,7 @@ const mapDispatchToProps = (dispatch: Dispatch<TopActions>) => {
     clearQuestions: () => dispatch<any>(clearQuestions()),
     getAllAnswers: () => dispatch<any>(getAllAnswers()),
     loadCategories: () => dispatch<any>(loadCategories()),
-    setShowModalJSON:  (show: boolean) => dispatch<any>(setShowModalJSON(show))
+    setShowModalJSON: (show: boolean) => dispatch<any>(setShowModalJSON(show))
   }
 };
 

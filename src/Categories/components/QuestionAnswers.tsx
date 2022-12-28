@@ -164,7 +164,7 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 				className={`${darkMode ? "dark" : ""}`}
 				contentClassName={`${darkMode ? "dark" : ""}`}>
 				<Modal.Header closeButton>
-					<Modal.Title>Add answer</Modal.Title>
+					<Modal.Title>Create and assign a new answer</Modal.Title>
 				</Modal.Header>
 				<Modal.Body style={{ height: '40vh', width: '50vw' }} >
 					<AnswerForm
@@ -178,7 +178,7 @@ const QuestionAnswers: React.FC<IProps> = (props: IProps) => {
 				className={`${darkMode ? "dark" : ""}`}
 				contentClassName={`${darkMode ? "dark" : ""}`}>
 				<Modal.Header closeButton>
-					<Modal.Title>Add answer</Modal.Title>
+					<Modal.Title>Assign the answer</Modal.Title>
 				</Modal.Header>
 				<Modal.Body style={{ height: '40vh', width: '50vw' }} className="question-answers">
 					<AutoSuggestAnswer

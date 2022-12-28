@@ -48,7 +48,6 @@ export const initialCategoriesState: ICategoriesState = {
 };
 
 const storeToStorage: string[] = [
-	QuestionActionTypes.ADD_CATEGORY,
 	QuestionActionTypes.TOGGLE_CATEGORY,
 	QuestionActionTypes.STORE_CATEGORY,
 	QuestionActionTypes.UPDATE_CATEGORY,
@@ -121,7 +120,8 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 					questionId,
 					text: action.text
 				},
-				showCategoryForm: false
+				showCategoryForm: false,
+				showQuestionForm: true
 			};
 		}
 
@@ -190,9 +190,11 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 
 		case QuestionActionTypes.QUESTION_FORM_TO_STATE: {
 			console.log("QUESTION_FORM_TO_STATE", action.question)
+			const category = state.categories.find( c => c.categoryId === action.question.categoryId);
 			return {
 				...state,
-				question: action.question
+				question: action.question,
+				category: category ? { ...category } : undefined
 			}
 		}
 

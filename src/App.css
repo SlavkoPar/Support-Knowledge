@@ -228,3 +228,13 @@ button {
 	padding: 2px 8px;
 }
 
+.abouts > p {
+	width: 40vw;
+	background-color: #e8eafb;
+	padding: 4px 8px;
+	border-radius: 4px;
+}
+
+.dark .abouts > p {
+	color:black
+}
