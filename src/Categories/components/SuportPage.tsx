@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Col, Container, Row } from 'react-bootstrap';
+import ContainerCategoryForm from '../containers/ContainerCategoryForm';
 
 type SupportParams = {
 	tekst: string;
@@ -19,16 +20,28 @@ type SupportParams = {
 
 const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	let { tekst } = useParams<SupportParams>();
-	const { categories, categoryQuestions, category, question, showQuestionForm, onSelectQuestion, add, canEdit } = props;
+	const { categories, categoryQuestions, category, question, showQuestionForm, onSelectQuestion, add, canEdit, formMode, addCategory } = props;
 
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	
+	const [showCategory, setShowCategory] = useState(false);
+	const handleCloseCategory = () => {
+		if (category && category.categoryId !== 0) {
+			setShowCategory(false);
+			add(category.categoryId, tekst ?? '', true); 
+			setShow(true);
+		}
+		else {
+			addCategory();
+		}
+	}
+
 	const open = categories && (category || question)
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
-	console.log(1111111111111)
+
 	return (
 		<Container fluid>
 			<Row className={`${darkMode ? "dark" : ""}`}>
@@ -44,7 +57,16 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							variant={variant}
 							className="button-edit"
 							title="Create a new Question"
-							onClick={() => { add(0, tekst ?? '', true); handleShow(); }}
+							onClick={() => { 
+								if (categories.length === 0) {
+									addCategory(); 
+									setShowCategory(true);
+								}
+								else {
+									add(0, tekst ?? '', true); 
+									setShow(true); 
+								}
+							}}
 						>
 							<FontAwesomeIcon icon={faPlus} size="lg" />
 						</Button>
@@ -63,6 +85,24 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					</div>
 				</Col>
 			</Row>
+			<Modal show={showCategory} animation={true} size="sm" centered
+				className={`${darkMode ? "dark" : ""}`}
+				contentClassName={`${darkMode ? "dark" : ""}`}>
+				<Modal.Header closeButton>
+					<Modal.Title>First create Category</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<ContainerCategoryForm canEdit={formMode === 'display' ? false : canEdit} handleClose={handleCloseCategory} />
+				</Modal.Body>
+				{/* <Modal.Footer>
+					<Button variant="secondary" onClick={handleClose}>
+						Close
+					</Button>
+					<Button variant="primary" onClick={handleClose}>
+						Save Changes
+					</Button>
+				</Modal.Footer> */}
+			</Modal>
 			<Modal show={show} onHide={handleClose} animation={true} size="sm" centered
 				className={`${darkMode ? "dark" : ""}`}
 				contentClassName={`${darkMode ? "dark" : ""}`}>

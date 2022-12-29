@@ -35,7 +35,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	
 	const { 
 		categories,
-		categoryQuestions,
+		categoryMap: categoryQuestions,
 		showCategoryForm,
 		category,
 		showQuestionForm,

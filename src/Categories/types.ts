@@ -73,7 +73,9 @@ export interface ICategoriesProps {
 	auth?: IAuth,
 	onSelectQuestion: (categoryId: number, questionId: number, canEdit: boolean) => void;
 	add:  (categoryId: number, text: string, canEdit?: boolean) => void;
+	addCategory: () => void,
 	closeQuestionForm: () => void;
+	handleClose: () => void;
 }
 
 export interface ICategoryListProps {
@@ -123,7 +125,7 @@ export interface ICategoriesState {
 	showQuestionForm: boolean,
 	categoryCopy?: ICategory;
 	questionCopy?: IQuestion;
-	categoryQuestions: Map<number, ICategoryState>,
+	categoryMap: Map<number, ICategoryState>,
 	categoryOptions: IOption<number>[];
 	loading: boolean,
 	formMode: string;
@@ -146,7 +148,8 @@ export interface IQuestionFormProps {
   export interface ICategoryFormProps {
 	category: ICategory | undefined;
 	formMode: string;
-	canEdit: boolean,
+	canEdit: boolean;
+	handleClose: () => void;
 	cancel: () => void;
 	saveForm: (category: ICategory, formMode: string) => void;
   }

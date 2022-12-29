@@ -14,7 +14,7 @@ interface IMyProps {
 
 const Support: React.FC<IMyProps> = (props: IMyProps) => { 
   return (
-      <containers.supporter canEdit={props.canEdit} />
+      <containers.supporter canEdit={props.canEdit} handleClose={()=>{}} />
   );
 };
 

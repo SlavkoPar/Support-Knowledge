@@ -11,14 +11,11 @@ import { Button, Container, Form } from "react-bootstrap";
 
 import { sourceOptions } from '../sourceOptions'
 import { statusOptions } from '../statusOptions'
-import { initialQuestion } from '../categoriesReducer';
 import ContainerQuestionAnswers from '../containers/ContainerQuestionAnswers';
 
 const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
   let { question } = props;
-  if (!question) // it is still view in modal, although hidden
-    question = { ...initialQuestion };
 
   console.log('props.categoryOptions', props.categoryOptions)
 
@@ -53,11 +50,9 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
   });
   
   const isEdit = () => props.formMode === 'edit';
-  const isAdd = () => props.formMode === 'add';
   const isDisabled = props.formMode === 'display';
 
-  console.log('RENDERING question formik.values', formik.values)
-  console.log('RENDERING question', question)
+  console.log('RENDERING question formik.values', formik.values, question)
   return (
     <Form onSubmit={formik.handleSubmit}>
       {isEdit() &&
@@ -75,9 +70,8 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           options={props.categoryOptions}
           //onChange={formik.handleChange}
           onChange={(e, value) => {
-            formik.setFieldValue("categoryId", value).then(() => {
+              formik.handleChange(e);
               formik.submitForm();
-            })
           }}
           value={formik.values.categoryId}
           disabled={isDisabled}
@@ -98,7 +92,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           onChange={formik.handleChange}
           //onBlur={formik.handleBlur}
           onBlur={(e: React.FocusEvent<HTMLTextAreaElement>): void => {
-            if (isAdd() || (isEdit() && formik.initialValues.text !== formik.values.text))
+            if (isEdit() && formik.touched.text) //  //.initialValues.text !== formik.values.text))
               formik.submitForm();
           }}
           value={formik.values.text}
@@ -120,15 +114,10 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           id="source"
           name="source"
           options={sourceOptions}
-          onChange={formik.handleChange}
-          //onChange={(e, value) => {
-          //  formik.handleChange(e);
-            //formik.setFieldValue("source", value); //.then(() => {
-              //formik.submitForm();
-            //})
-          //  console.log('source', value)
-          //    console.log('formik.values', formik.values)
-          // }}
+          onChange={(e, value) => {
+            formik.handleChange(e);
+            formik.submitForm();
+          }}
           value={formik.values.source}
           disabled={isDisabled}
         />
@@ -151,9 +140,8 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           options={statusOptions}
           //onChange={formik.handleChange}
           onChange={(e, value) => {
-            formik.setFieldValue("status", value).then(() => {
-              formik.submitForm();
-            })
+            formik.handleChange(e)
+            formik.submitForm();
           }}
           value={formik.values.status}
           disabled={isDisabled}
@@ -176,7 +164,8 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         <span>{' '}{formik.values.created.toLocaleDateString()}</span>
       </Form.Group>
 
-      {!isEdit() && !isDisabled &&
+      {/*
+      {!isDisabled &&
         <div className="buttons">
           {props.canEdit &&
             <Button
@@ -205,6 +194,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
             </Button>}
         </div>
       }
+      */}
       {isDisabled && props.canEdit &&
         <div className="buttons">
           <Button

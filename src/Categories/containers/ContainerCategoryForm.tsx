@@ -15,7 +15,8 @@ import {
 import { CategoryForm } from '../components/CategoryForm';
 
 interface IProps {
-	canEdit: boolean
+	canEdit: boolean,
+	handleClose: () => void
 }
 
 // Grab the categories from the store and make them available on props
@@ -25,7 +26,8 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	return {
 		category,
 		formMode,
-		canEdit: ownProps.canEdit
+		canEdit: ownProps.canEdit,
+		handleClose: ownProps.handleClose
 	};
 };
 
@@ -36,7 +38,7 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 			dispatch<any>(formMode==='add' 
 				? storeCategory(category)
 				: updateCategory(category)),
-		cancel: () => dispatch<any>(cancelCategory()),
+		cancel: () => dispatch<any>(cancelCategory())
 	}
 }
 

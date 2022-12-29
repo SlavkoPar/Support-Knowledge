@@ -6,11 +6,9 @@ import { IQuestion } from '../types'
 import { Dispatch } from 'redux';
 
 import { QuestionActions,  
-	storeQuestion,
 	updateQuestion,
 	cancelQuestion,
-	editQuestion,
-	questionFormToState
+	editQuestion
 } from '../actions'
 
 import { QuestionForm } from '../components/QuestionForm';
@@ -41,14 +39,8 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 		editForm: (question: IQuestion, formMode: string) => 
 			dispatch<any>(editQuestion(question.categoryId, question.questionId, true)),
 		saveForm: (question: IQuestion, formMode: string, fromSubmit: boolean) => 
-			dispatch<any>(formMode==='add'
-				? fromSubmit
-					? storeQuestion(question)
-					// During "add" we still don't have question stored, so we update state.question 
-					: questionFormToState(question)
-				: updateQuestion(question)
+			dispatch<any>(updateQuestion(question)
 		),
-		
 		cancel: () => dispatch<any>(cancelQuestion())
 	}
 }

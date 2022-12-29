@@ -68,14 +68,14 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					<div
 						className={`${darkMode ? "dark" : "light"}`}
 					>
-						{categories && showCategoryForm && category &&
+						{showCategoryForm && category &&
 							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
 								<h4 style={{ marginTop: 0 }}>Category</h4>
-								<ContainerCategoryForm canEdit={formMode === 'display' ? false : canEdit} />
+								<ContainerCategoryForm canEdit={formMode === 'display' ? false : canEdit} handleClose={()=>{}} />
 							</div>
 						}
 
-						{categories && showQuestionForm && question &&
+						{showQuestionForm &&
 							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px'}}> 
 								<h4 style={{ marginTop: 0 }}>Question</h4>
 								<ContainerQuestionForm canEdit={formMode === 'display' ? false : canEdit} handleClose={() => { }} />

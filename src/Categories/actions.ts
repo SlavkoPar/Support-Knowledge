@@ -59,7 +59,6 @@ export enum QuestionActionTypes {
 	CANCEL_QUESTION = 'CANCEL_QUESTION',
 	CLOSE_QUESTION_FORM = 'CLOSE_QUESTION_FORM',
 	OPEN_QUESTION_FORM = 'OPEN_QUESTION_FORM',
-	QUESTION_FORM_TO_STATE = 'QUESTION_FORM_TO_STATE',
 
 	// groups
 	GET_CATEGORY = 'GET_CATEGORY',
@@ -95,9 +94,10 @@ export interface IGet {
 
 export interface IAdd {
 	type: QuestionActionTypes.ADD_QUESTION;
-	createdBy: number;
-	categoryId: number;
-	text: string;
+	// createdBy: number;
+	// categoryId: number;
+	// text: string;
+	question: IQuestion
 }
 
 export interface IEdit {
@@ -138,10 +138,6 @@ export interface IOpenQuestionForm {
 }
 
 
-export interface IQuestionFormToState {
-	type: QuestionActionTypes.QUESTION_FORM_TO_STATE;
-	question: IQuestion;
-}
 
 
 // group
@@ -154,7 +150,7 @@ export interface IGetCategory {
 
 export interface IAddCategory {
 	type: QuestionActionTypes.ADD_CATEGORY;
-	//categoryId: number
+	category: ICategory,
 	showCategoryForm: boolean
 }
 
@@ -236,8 +232,7 @@ export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | I
 	IStoreCategory | IUpdateCategory | ICancelCategory |
 	IRemoveQuestionAnswer | IAssignQuestionAnswer |
 	IAddAndAssignNewAnswer |
-	ICloseQuestionForm | IOpenQuestionForm | IClear |
-	IQuestionFormToState;
+	ICloseQuestionForm | IOpenQuestionForm | IClear;
 
 const isWebStorageSupported = () => 'localStorage' in window
 
@@ -336,9 +331,12 @@ export const addQuestion: ActionCreator<
 		try {
 			dispatch({
 				type: QuestionActionTypes.ADD_QUESTION,
-				createdBy: getState().topState.top!.auth!.who!.userId,
-				categoryId,
-				text,
+				question: {
+					categoryId,
+					createdBy: getState().topState.top!.auth!.who!.userId,
+					text,
+					words: text.split(' ')
+				},
 				showCategoryForm: false
 			});
 		}
@@ -483,55 +481,15 @@ const syncWithOthers = (type: string, entity: any) => {
 	*/
 };
 
+
 export const storeQuestion: ActionCreator<
 	ThunkAction<Promise<any>, IAppState, null, IStore>
 > = (question: IQuestion) => {
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
-		const { categoryId } = question;
 		try {
 			//await delay();
-			if (categoryId === 0) {
-				const res = await addCategoryUnknown(getState(), dispatch);
-				dispatch({
-					type: QuestionActionTypes.STORE_QUESTION,
-					question
-				});
-			}
-			else {
-				dispatch({
-					type: QuestionActionTypes.STORE_QUESTION,
-					question
-				});
-			}
-		}
-		catch (err) {
-			console.error(err);
-		}
-	};
-};
-
-const addCategoryUnknown = async (state: IAppState, dispatch: Dispatch) => {
-	if (state.categoriesState.categories.find(c => c.categoryId === 0))
-		return Promise.resolve(-1);
-	const newCategory = {
-		...initialCategory,
-		categoryId: 0,
-		title: 'Unknown',
-		questions: []
-	}
-	return dispatch<any>(storeCategory(newCategory))
-		.then((categoryId: number) => {
-			return categoryId;
-		});
-}
-
-export const questionFormToState: ActionCreator<
-	ThunkAction<Promise<any>, IAppState, null, IUpdate>
-> = (question: IQuestion) => {
-	return async (dispatch: Dispatch, getState: () => IAppState) => {
-		try {
 			dispatch({
-				type: QuestionActionTypes.QUESTION_FORM_TO_STATE,
+				type: QuestionActionTypes.STORE_QUESTION,
 				question
 			});
 		}
@@ -541,27 +499,32 @@ export const questionFormToState: ActionCreator<
 	};
 };
 
+// const addCategoryUnknown = async (state: IAppState, dispatch: Dispatch) => {
+// 	if (state.categoriesState.categories.find(c => c.categoryId === 0))
+// 		return Promise.resolve(-1);
+// 	const newCategory = {
+// 		...initialCategory,
+// 		categoryId: 0,
+// 		title: 'Unknown',
+// 		questions: []
+// 	}
+// 	return dispatch<any>(storeCategory(newCategory))
+// 		.then((categoryId: number) => {
+// 			return categoryId;
+// 		});
+// }
+
 
 export const updateQuestion: ActionCreator<
 	ThunkAction<Promise<any>, IAppState, null, IUpdate>
 > = (question: IQuestion) => {
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
-			const { categoryId } = question;
 			await delay();
-			if (categoryId === 0) {
-				const res = await addCategoryUnknown(getState(), dispatch);
-				dispatch({
-					type: QuestionActionTypes.UPDATE_QUESTION,
-					question
-				});
-			}
-			else {
-				dispatch({
-					type: QuestionActionTypes.UPDATE_QUESTION,
-					question
-				});
-			}
+			dispatch({
+				type: QuestionActionTypes.UPDATE_QUESTION,
+				question
+			});
 			// if (doSync) {
 			// 	question.categoryIdWas = getState().categoriesState.questionCopy!.categoryId;
 			// 	syncWithOthers(QuestionActionTypes.UPDATE_QUESTION, question);
@@ -646,12 +609,16 @@ export const getCategory: ActionCreator<
 
 
 export const addCategory: ActionCreator<
-	ThunkAction<Promise<any>, ICategoriesState, null, IAddCategory>
+	ThunkAction<Promise<any>, IAppState, null, IAddCategory>
 > = () => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
 			dispatch({
 				type: QuestionActionTypes.ADD_CATEGORY,
+				category: {
+					...initialCategory,
+					createdBy: getState().topState.top!.auth!.who!.userId
+				},
 				showCategoryForm: true
 			});
 		} catch (err) {

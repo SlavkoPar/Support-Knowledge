@@ -10,6 +10,7 @@ import { QuestionActions,
 	closeQuestionForm,
 	openQuestionForm,
 	editQuestion,
+	addCategory,
 } from '../actions'
 
 import CategoriesPage from '../components/CategoriesPage'
@@ -25,7 +26,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	
 	const { 
 		categories,
-		categoryQuestions,
+		categoryMap: categoryQuestions,
 		showCategoryForm,
 		category,
 		showQuestionForm,
@@ -58,6 +59,7 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 			dispatch<any>(openQuestionForm());
 		},
 		add: (categoryId: number, text: string, canEdit?: boolean) => dispatch<any>(addQuestion(categoryId, text, canEdit)),
+		addCategory: () => dispatch<any>(addCategory()),
 		closeQuestionForm: () => dispatch<any>(closeQuestionForm())
 	}
 }

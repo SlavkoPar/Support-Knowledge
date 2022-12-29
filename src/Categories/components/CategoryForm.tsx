@@ -6,11 +6,15 @@ import { ICategoryFormProps } from '../types';
 import { ThemeContext } from "../../ThemeContext";
 import { Button, Container, Form } from "react-bootstrap";
 import UserName from '../../common/containers/UserName';
+import { initialCategory } from '../categoriesReducer';
 //import { number } from 'yup/lib/locale';
 
 const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
 
-  const category = props.category!;
+  let category = props.category;
+  if (!category)
+    category = {...initialCategory} // we have form in Modal, although hidden
+
   const { categoryId, title, questions, isExpanded, createdBy, created } = category;
 
   const formik = useFormik({
@@ -31,6 +35,7 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
     onSubmit: values => {
       // alert(JSON.stringify(values, null, 2));
       props.saveForm(values, props.formMode)
+      props.handleClose();
     }
   });
 

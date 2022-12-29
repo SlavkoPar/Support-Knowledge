@@ -34,7 +34,7 @@ const Landing: React.FC<ILanding> = (props: ILanding) => {
         <p className="mx-auto">
           <ul>
             <li>User sends you the email with the Question</li>
-            <li>You open the mail and click on the Support icon that was created by Support chrome extension </li>
+            <li>You open the mail (Chrome or Edge) and click on the Support icon that was created by Support chrome extension </li>
             <li>Extension opens the Support Web App, using email subject as the filter in Question auto-complete</li>
             <li>You copy the selected answer in reply of the mail</li>
           </ul>

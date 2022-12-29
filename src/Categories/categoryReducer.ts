@@ -16,6 +16,7 @@ export const initialCategoryState: ICategoryState = {
 };
 
 const storeToStorage: string[] = [
+	QuestionActionTypes.ADD_QUESTION,
 	QuestionActionTypes.STORE_QUESTION,
 	QuestionActionTypes.UPDATE_QUESTION,
 	QuestionActionTypes.REMOVE_QUESTION,
@@ -26,13 +27,13 @@ const storeToStorage: string[] = [
 const aTypesToStore = Object.keys(QuestionActionTypes)
 	.filter(a => storeToStorage.includes(a));
 
-export const reduceQuestions = (
-	categoryQuestions: Map<number, ICategoryState>,
+export const reduceCategory = (
+	categoryMap: Map<number, ICategoryState>,
 	action: QuestionActions,
 	categoryId: number,
 	questionId?: number
-): {categoryQuestions: Map<number, ICategoryState>, question: IQuestion|undefined} => {
-	const categoryState = categoryQuestions.get(categoryId)!;
+): {categoryMap: Map<number, ICategoryState>, question: IQuestion|undefined} => {
+	const categoryState = categoryMap.get(categoryId)!;
 	const newState: ICategoryState = myReducer(categoryState, action);
 
 	if (aTypesToStore.includes(action.type)) {
@@ -40,9 +41,9 @@ export const reduceQuestions = (
 		localStorage.setItem(`CATEGORY_${categoryId}`, JSON.stringify(newState.questions));
 		newState.questions.forEach(q => q.words = q.text.split(' '));
 	}
-	categoryQuestions.set(categoryId, newState);
+	categoryMap.set(categoryId, newState);
 	const question = newState.questions.find(q => q.questionId === questionId);
-	return { categoryQuestions, question }
+	return { categoryMap, question }
 }
 
 const myReducer: Reducer<ICategoryState, QuestionActions> = (
@@ -60,21 +61,10 @@ const myReducer: Reducer<ICategoryState, QuestionActions> = (
 		}
 
 		case QuestionActionTypes.ADD_QUESTION: {
-			let questionIdMax = 0;
-			for (let question of state.questions)
-				if (question.questionId > questionIdMax)
-					questionIdMax = question.questionId
+			const { questions } = state;
 			return {
 				...state,
-				formMode: 'add',
-				question: {
-					...initialQuestion,
-					createdBy: action.createdBy,
-					categoryId: action.categoryId,
-					questionId: questionIdMax + 1,
-					text: action.text,
-					words: action.text.split(' ')
-				}
+				questions: [...questions, {...action.question}]
 			};
 		}
 
@@ -92,8 +82,8 @@ const myReducer: Reducer<ICategoryState, QuestionActions> = (
 			const { question } = action;
 			question.words = question.text.split(' ');
 			return {
-				...state,
-				questions: [...state.questions, {...question}]
+				...state //,
+				//questions: [...state.questions, {...question}]
 			};
 		}
 

@@ -70,7 +70,7 @@ const App = ({ isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, s
 									<LoginForm canEdit={true} isRegister={true} />
 								} />
 								<Route path="/supporter/:tekst" element={<Support canEdit={canEdit} />} />
-								<Route path="/questions" element={<containers.categories canEdit={canEdit} />} />
+								<Route path="/questions" element={<containers.categories canEdit={canEdit} handleClose={()=>{}} />} />
 								<Route path="/answers/:slug" element={<AnswersPage />} />
 								<Route path="/users/:slug" element={<UsersPage canEdit={true} />} />
 								<Route path="/about" element={<About />} />
