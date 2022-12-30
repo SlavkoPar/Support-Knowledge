@@ -9,7 +9,8 @@ import {
 	storeCategory,
 	updateCategory,
 	cancelCategory,
-	QuestionActions
+	QuestionActions,
+	categoryOptions
 } from '../actions'
 
 import { CategoryForm } from '../components/CategoryForm';
@@ -34,10 +35,12 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
-		saveForm: (category: ICategory, formMode: string) => 
-			dispatch<any>(formMode==='add' 
-				? storeCategory(category)
-				: updateCategory(category)),
+		saveForm: (category: ICategory, formMode: string) => {
+			if (formMode==='add')
+				dispatch<any>(storeCategory(category)).then(()=> dispatch(categoryOptions()))
+			else
+				dispatch<any>(updateCategory(category)).then(()=> dispatch(categoryOptions()))
+		},
 		cancel: () => dispatch<any>(cancelCategory())
 	}
 }

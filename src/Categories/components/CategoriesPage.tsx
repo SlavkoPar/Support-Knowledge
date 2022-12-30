@@ -22,7 +22,7 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 
 	const {
 		categories,
-		categoryQuestions,
+		categoryMap,
 		showCategoryForm,
 		category,
 		showQuestionForm,
@@ -53,7 +53,7 @@ const Page: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					<div style={{ border: '0px solid silver' }}>
 						<AutoSuggest
 							categories={categories}
-							categoryQuestions={categoryQuestions}
+							categoryMap={categoryMap}
 							tekst={tekst}
 							onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId, canEdit)}
 						/>

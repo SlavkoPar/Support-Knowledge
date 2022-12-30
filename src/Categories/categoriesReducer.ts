@@ -74,16 +74,12 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 	switch (action.type) {
 
 		case QuestionActionTypes.LOAD_CATEGORIES: {
-			const { categories, categoryQuestions } = action;
-
-			const categoryOptions = categories.map(g => ({ value: g.categoryId, label: g.title }))
-			categoryOptions.unshift({ value: 0, label: 'Unknown' })
+			const { categories, categoryMap } = action;
 
 			return {
 				...state,
 				categories,
-				categoryMap: categoryQuestions,
-				categoryOptions
+				categoryMap
 			};
 		}
 
@@ -100,16 +96,22 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 		case QuestionActionTypes.ADD_QUESTION: {
 			const { categoryId } = action.question;
 			let questionId = 1;
-			//if (categoryId !== 0) {
-				const { questions } = state.categoryMap.get(categoryId)!;
-				questionId = questions.length === 0 ? 1 : Math.max(...questions.map(q => q.questionId)) + 1;
-			//}
-
 			action.question = {
 				...initialQuestion,
 				...action.question,
 				questionId
 			}
+			if (categoryId === 0) {
+				return {
+					...state,
+					formMode: 'edit', // adding => editing
+					question: action.question,
+					questionCopy: { ...action.question },
+					showCategoryForm: false
+				};
+			}
+			const { questions } = state.categoryMap.get(categoryId)!;
+			questionId = questions.length === 0 ? 1 : Math.max(...questions.map(q => q.questionId)) + 1;
 			const { categoryMap, question } = reduceCategory(state.categoryMap, action, categoryId, questionId);
 			return {
 				...state,
@@ -219,7 +221,7 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 
 		case QuestionActionTypes.ASSIGN_QUESTION_ANSWER: {
 			const { categoryId, questionId, answerId, assignedBy } = action;
-			if (state.formMode === 'add') { // use state.question, because question is still not added to categoryQuestions
+			if (state.formMode === 'add') { 
 				return {
 					...state,
 					question: {
@@ -265,14 +267,14 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 
 		case QuestionActionTypes.ADD_CATEGORY: {
 			// const group =  state.categories.find(g => g.categoryId === action.categoryId);
-			const { categoryMap: categoryQuestions } = state;
+			const { categoryMap } = state;
 			const { category, showCategoryForm } = action;
 			const categoryId = state.categories.length === 0 ? 11 : Math.max(...state.categories.map(g => g.categoryId)) + 1;
 			category.categoryId = categoryId
 			const categoryState: ICategoryState = {
 				questions: []
 			}
-			categoryQuestions.set(categoryId, categoryState)
+			categoryMap.set(categoryId, categoryState)
 			return {
 				...state,
 				formMode: 'add',
@@ -322,15 +324,12 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			categoryMap.set(category.categoryId, categoryState)
 			category.questions = [];
 			const categories = [...state.categories, category]
-			const categoryOptions = categories.map(g => ({ value: g.categoryId, label: g.title }))
-			categoryOptions.unshift({ value: 0, label: 'Unknown' })
 			
 			return {
 				...state,
 				formMode: 'edit',
 				categoryIdEditing: -1,
 				categories,
-				categoryOptions,
 				categoryMap
 			}
 		}
@@ -343,9 +342,9 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			return {
 				...state,
 				categoryIdEditing: -1,
-				categories: state.categories.map(g => g.categoryId !== categoryId
-					? g
-					: { ...g, title }
+				categories: state.categories.map(c => c.categoryId !== categoryId
+					? c
+					: { ...c, title }
 				)
 			}
 		}
@@ -365,12 +364,17 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 				return acc
 			}, [])
 
-			const categoryOptions = categories.map(g => ({ value: g.categoryId, label: g.title }))
-			categoryOptions.unshift({ value: 0, label: 'Unknown' })
-
 			return {
 				...state,
-				categories,
+				categories
+			};
+		}
+
+		case QuestionActionTypes.CATEGORY_OPTIONS: {
+			const categoryOptions = state.categories.map(g => ({ value: g.categoryId, label: g.title }))
+			categoryOptions.unshift({ value: 0, label: 'Unknown' })
+			return {
+				...state,
 				categoryOptions
 			};
 		}

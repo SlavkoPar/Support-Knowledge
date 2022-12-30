@@ -21,7 +21,7 @@ const QuestionAutosuggestMulti = Autosuggest as { new(): Autosuggest<IQuestion, 
 
 export class AutoSuggest extends React.Component<{
 	categories: ICategory[],
-	categoryQuestions: Map<number, ICategoryState>,
+	categoryMap: Map<number, ICategoryState>,
 	tekst: string | undefined,
 	onSelectQuestion: (categoryId: number, questionId: number) => void
 }, any
@@ -204,15 +204,15 @@ export class AutoSuggest extends React.Component<{
 		// 			};
 		// 		})
 		// 		.filter(section => section.questions.length > 0);
-		const { categories, categoryQuestions } = this.props;
+		const { categories, categoryMap } = this.props;
 		return categories
 			.map(group => {
 				console.log('categoryId:', group.categoryId);
-				console.log('questions:', categoryQuestions.get(group.categoryId)!.questions)
+				console.log('questions:', categoryMap.get(group.categoryId)!.questions)
 				return {
 					...group,
 					questions: //.group.questions
-						categoryQuestions.get(group.categoryId)!.questions
+					categoryMap.get(group.categoryId)!.questions
 							.filter(question => this.anyWord(valueWordRegex, question.words!))
 				};
 			})

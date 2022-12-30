@@ -15,7 +15,7 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
 
-	const { categories, categoryQuestions,
+	const { categories, categoryMap,
 		onSelectCategory, onSelectQuestion, add, edit, remove, 
 		addCategory, toggleCategory, editCategory, removeCategory } = props;
 
@@ -47,7 +47,7 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 			<ListGroup as="ul" variant={variant}>
 				{categories.map(category => {
 					const { categoryId, title, isExpanded } = category;
-					const categoryState = categoryQuestions.get(categoryId);
+					const categoryState = categoryMap.get(categoryId);
 					const { questions } = categoryState!;
 					return (
 						// {categoryIdEditing === categoryId &&

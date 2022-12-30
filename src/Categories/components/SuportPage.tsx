@@ -20,7 +20,7 @@ type SupportParams = {
 
 const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	let { tekst } = useParams<SupportParams>();
-	const { categories, categoryQuestions, category, question, showQuestionForm, onSelectQuestion, add, canEdit, formMode, addCategory } = props;
+	const { categories, categoryMap, category, question, showQuestionForm, onSelectQuestion, add, canEdit, formMode, addCategory } = props;
 
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
@@ -49,7 +49,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					<div style={{ display: 'flex', alignItems: 'center' }}>
 						<AutoSuggest
 							categories={categories}
-							categoryQuestions={categoryQuestions}
+							categoryMap={categoryMap}
 							tekst={tekst}
 							onSelectQuestion={(categoryId: number, questionId: number) => onSelectQuestion(categoryId, questionId, canEdit)}
 						/>

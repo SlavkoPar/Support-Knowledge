@@ -69,6 +69,7 @@ export enum QuestionActionTypes {
 	STORE_CATEGORY = 'STORE_CATEGORY',
 	UPDATE_CATEGORY = 'UPDATE_CATEGORY',
 	CANCEL_CATEGORY = 'CANCEL_CATEGORY',
+	CATEGORY_OPTIONS = 'CATEGORY_OPTIONS',
 	// question answers
 	REMOVE_QUESTION_ANSWER = 'REMOVE_QUESTION_ANSWER',
 	ASSIGN_QUESTION_ANSWER = 'ASSIGN_QUESTION_ANSWER',
@@ -82,7 +83,7 @@ export enum QuestionActionTypes {
 export interface ILoad {
 	type: QuestionActionTypes.LOAD_CATEGORIES;
 	categories: ICategory[];
-	categoryQuestions: Map<number, ICategoryState>
+	categoryMap: Map<number, ICategoryState>
 }
 
 
@@ -225,11 +226,16 @@ export interface IClear {
 	type: QuestionActionTypes.CLEAR;
 }
 
+export interface ICategoryOptions {
+	type: QuestionActionTypes.CATEGORY_OPTIONS;
+}
+
+
 
 // Combine the action types with a union (we assume there are more)
 export type QuestionActions = ILoad | IGet | IAdd | IEdit | IRemove | IStore | IUpdate | ICancel |
 	IGetCategory | IAddCategory | IToggleCategory | IEditCategory | IRemoveCategory |
-	IStoreCategory | IUpdateCategory | ICancelCategory |
+	IStoreCategory | IUpdateCategory | ICancelCategory | ICategoryOptions |
 	IRemoveQuestionAnswer | IAssignQuestionAnswer |
 	IAddAndAssignNewAnswer |
 	ICloseQuestionForm | IOpenQuestionForm | IClear;
@@ -274,12 +280,12 @@ export const loadCategories: ActionCreator<
 				}
 			}
 
-			const categoryQuestions = new Map<number, ICategoryState>();
+			const categoryMap = new Map<number, ICategoryState>();
 			for (let category of categories) {
 				const categoryState: ICategoryState = {
 					questions: [...category.questions]
 				}
-				categoryQuestions.set(category.categoryId, categoryState);
+				categoryMap.set(category.categoryId, categoryState);
 				category.questions = [];
 			}
 
@@ -287,11 +293,14 @@ export const loadCategories: ActionCreator<
 				localStorage.setItem(SUPPORT_CATEGORIES, JSON.stringify(categories));
 			}
 
-			dispatch({
+			dispatch<any>({
 				type: QuestionActionTypes.LOAD_CATEGORIES,
 				categories,
-				categoryQuestions
-			});
+				categoryMap
+			})
+			.then(() => 
+				dispatch(categoryOptions())
+			);
 		}
 		catch (err) {
 			console.error(err);
@@ -670,6 +679,7 @@ export const removeCategory: ActionCreator<
 				type: QuestionActionTypes.REMOVE_CATEGORY,
 				categoryId
 			});
+			return Promise.resolve(0)
 		} catch (err) {
 			console.error(err);
 		}
@@ -681,12 +691,11 @@ export const storeCategory: ActionCreator<
 > = (category: ICategory) => {
 	return async (dispatch: Dispatch, getState: () => IAppState) => {
 		try {
-			// await updateCategoryFromLocalStorage(group);
 			dispatch({
 				type: QuestionActionTypes.STORE_CATEGORY,
 				category
 			});
-			return Promise.resolve(category.categoryId) //getState().categoriesState.categories.length)
+			return Promise.resolve(category.categoryId)
 		}
 		catch (err) {
 			console.error(err);
@@ -705,6 +714,7 @@ export const updateCategory: ActionCreator<
 				type: QuestionActionTypes.UPDATE_CATEGORY,
 				category
 			});
+			return Promise.resolve(category.categoryId)
 		}
 		catch (err) {
 			console.error(err);
@@ -717,6 +727,19 @@ export const cancelCategory: ActionCreator<any> = () => {
 		try {
 			dispatch({
 				type: QuestionActionTypes.CANCEL_CATEGORY
+			});
+		}
+		catch (err) {
+			console.error(err);
+		}
+	};
+};
+
+export const categoryOptions: ActionCreator<any> = () => {
+	return (dispatch: Dispatch) => {
+		try {
+			dispatch({
+				type: QuestionActionTypes.CATEGORY_OPTIONS
 			});
 		}
 		catch (err) {

@@ -20,7 +20,8 @@ import { QuestionActions,
 	updateCategory,
 	addAndAssignNewAnswer,
 	toggleCategory,
-	getCategory
+	getCategory,
+	categoryOptions
 } from '../actions'
 
 import CategoryList from '../components/CategoryList'
@@ -35,7 +36,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 	
 	const { 
 		categories,
-		categoryMap: categoryQuestions,
+		categoryMap,
 		showCategoryForm,
 		category,
 		showQuestionForm,
@@ -47,7 +48,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 
 	return {
 		categories,
-		categoryQuestions,
+		categoryMap,
 		categoryOptions,
 		showCategoryForm,
 		category,
@@ -86,9 +87,9 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 		addCategory: () => dispatch<any>(addCategory()),
 		toggleCategory: (categoryId: number) =>  dispatch<any>(toggleCategory(categoryId)),
 		editCategory: (categoryId: number) =>  dispatch<any>(editCategory(categoryId)),
-		removeCategory: (categoryId: number) => dispatch<any>(removeCategory(categoryId)),
-		storeCategory: (group: ICategory) => dispatch<any>(storeCategory(group)),
-		updateCategory: (group: ICategory) => dispatch<any>(updateCategory(group)),
+		removeCategory: (categoryId: number) => dispatch<any>(removeCategory(categoryId)).then(() => dispatch(categoryOptions())),
+		storeCategory: (group: ICategory) => dispatch<any>(storeCategory(group)).then(() => dispatch(categoryOptions())),
+		updateCategory: (group: ICategory) => dispatch<any>(updateCategory(group)).then(() => dispatch(categoryOptions()))
 	}
 }
 

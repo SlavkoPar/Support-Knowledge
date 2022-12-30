@@ -63,7 +63,7 @@ export const initialQuestion: IQuestion = {
 
 export interface ICategoriesProps {
 	categories: ICategory[];
-	categoryQuestions: Map<number, ICategoryState>,
+	categoryMap: Map<number, ICategoryState>,
 	showCategoryForm: boolean;
 	showQuestionForm: boolean;
 	category: ICategory | undefined;
@@ -80,7 +80,7 @@ export interface ICategoriesProps {
 
 export interface ICategoryListProps {
 	categories: ICategory[];
-	categoryQuestions: Map<number, ICategoryState>,
+	categoryMap: Map<number, ICategoryState>,
 	categoryOptions: IOption<number>[],
 	showCategoryForm: boolean;
 	showQuestionForm: boolean;

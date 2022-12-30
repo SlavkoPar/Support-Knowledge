@@ -11,10 +11,10 @@ import Page from '../components/Page'
 import { IQuestionAnswer, ICategoriesState } from '../../Categories/types';
 
 const getUsedAnswers = (categoriesState: ICategoriesState) : IQuestionAnswer[]=> {
-	const { categories, categoryMap: categoryQuestions } = categoriesState;
+	const { categories, categoryMap } = categoriesState;
 	let questionAnswers: IQuestionAnswer[] = [];
 	for (let category of categories) {
-		const categoryState = categoryQuestions.get(category.categoryId)!;
+		const categoryState = categoryMap.get(category.categoryId)!;
 		for (let question of categoryState.questions) {
 			const arr = question.answers.map(a => ({
 				...a,
@@ -28,9 +28,9 @@ const getUsedAnswers = (categoriesState: ICategoriesState) : IQuestionAnswer[]=>
 }
 
 const getCategoryQuestion = (categoriesState: ICategoriesState, categoryId: number, questionId: number) : string => {
-	const { categories, categoryMap: categoryQuestions } = categoriesState;
+	const { categories, categoryMap } = categoriesState;
 	const category = categories.find( g => g.categoryId === categoryId);
-	const categoryState = categoryQuestions.get(category!.categoryId)!;
+	const categoryState = categoryMap.get(category!.categoryId)!;
 	const question = categoryState.questions.find(q => q.questionId === questionId);
 	return `${category!.title}/${question!.text}`;
 
