@@ -16,22 +16,21 @@ import ContainerQuestionAnswers from '../containers/ContainerQuestionAnswers';
 const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
 
   let { question } = props;
+  const { categoryId, questionId, text, source, status, answers, createdBy, created } = question;
 
   console.log('props.categoryOptions', props.categoryOptions)
-
-  const [fromSubmit, setSubmit] = useState(false);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: { 
-      categoryId: question.categoryId,
-      questionId: question.questionId,
-      text: question.text,
-      source: question.source,
-      status: question.status,
-      answers: question.answers,
-      createdBy: question.createdBy,
-      created: question.created
+      categoryId,
+      questionId,
+      text,
+      source,
+      status,
+      answers,
+      createdBy,
+      created
     },
     validationSchema: Yup.object({
       text: Yup.string()
@@ -39,12 +38,12 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         .required('Required'),
       categoryId: Yup.number()
         .moreThan(0, 'Select Category')
-        .required('Required')
+        .required('Required'),
     }),
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
-      props.saveForm(values, props.formMode, fromSubmit);
-      if (props.formMode === 'add' && fromSubmit)
+      props.saveForm(values, props.formMode);
+      if (props.formMode === 'add')
         props.handleClose();
     }
   });
@@ -52,13 +51,12 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
   const isEdit = () => props.formMode === 'edit';
   const isDisabled = props.formMode === 'display';
 
-  console.log('RENDERING question formik.values', formik.values, question)
   return (
     <Form onSubmit={formik.handleSubmit}>
       {isEdit() &&
         <Form.Group controlId="questionId">
           <Form.Label>Id:</Form.Label>
-          <span> {formik.values.questionId}</span>
+          <span className="mx-1"> {formik.values.questionId}</span>
         </Form.Group>
       }
 
@@ -70,13 +68,13 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           options={props.categoryOptions}
           //onChange={formik.handleChange}
           onChange={(e, value) => {
-              formik.handleChange(e);
-              formik.submitForm();
+              formik.setFieldValue('categoryId', value)
+                .then(() => formik.submitForm())
           }}
           value={formik.values.categoryId}
           disabled={isDisabled}
         />
-        <Form.Text className="text-danger">
+        <Form.Text className="text-danger">  {/* formik.submitCount > 0 && */}
           {formik.touched.categoryId && formik.errors.categoryId ? (
             <div className="text-danger">{formik.errors.categoryId}</div>
           ) : null}
@@ -115,8 +113,8 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           name="source"
           options={sourceOptions}
           onChange={(e, value) => {
-            formik.handleChange(e);
-            formik.submitForm();
+            formik.setFieldValue('source', value)
+              .then(() => formik.submitForm())
           }}
           value={formik.values.source}
           disabled={isDisabled}
@@ -140,8 +138,8 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           options={statusOptions}
           //onChange={formik.handleChange}
           onChange={(e, value) => {
-            formik.handleChange(e)
-            formik.submitForm();
+            formik.setFieldValue('status', value)
+              .then(() => formik.submitForm())
           }}
           value={formik.values.status}
           disabled={isDisabled}

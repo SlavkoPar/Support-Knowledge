@@ -82,8 +82,8 @@ const myReducer: Reducer<ICategoryState, QuestionActions> = (
 			const { question } = action;
 			question.words = question.text.split(' ');
 			return {
-				...state //,
-				//questions: [...state.questions, {...question}]
+				...state,
+				questions: [...state.questions, {...question}]
 			};
 		}
 

@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch: Dispatch<QuestionActions>) => {
 	return {
 		editForm: (question: IQuestion, formMode: string) => 
 			dispatch<any>(editQuestion(question.categoryId, question.questionId, true)),
-		saveForm: (question: IQuestion, formMode: string, fromSubmit: boolean) => 
+		saveForm: (question: IQuestion, formMode: string) => 
 			dispatch<any>(updateQuestion(question)
 		),
 		cancel: () => dispatch<any>(cancelQuestion())

@@ -26,14 +26,13 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	const handleClose = () => setShow(false);
 	
 	const [showCategory, setShowCategory] = useState(false);
-	const handleCloseCategory = () => {
+	const handleCloseCategory = (isCancel: boolean) => {
 		if (category && category.categoryId !== 0) {
 			setShowCategory(false);
-			add(category.categoryId, tekst ?? '', true); 
-			setShow(true);
-		}
-		else {
-			addCategory();
+			if (!isCancel) {
+				add(category.categoryId, tekst ?? '', true); 
+				setShow(true);
+			}
 		}
 	}
 

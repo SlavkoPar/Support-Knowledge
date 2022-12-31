@@ -137,22 +137,10 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			};
 		}
 
-		// case QuestionActionTypes.STORE_QUESTION: {
-		// 	const { question } = action;
-		// 	const { categoryId } = question;
-		// 	const { categoryMap } = reduceCategory(state.categoryMap, action, categoryId);
-		// 	return {
-		// 		...state,
-		// 		formMode: 'edit',
-		// 		categoryMap,
-		// 		questionCopy: { ...question }
-		// 	};
-		// }
-
 		case QuestionActionTypes.UPDATE_QUESTION: {
 			let { questionCopy } = state;
-			const { categoryId, questionId, categoryIdWas } = action.question; // comes from other user update
-			const categoryIdCopy = categoryIdWas ? categoryIdWas : questionCopy!.categoryId;
+			const { categoryId, questionId  } = action.question; // comes from other user update
+			const categoryIdCopy = questionCopy!.categoryId;
 			if (action.question.categoryId === categoryIdCopy) {
 				// category hasn't been changed
 				const { categoryMap, question } = reduceCategory(state.categoryMap, action, categoryId, questionId);

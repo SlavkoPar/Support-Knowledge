@@ -25,8 +25,7 @@ export interface IQuestion {
 	source: number,
 	status: number,
 	createdBy: number,
-	created: Date,
-	categoryIdWas?: number
+	created: Date
 }
 
 export interface IQuestionJson extends Omit<IQuestion, 'categoryId' | 'answers' | 'created'> {
@@ -142,14 +141,14 @@ export interface IQuestionFormProps {
 	handleClose: () => void;
 	cancel: () => void;
 	editForm: (question: IQuestion, formMode: string) => void;
- 	saveForm: (question: IQuestion, formMode: string, fromSubmit: boolean) => void;
+ 	saveForm: (question: IQuestion, formMode: string) => void;
   }
 
   export interface ICategoryFormProps {
 	category: ICategory | undefined;
 	formMode: string;
 	canEdit: boolean;
-	handleClose: () => void;
+	handleClose: (isCancel: boolean) => void;
 	cancel: () => void;
 	saveForm: (category: ICategory, formMode: string) => void;
   }

@@ -35,7 +35,7 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
     onSubmit: values => {
       // alert(JSON.stringify(values, null, 2));
       props.saveForm(values, props.formMode)
-      props.handleClose();
+      props.handleClose(false);
     }
   });
 
@@ -95,7 +95,7 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
               size="sm"
               onClick={() => {
                 props.cancel();
-                //props.handleClose()
+                props.handleClose(true)
               }}>
               Cancel
             </Button>}

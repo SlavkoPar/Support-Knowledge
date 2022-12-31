@@ -298,9 +298,6 @@ export const loadCategories: ActionCreator<
 				categories,
 				categoryMap
 			})
-			.then(() => 
-				dispatch(categoryOptions())
-			);
 		}
 		catch (err) {
 			console.error(err);
@@ -477,8 +474,9 @@ export const assignQuestionAnswer: ActionCreator<
 };
 
 
+/*
 const syncWithOthers = (type: string, entity: any) => {
-	/*
+	
 	const btnSync = document.getElementById('btnSync');
 	localStorage.setItem('syncAction', JSON.stringify({
 			type,
@@ -487,41 +485,8 @@ const syncWithOthers = (type: string, entity: any) => {
 		})
 	);
 	btnSync!.click();
-	*/
 };
-
-
-export const storeQuestion: ActionCreator<
-	ThunkAction<Promise<any>, IAppState, null, IStore>
-> = (question: IQuestion) => {
-	return async (dispatch: Dispatch, getState: () => IAppState) => {
-		try {
-			//await delay();
-			dispatch({
-				type: QuestionActionTypes.STORE_QUESTION,
-				question
-			});
-		}
-		catch (err) {
-			console.error(err);
-		}
-	};
-};
-
-// const addCategoryUnknown = async (state: IAppState, dispatch: Dispatch) => {
-// 	if (state.categoriesState.categories.find(c => c.categoryId === 0))
-// 		return Promise.resolve(-1);
-// 	const newCategory = {
-// 		...initialCategory,
-// 		categoryId: 0,
-// 		title: 'Unknown',
-// 		questions: []
-// 	}
-// 	return dispatch<any>(storeCategory(newCategory))
-// 		.then((categoryId: number) => {
-// 			return categoryId;
-// 		});
-// }
+*/
 
 
 export const updateQuestion: ActionCreator<
@@ -534,10 +499,6 @@ export const updateQuestion: ActionCreator<
 				type: QuestionActionTypes.UPDATE_QUESTION,
 				question
 			});
-			// if (doSync) {
-			// 	question.categoryIdWas = getState().categoriesState.questionCopy!.categoryId;
-			// 	syncWithOthers(QuestionActionTypes.UPDATE_QUESTION, question);
-			// }
 		}
 		catch (err) {
 			console.error(err);

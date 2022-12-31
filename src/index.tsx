@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import configureStore from './store/Store';
-import { loadCategories } from './Categories/actions';
+import { categoryOptions, loadCategories } from './Categories/actions';
 import { getAllAnswers } from './Answers/actions';
 
 import './index.css';
@@ -23,7 +23,8 @@ import { ITop } from './Top/types';
 // localStorage.clear(); // !!!!!!!!!!!!
 
 const store = configureStore();
-store.dispatch(loadCategories());
+store.dispatch<any>(loadCategories())
+	.then(() => store.dispatch(categoryOptions()));
 store.dispatch(getAllAnswers());
 store.dispatch(getAllUsers())
 store.dispatch<any>(loadTop())

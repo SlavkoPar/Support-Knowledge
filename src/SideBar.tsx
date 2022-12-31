@@ -23,7 +23,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { setShowModalJSON, toggleMode, TopActions } from "./Top/actions";
-import { closeQuestionForm } from "./Categories/actions";
+import { categoryOptions, closeQuestionForm } from "./Categories/actions";
 
 import { clearAnswers } from "./Answers/actions";
 import { clearQuestions } from "./Categories/actions";
@@ -307,7 +307,7 @@ const mapDispatchToProps = (dispatch: Dispatch<TopActions>) => {
     clearAnswers: () => dispatch<any>(clearAnswers()),
     clearQuestions: () => dispatch<any>(clearQuestions()),
     getAllAnswers: () => dispatch<any>(getAllAnswers()),
-    loadCategories: () => dispatch<any>(loadCategories()),
+    loadCategories: () => dispatch<any>(loadCategories()).then(() => dispatch(categoryOptions())),
     setShowModalJSON: (show: boolean) => dispatch<any>(setShowModalJSON(show))
   }
 };

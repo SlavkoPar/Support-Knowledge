@@ -17,7 +17,7 @@ import { CategoryForm } from '../components/CategoryForm';
 
 interface IProps {
 	canEdit: boolean,
-	handleClose: () => void
+	handleClose: (isCancel: boolean) => void
 }
 
 // Grab the categories from the store and make them available on props
