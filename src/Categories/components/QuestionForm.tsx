@@ -48,12 +48,12 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
     }
   });
   
-  const isEdit = () => props.formMode === 'edit';
+  const isEdit = props.formMode === 'edit';
   const isDisabled = props.formMode === 'display';
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      {isEdit() &&
+      {isEdit &&
         <Form.Group controlId="questionId">
           <Form.Label>Id:</Form.Label>
           <span className="mx-1"> {formik.values.questionId}</span>
@@ -69,7 +69,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           //onChange={formik.handleChange}
           onChange={(e, value) => {
               formik.setFieldValue('categoryId', value)
-                .then(() => formik.submitForm())
+                .then(() => { if (isEdit) formik.submitForm()})
           }}
           value={formik.values.categoryId}
           disabled={isDisabled}
@@ -90,7 +90,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           onChange={formik.handleChange}
           //onBlur={formik.handleBlur}
           onBlur={(e: React.FocusEvent<HTMLTextAreaElement>): void => {
-            if (isEdit() && formik.touched.text) //  //.initialValues.text !== formik.values.text))
+            if (isEdit && formik.touched.text) //  //.initialValues.text !== formik.values.text))
               formik.submitForm();
           }}
           value={formik.values.text}
@@ -114,7 +114,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           options={sourceOptions}
           onChange={(e, value) => {
             formik.setFieldValue('source', value)
-              .then(() => formik.submitForm())
+            .then(() => { if (isEdit) formik.submitForm()})
           }}
           value={formik.values.source}
           disabled={isDisabled}
@@ -139,7 +139,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
           //onChange={formik.handleChange}
           onChange={(e, value) => {
             formik.setFieldValue('status', value)
-              .then(() => formik.submitForm())
+            .then(() => { if (isEdit) formik.submitForm()})
           }}
           value={formik.values.status}
           disabled={isDisabled}
@@ -162,8 +162,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
         <span>{' '}{formik.values.created.toLocaleDateString()}</span>
       </Form.Group>
 
-      {/*
-      {!isDisabled &&
+      {!isDisabled && !isEdit &&
         <div className="buttons">
           {props.canEdit &&
             <Button
@@ -181,10 +180,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
               size="sm"
               type='button'
               onClick={() => {
-                setSubmit(true); 
-                formik.submitForm().then(
-                  () => setSubmit(false)
-                );
+                formik.submitForm()
               }
             }
             >
@@ -192,7 +188,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
             </Button>}
         </div>
       }
-      */}
+
       {isDisabled && props.canEdit &&
         <div className="buttons">
           <Button

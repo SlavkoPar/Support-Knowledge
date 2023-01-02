@@ -93,32 +93,25 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			};
 		}
 
+		
 		case QuestionActionTypes.ADD_QUESTION: {
 			const { categoryId } = action.question;
-			let questionId = 1;
-			action.question = {
+			const question = {
 				...initialQuestion,
-				...action.question,
-				questionId
+				...action.question
 			}
 			if (categoryId === 0) {
-				return {
-					...state,
-					formMode: 'edit', // adding => editing
-					question: action.question,
-					questionCopy: { ...action.question },
-					showCategoryForm: false
-				};
+				question.questionId = 0;
 			}
-			const { questions } = state.categoryMap.get(categoryId)!;
-			questionId = questions.length === 0 ? 1 : Math.max(...questions.map(q => q.questionId)) + 1;
-			const { categoryMap, question } = reduceCategory(state.categoryMap, action, categoryId, questionId);
+			else {
+				const { questions } = state.categoryMap.get(categoryId)!;
+				question.questionId = questions.length === 0 ? 1 : Math.max(...questions.map(q => q.questionId)) + 1;
+			}
 			return {
 				...state,
-				formMode: 'edit', // adding => editing
+				formMode: 'add',
 				question,
-				questionCopy: { ...question! },
-				categoryMap,
+				questionCopy: { ...question },
 				showCategoryForm: false
 			};
 		}
@@ -161,6 +154,8 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 					questionId
 				}, categoryIdCopy);
 				// 2) add question  to new category
+				const { questions } = state.categoryMap.get(categoryId)!;
+				action.question.questionId = questions.length === 0 ? 1 : Math.max(...questions.map(q => q.questionId)) + 1;
 				categoryMap = reduceCategory(categoryMap, {
 					...action,
 					type: QuestionActionTypes.STORE_QUESTION
@@ -174,6 +169,19 @@ const myReducer: Reducer<ICategoriesState, QuestionActions> = (
 			}
 		}
 
+		case QuestionActionTypes.STORE_QUESTION: {
+			const { question: aq } = action;
+			const { questions } = state.categoryMap.get(aq.categoryId)!;
+			aq.questionId = questions.length === 0 ? 1 : Math.max(...questions.map(q => q.questionId)) + 1;
+			const { categoryMap, question } = reduceCategory(state.categoryMap, action, aq.categoryId, aq.questionId);
+			return {
+				...state,
+				formMode: 'edit',
+				question,
+				questionCopy: { ...question! },
+				categoryMap
+			};
+		}
 
 		case QuestionActionTypes.CANCEL_QUESTION: {
 			return {

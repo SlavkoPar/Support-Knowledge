@@ -507,6 +507,24 @@ export const updateQuestion: ActionCreator<
 };
 
 
+export const storeQuestion: ActionCreator<
+	ThunkAction<Promise<any>, IAppState, null, IStore>
+> = (question: IQuestion) => {
+	return async (dispatch: Dispatch, getState: () => IAppState) => {
+		const { categoryId } = question;
+		try {
+			//await delay();
+			dispatch({
+				type: QuestionActionTypes.STORE_QUESTION,
+				question
+			});
+		}
+		catch (err) {
+			console.error(err);
+		}
+	};
+};
+
 const delay = (): Promise<any> => {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
