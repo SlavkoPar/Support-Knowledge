@@ -41,7 +41,7 @@ sessionStorage.setItem('sessionId', sessionId.toString())
 
 const state = store.getState();
 
-ReactDOM.render(
+ReactDOM.render(  
 	<React.StrictMode>
 		<Provider store={store} >
 			<ThemeProvider darkMode={state.topState.top.darkMode }>

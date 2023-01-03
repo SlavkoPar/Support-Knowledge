@@ -20,10 +20,13 @@ type SupportParams = {
 
 const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 	let { tekst } = useParams<SupportParams>();
-	const { categories, categoryMap, category, question, showQuestionForm, onSelectQuestion, add, canEdit, formMode, addCategory } = props;
+	const { categories, categoryMap, category, question, showQuestionForm, closeQuestionForm, onSelectQuestion, add, canEdit, formMode, addCategory } = props;
 
 	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
+	const handleClose = () => {
+		closeQuestionForm();
+		setShow(false);
+	}
 	
 	const [showCategory, setShowCategory] = useState(false);
 	const handleCloseCategory = (isCancel: boolean) => {
@@ -78,7 +81,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 						{categories && question && showQuestionForm &&
 							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
 								<h4 style={{ textAlign: 'center' }}>Question</h4>
-								<ContainerQuestionForm canEdit={canEdit} handleClose={() => { }} />
+								<ContainerQuestionForm canEdit={canEdit} handleClose={handleClose} />
 							</div>
 						}
 					</div>
