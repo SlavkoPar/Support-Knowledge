@@ -1,20 +1,13 @@
 {
   "files": {
-    "main.css": "/Support-Knowledge/static/css/main.42d360bc.chunk.css",
-    "main.js": "/Support-Knowledge/static/js/main.41dd7d17.chunk.js",
-    "main.js.map": "/Support-Knowledge/static/js/main.41dd7d17.chunk.js.map",
-    "runtime-main.js": "/Support-Knowledge/static/js/runtime-main.9db7944b.js",
-    "runtime-main.js.map": "/Support-Knowledge/static/js/runtime-main.9db7944b.js.map",
-    "static/js/2.bc98d12d.chunk.js": "/Support-Knowledge/static/js/2.bc98d12d.chunk.js",
-    "static/js/2.bc98d12d.chunk.js.map": "/Support-Knowledge/static/js/2.bc98d12d.chunk.js.map",
+    "main.css": "/Support-Knowledge/static/css/main.d749630a.css",
+    "main.js": "/Support-Knowledge/static/js/main.c02afea2.js",
     "index.html": "/Support-Knowledge/index.html",
-    "static/css/main.42d360bc.chunk.css.map": "/Support-Knowledge/static/css/main.42d360bc.chunk.css.map",
-    "static/js/2.bc98d12d.chunk.js.LICENSE.txt": "/Support-Knowledge/static/js/2.bc98d12d.chunk.js.LICENSE.txt"
+    "main.d749630a.css.map": "/Support-Knowledge/static/css/main.d749630a.css.map",
+    "main.c02afea2.js.map": "/Support-Knowledge/static/js/main.c02afea2.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.9db7944b.js",
-    "static/js/2.bc98d12d.chunk.js",
-    "static/css/main.42d360bc.chunk.css",
-    "static/js/main.41dd7d17.chunk.js"
+    "static/css/main.d749630a.css",
+    "static/js/main.c02afea2.js"
   ]
 }
