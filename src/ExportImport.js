@@ -3,17 +3,46 @@ import JSZip from 'jszip';
 export const LocalStorage = {
 
   display: async () => {
-    let s = "";
+
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       console.log("============");
-      s += ("\n============");
       console.log(key);
-      s += '\n' + key;
       console.log("\n============");
-      s += ("\n============\n");
       console.log(key ? await localStorage.getItem(key) : "null");
-      s += '\n' + key ? localStorage.getItem(key) : "null"
+
+      if (key === "SUPPORT_TOP") {
+        console.log(JSON.stringify(JSON.parse(localStorage.getItem(key), null, 2)))
+      }
+      else {
+        if (key && localStorage.getItem(key)) {
+          const obj = JSON.parse(localStorage.getItem(key))
+          // eslint-disable-next-line no-loop-func
+          Object.values(obj).forEach(o => console.log(JSON.stringify(o)))
+        }
+      }
+    }
+
+    let s = "";
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      s += '<h7>' + (key ?? "null") + '</h7>';
+
+      if (key === "SUPPORT_TOP") {
+        s += '<ul>';
+        s += JSON.stringify(JSON.parse(localStorage.getItem(key)), null, 2)
+        s += '</ul>';
+      }
+      else {
+        if (key && localStorage.getItem(key)) {
+          const obj = JSON.parse(localStorage.getItem(key))
+          s += '<ul>';
+          // eslint-disable-next-line no-loop-func
+          Object.values(obj).forEach(o => s += '<li>' + JSON.stringify(o) + '</li>')
+          s += '</ul>';
+        }
+      }
+
     }
     return Promise.resolve(s);
   },
@@ -38,7 +67,7 @@ export const LocalStorage = {
       // after LocalStorage.clear(),
       // we don't load demo data.json in loadCategories()
       localStorage.setItem('SUPPORT_CATEGORIES', "")
-      localStorage.setItem('SUPPORT_ANSWERS', "")       
+      localStorage.setItem('SUPPORT_ANSWERS', "")
     }
   },
 

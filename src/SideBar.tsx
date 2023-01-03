@@ -115,7 +115,10 @@ function SideBar(props: ISideBarProps) {
 
                   case "STORAGE_DISPLAY":
                     LocalStorage.display()
-                      .then(s => { setStrJSON(s) });
+                      .then(s => { 
+                        //setStrJSON(s) 
+                        document.getElementById('bodi')!.innerHTML = s;
+                      });
                     setShowModalJSON(true);
                     break;
                   case "STORAGE_CLEAR":
@@ -275,10 +278,10 @@ function SideBar(props: ISideBarProps) {
           <Modal.Header closeButton>
             <Modal.Title>LOCAL STORAGE</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <pre style={{ whiteSpace: "pre-line" }}>
-              {strJSON}
-            </pre>
+          <Modal.Body  id='bodi'>
+            {/* <pre style={{ whiteSpace: "pre-line" }}> */}
+             
+            {/* </pre> */}
           </Modal.Body>
           <Modal.Footer>
           </Modal.Footer>
