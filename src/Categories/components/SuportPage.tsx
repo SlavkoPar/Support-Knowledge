@@ -60,6 +60,10 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 							className="button-edit"
 							title="Create a new Question"
 							onClick={() => { 
+								if (!canEdit) {
+									alert('As the member of Viewer Group, you have no permission to edit data');
+									return false;
+								}
 								if (categories.length === 0) {
 									addCategory(); 
 									setShowCategory(true);

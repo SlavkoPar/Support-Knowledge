@@ -50,7 +50,7 @@ const QuestForm: React.FC<IQuestionFormProps> = (props: IQuestionFormProps) => {
   
   const isEdit = props.formMode === 'edit';
   const isDisabled = props.formMode === 'display';
-
+console.log('isEdit, isDisabled', isEdit, isDisabled, props.canEdit)
   return (
     <Form onSubmit={formik.handleSubmit}>
       {isEdit &&

@@ -46,7 +46,7 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 
 			<ListGroup as="ul" variant={variant}>
 				{categories.map(category => {
-					const { categoryId, title, isExpanded } = category;
+					const { categoryId } = category;
 					const categoryState = categoryMap.get(categoryId);
 					const { questions } = categoryState!;
 					return (
