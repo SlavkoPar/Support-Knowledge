@@ -97,7 +97,7 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
                 props.handleClose(true)
               }}>
               Cancel
-            </Button>
+            </Button>&nbsp;
             <Button
               variant="primary"
               size="sm"

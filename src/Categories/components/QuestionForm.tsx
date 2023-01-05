@@ -172,7 +172,7 @@ console.log('isEdit, isDisabled', isEdit, isDisabled, props.canEdit)
                 props.handleClose()
               }}>
               Cancel
-            </Button>
+            </Button>&nbsp;
             <Button
               variant="primary"
               size="sm"
