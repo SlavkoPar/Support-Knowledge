@@ -13,6 +13,7 @@ import QuestionRow from './QuestionRow';
 interface ICategoryRowProps {
 	category: ICategory;
 	questions: IQuestion[];
+	canEdit: boolean;
 	toggleCategory: (categoryId: number) => void;
 	editCategory: (categoryId: number) => void;
 	removeCategory: (categoryId: number) => void;
@@ -27,7 +28,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 
 	const [hoverRef, hoverProps] = useHover();
 	const { category, questions, toggleCategory, editCategory, removeCategory, onSelectCategory,
-		onSelectQuestion, add, edit, remove } = props;
+		onSelectQuestion, add, edit, remove, canEdit } = props;
 	const { categoryId, title, isExpanded } = category;
 
 	const theme = useContext(ThemeContext);
@@ -72,7 +73,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 					>
 						<FontAwesomeIcon icon={faPlus} size='xs' color='orange' />
 					</Button>
-					{hoverProps.isHovered &&
+					{canEdit && hoverProps.isHovered &&
 						<Button
 							variant={variant}
 							size="sm"
@@ -83,7 +84,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 							<FontAwesomeIcon icon={faEdit} color='lightblue' />
 						</Button>
 					}
-					{hoverProps.isHovered && questions.length === 0 &&
+					{canEdit && hoverProps.isHovered && questions.length === 0 &&
 						<Button
 							size="sm"
 							className="py-0 px-1"
@@ -107,6 +108,7 @@ const CategoryRow: React.FC<ICategoryRowProps> = (props: ICategoryRowProps) => {
 								onSelectQuestion={onSelectQuestion}
 								edit={edit}
 								remove={remove}
+								canEdit={canEdit}
 							/>
 						)}
 					</ListGroup>

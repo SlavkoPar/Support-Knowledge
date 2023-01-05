@@ -20,7 +20,6 @@ import { UserActions,
 import UsersPage from '../components/UsersPage'
 
 interface IProps {
-	canEdit: boolean
 }
 
 // Grab the users from the store and make them available on props
@@ -33,7 +32,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		userEditing,
 		formMode,
 		roleIdEditing,
-		canEdit: ownProps.canEdit
+		canEdit: topState.top.canEdit
 	};
 };
 

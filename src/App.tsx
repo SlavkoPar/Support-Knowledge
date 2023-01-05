@@ -25,6 +25,7 @@ import About from './components/About';
 
 interface IProps {
 	isAuthenticated: boolean | null;
+	canEdit: boolean,
 	uuid: string | null;
 	auth?: IAuth,
 	toggleNavbar: () => void,
@@ -32,7 +33,7 @@ interface IProps {
 	signOut: () => void;
 }
 
-const App = ({ isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, signOut }: IProps) => {
+const App = ({ isAuthenticated, canEdit,  uuid, auth, toggleNavbar, checkAuthentication, signOut }: IProps) => {
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
@@ -41,9 +42,7 @@ const App = ({ isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, s
 		document.body.classList.add(bg)
 	}, []);
 
-
-	const canEdit = isAuthenticated === true && auth!.who.roleId < 44;
-
+	
 	// null is the third state false/true/null in reducer
 	const app = 
 		<Router>
@@ -59,15 +58,15 @@ const App = ({ isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, s
 							<Routes>
 								<Route path="/" element={<Landing />} />
 								<Route path="/sign-in" element={
-									<LoginForm canEdit={true} isRegister={false} />
+									<LoginForm isRegister={false} />
 								} />
 								<Route path="/register" element={
-									<LoginForm canEdit={true} isRegister={true} />
+									<LoginForm isRegister={true} />
 								} />
-								<Route path="/supporter/:tekst" element={<Support canEdit={canEdit} />} />
-								<Route path="/questions" element={<containers.categories canEdit={canEdit} handleClose={()=>{}} />} />
+								<Route path="/supporter/:tekst" element={<Support />} />
+								<Route path="/questions" element={<containers.categories handleClose={()=>{}} />} />
 								<Route path="/answers/:slug" element={<AnswersPage />} />
-								<Route path="/users/:slug" element={<UsersPage canEdit={true} />} />
+								<Route path="/users/:slug" element={<UsersPage />} />
 								<Route path="/about" element={<About />} />
 								<Route path="/landing" element={<Landing />} />
 							</Routes>
@@ -91,6 +90,7 @@ const App = ({ isAuthenticated, uuid, auth, toggleNavbar, checkAuthentication, s
 
 const mapStateToProps = (store: IAppState) => ({
 	isAuthenticated: store.topState.top.isAuthenticated,
+	canEdit: store.topState.top.canEdit,
 	auth: store.topState.top.auth,
 	uuid: store.topState.top.uuid
 });

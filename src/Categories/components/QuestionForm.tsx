@@ -127,7 +127,7 @@ console.log('isEdit, isDisabled', isEdit, isDisabled, props.canEdit)
       </Form.Group>
 
       <br />
-      <ContainerQuestionAnswers canEdit={props.canEdit} />
+      <ContainerQuestionAnswers />
       <br />
 
       <Form.Group controlId="status">
@@ -164,7 +164,6 @@ console.log('isEdit, isDisabled', isEdit, isDisabled, props.canEdit)
 
       {!isDisabled && !isEdit &&
         <div className="buttons">
-          {props.canEdit &&
             <Button
               variant="secondary"
               size="sm"
@@ -173,8 +172,7 @@ console.log('isEdit, isDisabled', isEdit, isDisabled, props.canEdit)
                 props.handleClose()
               }}>
               Cancel
-            </Button>}
-          {props.canEdit &&
+            </Button>
             <Button
               variant="primary"
               size="sm"
@@ -185,7 +183,7 @@ console.log('isEdit, isDisabled', isEdit, isDisabled, props.canEdit)
             }
             >
               Save
-            </Button>}
+            </Button>
         </div>
       }
 

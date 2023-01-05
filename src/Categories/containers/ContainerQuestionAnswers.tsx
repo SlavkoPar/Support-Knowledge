@@ -30,12 +30,11 @@ const joinQuestionAnswers = (question: IQuestion | undefined, answers: IAnswer[]
 }
 
 interface IProps {
-	canEdit: boolean
 }
 
 // Grab the categories from the store and make them available on props
 const mapStateToProps = (store: IAppState, ownProps: IProps) => { // 
-	const { categoriesState, answerState } = store;
+	const { categoriesState, answerState, topState } = store;
 	const { question, categoryOptions, formMode } = categoriesState;
 	const { answers, answer } = answerState;
 	return {
@@ -45,7 +44,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps) => { //
 		answers,
 		answer,
 		formMode,
-		canEdit: ownProps.canEdit
+		canEdit: topState.top.canEdit
 	};
 };
 

@@ -17,7 +17,6 @@ import CategoriesPage from '../components/CategoriesPage'
 import SupportPage from '../components/SuportPage'
 
 interface IProps {
-	canEdit: boolean
 }
 
 // Grab the categories from the store and make them available on props
@@ -46,7 +45,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		question,
 		formMode,
 		categoryIdEditing,
-		canEdit: ownProps.canEdit,
+		canEdit: topState.top.canEdit,
 		tagOptions: tagState.tags.map(f => ({ label: f.name, value: f.tagId, color: f.color })),
 		auth: topState.top.auth
 	};

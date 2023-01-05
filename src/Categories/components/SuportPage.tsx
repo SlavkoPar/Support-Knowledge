@@ -85,7 +85,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 						{categories && question && showQuestionForm &&
 							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
 								<h4 style={{ textAlign: 'center' }}>Question</h4>
-								<ContainerQuestionForm canEdit={canEdit} handleClose={handleClose} />
+								<ContainerQuestionForm handleClose={handleClose} />
 							</div>
 						}
 					</div>
@@ -98,7 +98,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					<Modal.Title>First create Category</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<ContainerCategoryForm canEdit={formMode === 'display' ? false : canEdit} handleClose={handleCloseCategory} />
+					<ContainerCategoryForm handleClose={handleCloseCategory} />
 				</Modal.Body>
 				{/* <Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>
@@ -116,7 +116,7 @@ const SupportPage: React.FC<ICategoriesProps> = (props: ICategoriesProps) => {
 					<Modal.Title>Store question</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<ContainerQuestionForm canEdit={canEdit} handleClose={handleClose} />
+					<ContainerQuestionForm handleClose={handleClose} />
 				</Modal.Body>
 				{/* <Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>

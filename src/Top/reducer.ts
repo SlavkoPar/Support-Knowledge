@@ -1,5 +1,6 @@
 // Import Reducer type
 import { Reducer } from 'redux';
+import { RoleId } from '../Users/types';
 import {
 	SUPPORT_TOP, TopActions, TopActionTypes
 } from './actions';
@@ -9,6 +10,7 @@ const initialTop: ITop = {
 	isAuthenticated: null,
 	uuid: null,
 	darkMode: true,
+	canEdit: false,
 	showModalJSON: false
 };
 
@@ -43,6 +45,7 @@ const myReducer: Reducer<ITopState, TopActions> = (
 		}
 
 		case TopActionTypes.REGISTER: {
+			const { roleId } = action.user
 			return {
 				...state,
 				top: {
@@ -54,6 +57,7 @@ const myReducer: Reducer<ITopState, TopActions> = (
 						visited: new Date()
 					},
 					darkMode: false,
+					canEdit: roleId === RoleId.OWNER || roleId === RoleId.ADMINS || roleId === RoleId.EDITORS,
 					showModalJSON: false
 				}
 			};
@@ -68,15 +72,6 @@ const myReducer: Reducer<ITopState, TopActions> = (
 				}
 			};
 		}		
-
-		// case TopActionTypes.NAVBAR_TOGGLE: {
-		// 	return {
-		// 		...state,
-		// 		top: {
-		// 			...state.top
-		// 		}
-		// 	};
-		// }	
 
 		case TopActionTypes.SHOW_MODAL_JSON: {
 			return {
@@ -99,6 +94,7 @@ const myReducer: Reducer<ITopState, TopActions> = (
 		}	
 
 		case TopActionTypes.AUTHENTICATE: {
+			const { roleId } = action.user;
 			return {
 				...state,
 				top: {
@@ -109,7 +105,8 @@ const myReducer: Reducer<ITopState, TopActions> = (
 						who: action.user,
 						authenticated: new Date(),
 						visited: new Date()
-					}
+					},
+					canEdit: roleId === RoleId.OWNER || roleId === RoleId.ADMINS || roleId === RoleId.EDITORS
 				}
 			};
 		}
@@ -120,6 +117,7 @@ const myReducer: Reducer<ITopState, TopActions> = (
 				top: {
 					...state.top,
 					isAuthenticated: false,
+					canEdit: false,
 					auth: undefined
 				}
 			};

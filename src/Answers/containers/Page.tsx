@@ -43,7 +43,8 @@ const mapStateToProps = (store: IAppState) => {
 	formMode: store.answerState.formMode,
 	usedAnswers: getUsedAnswers(store.categoriesState),
 	getCategoryQuestion: (categoryId: number, questionId: number): string => getCategoryQuestion(store.categoriesState, categoryId, questionId),
-	who: store.topState.top.auth!.who
+	who: store.topState.top.auth!.who,
+	canEdit: store.topState.top.canEdit
   };
 };
 

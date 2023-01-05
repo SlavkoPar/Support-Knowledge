@@ -28,6 +28,7 @@ export interface ITop {
 	authError?: string,
 	auth?: IAuth;
 	darkMode: boolean;
+	canEdit: boolean;
 	showModalJSON: boolean; // when displaying localStorage
 }
 

@@ -13,10 +13,11 @@ interface IProps {
 	getCategoryQuestion: (categoryId: number, questionId: number) => string,
 	edit: (answerId: number) => void;
 	remove: (answerId: number) => void;
+	canEdit: boolean;
 }
 
 const List: React.FC<IProps> = (props: IProps) => {
-	const { answers, usedAnswers, getCategoryQuestion, edit, remove } = props;
+	const { answers, usedAnswers, getCategoryQuestion, edit, remove, canEdit } = props;
 
 	const theme = useContext(ThemeContext);
 	const { darkMode, variant, bg } = theme.state;
@@ -27,8 +28,8 @@ const List: React.FC<IProps> = (props: IProps) => {
 				<tr>
 					<th>Id</th>
 					<th>Answer</th>
-					<th></th>
-					<th></th>
+					{canEdit && <th></th>}
+					{canEdit && <th></th>}
 				</tr>
 			</thead>
 			<tbody>
@@ -40,6 +41,7 @@ const List: React.FC<IProps> = (props: IProps) => {
 						getCategoryQuestion={getCategoryQuestion}
 						edit={edit}
 						remove={remove}
+						canEdit={canEdit}
 					/>
 				)}
 			</tbody>

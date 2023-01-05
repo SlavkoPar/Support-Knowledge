@@ -15,13 +15,12 @@ import { QuestionActions,
 import { QuestionForm } from '../components/QuestionForm';
 
 interface IProps {
-	canEdit: boolean,
 	handleClose: () => void
 }
 
 // Grab the categories from the store and make them available on props
 const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
-	const {categoriesState, answerState } = store;
+	const {categoriesState, answerState, topState } = store;
 	const { question, categoryOptions, formMode } = categoriesState; 
 	const { answers } = answerState;
 	return {
@@ -29,7 +28,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
 		question: question!,
 		answers,
 		formMode,
-		canEdit: ownProps.canEdit,
+		canEdit: topState.top.canEdit,
 		handleClose: ownProps.handleClose
 	};
 };

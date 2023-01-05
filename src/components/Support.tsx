@@ -9,12 +9,11 @@ import containers from '../Categories/containers/ContainerCategoriesPage'
 // }
 
 interface IMyProps {
-  canEdit: boolean;
 }
 
 const Support: React.FC<IMyProps> = (props: IMyProps) => { 
   return (
-      <containers.supporter canEdit={props.canEdit} handleClose={()=>{}} />
+      <containers.supporter handleClose={()=>{}} />
   );
 };
 

@@ -19,6 +19,7 @@ interface IProps {
 	remove: (answerId: number) => void;
 	cancel: () => void;
 	saveForm: (answer: IAnswer, formMode: string) => void;
+	canEdit: boolean;
 }
 
 type MyParams = {
@@ -32,7 +33,7 @@ const Page: React.FC<IProps> = (props: IProps) => {
 	const { darkMode, variant, bg } = theme.state;
 
 	// slug = ''
-	const { answers, answer, usedAnswers, getCategoryQuestion, formMode, add, edit, remove, cancel, saveForm } = props;
+	const { answers, answer, usedAnswers, getCategoryQuestion, formMode, add, edit, remove, cancel, saveForm, canEdit } = props;
 	return (
 		<Container fluid>
 			<Row className={`${darkMode ? "dark" : "light"}`}>
@@ -51,7 +52,9 @@ const Page: React.FC<IProps> = (props: IProps) => {
 										usedAnswers={usedAnswers}
 										getCategoryQuestion={getCategoryQuestion}
 										edit={edit}
-										remove={remove} />
+										remove={remove} 
+										canEdit={canEdit}
+									/>
 								</div>
 							)}
 					</div>

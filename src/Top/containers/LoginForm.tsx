@@ -11,7 +11,6 @@ import { LoginForm } from '../components/LoginForm';
 import { ILogin } from '../types';
 
 interface IProps {
-	canEdit: boolean,
 	isRegister: boolean
 }
 
@@ -22,7 +21,7 @@ const mapStateToProps = (store: IAppState, ownProps: IProps) => {
 		isAuthenticated: top.isAuthenticated,
 		uuid: top.uuid,
 		authError: top.authError,
-		canEdit: ownProps.canEdit,
+		canEdit: top.canEdit,
 		isRegister: ownProps.isRegister,
 		formMode: 'edit'
 	};

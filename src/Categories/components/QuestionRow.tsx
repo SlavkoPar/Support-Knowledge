@@ -15,13 +15,14 @@ interface IQuestionRowProps {
 	onSelectQuestion: (categoryId: number, questionId: number) => void;
 	edit: (categoryId: number, questionId: number, showQuestionForm: boolean) => void;
 	remove: (categoryId: number, questionId: number) => void;
+	canEdit: boolean;
 }
 
 const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 
 	const [hoverRef, hoverProps] = useHover();
 
-	const { question, onSelectQuestion, edit, remove } = props;
+	const { question, onSelectQuestion, edit, remove, canEdit } = props;
 	const { categoryId, questionId } = question;
 
 	const theme = useContext(ThemeContext);
@@ -38,7 +39,7 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 					onClick={() => onSelectQuestion(categoryId, questionId)}>
 					{question.text}
 				</Button>
-				{hoverProps.isHovered &&
+				{canEdit && hoverProps.isHovered &&
 					<Button
 						variant={variant}
 						size="sm"
@@ -50,7 +51,7 @@ const QuestionRow: React.FC<IQuestionRowProps> = (props: IQuestionRowProps) => {
 						<FontAwesomeIcon icon={faEdit} color={darkMode?'lightblue':'lightblue'} />
 					</Button>
 				}
-				{hoverProps.isHovered &&
+				{canEdit && hoverProps.isHovered &&
 					<Button
 						variant={variant}
 						size="sm"

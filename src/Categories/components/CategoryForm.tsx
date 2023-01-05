@@ -89,7 +89,6 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
       <br />
       {!isEdit() &&
         <div className="buttons">
-          {props.canEdit &&
             <Button
               variant="secondary"
               size="sm"
@@ -98,15 +97,14 @@ const CategForm: React.FC<ICategoryFormProps> = (props: ICategoryFormProps) => {
                 props.handleClose(true)
               }}>
               Cancel
-            </Button>}
-          {props.canEdit &&
+            </Button>
             <Button
               variant="primary"
               size="sm"
               type="submit"
             >
               Save
-            </Button>}
+            </Button>
         </div>
       }
     </Form>

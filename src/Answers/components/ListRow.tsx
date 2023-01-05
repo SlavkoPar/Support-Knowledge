@@ -12,10 +12,11 @@ interface IProps {
 	getCategoryQuestion: (categoryId: number, questionId: number) => string,
 	edit: (answerId: number) => void;
 	remove: (answerId: number) => void;
+	canEdit: boolean;
 }
 
 export const ListRow: React.FC<IProps> = (props: IProps) => {
-	const { answer, usedAnswers, getCategoryQuestion, edit, remove } = props;
+	const { answer, usedAnswers, getCategoryQuestion, edit, remove, canEdit } = props;
 	return (
 		<tr key={answer.answerId} >
 			<td>
@@ -24,15 +25,16 @@ export const ListRow: React.FC<IProps> = (props: IProps) => {
 			<td>
 				{answer.text}
 			</td>
-			<td>
+			{canEdit && <td>
 				<button
 					className="button-edit"
-					title="Add a new Answer"
+					title="Edit Answer"
 					onClick={() => edit(answer.answerId)}>
 					<FontAwesomeIcon icon={faEdit} color='lightblue' />
 				</button>
 			</td>
-			<td>
+			}
+			{canEdit && <td>
 				<button
 					className="button-remove"
 					title="Remove Answer"
@@ -42,11 +44,13 @@ export const ListRow: React.FC<IProps> = (props: IProps) => {
 							alert(`Answer is assigned to the question: \n"${getCategoryQuestion(qa.categoryId!, qa.questionId!)}". \nFirst unassign answer from question!`)
 						else
 							remove(answer.answerId)
-					}
-					}>
+					}}
+				>
 					<FontAwesomeIcon icon={faWindowClose} color='lightblue' />
 				</button>
+
 			</td>
+			}
 		</tr>
 	);
 }

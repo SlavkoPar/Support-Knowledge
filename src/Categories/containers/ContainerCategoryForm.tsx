@@ -16,18 +16,17 @@ import {
 import { CategoryForm } from '../components/CategoryForm';
 
 interface IProps {
-	canEdit: boolean,
 	handleClose: (isCancel: boolean) => void
 }
 
 // Grab the categories from the store and make them available on props
 const mapStateToProps = (store: IAppState, ownProps: IProps ) => {
-	const {categoriesState } = store;
+	const {categoriesState, topState } = store;
 	const { category, formMode } = categoriesState; 
 	return {
 		category,
 		formMode,
-		canEdit: ownProps.canEdit,
+		canEdit: topState.top.canEdit,
 		handleClose: ownProps.handleClose
 	};
 };

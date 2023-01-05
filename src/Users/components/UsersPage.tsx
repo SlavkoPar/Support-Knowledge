@@ -122,7 +122,7 @@ const UserPage: React.FC<IRolesProps> = (props: IRolesProps) => {
 						{userRoles && userEditing &&
 							<div style={{ border: '1px solid silver', borderRadius: '5px', padding: '5px 5px 15px 5px' }}>
 								<h4 style={{ marginTop: 0, color: 'white' }}>User</h4>
-								<UserForm canEdit={formMode === 'display' ? false : canEdit} />
+								<UserForm />
 							</div>
 						}
 					</div>
