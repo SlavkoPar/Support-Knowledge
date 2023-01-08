@@ -14,18 +14,28 @@ const Landing: React.FC<ILanding> = (props: ILanding) => {
         </p>
 
         <p className="mx-auto">
-          Your questions and answers are stored to "localStorage", which means they are protected od unwanted disclosure.
-
+          Your questions and answers are stored to "localStorage", which means they are protected of unwanted disclosure.
+          Web App comes with Demo data, which can be "Clean" from menu item: "LocalStorage/Clean"
         </p>
 
         <p className="mx-auto">
+          Team can consist of one or more people. 
+          <br />
+          That's why we need to register an sign-in. 
+          <br />
+          Users are grouped in groups: Owner, Admins, Editors, Viewers.
+          <br />
+          Database can be shared between team members by exporting it to 'zip' file, and importing it on other platforms.
+          <br />
           You can easily export Questions/Answers to the 'zip' file, and send by email to the memebers of your team.
-          <br /><br />They can import that 'zip' file into the Web App at their platforms
+          <br />They can import that 'zip' file into the Web App at their platforms
+          <br />
+          Next version will use WebSockets for synchronization of changes between members of the team.
         </p>
 
         <p className="mx-auto">
           Most of the software companies need some kind of software for client support.
-          As a developer, many times I had to open source code, giving the answer on the questions that we have already answered.
+          As a developer, many times I had to open source code, giving the answer on the questions that we have been already answered.
           Instead of complex and expensive Issue trackers, with relations between the issues and so on, which are difficult to learn, you can use this product just after instalation of my "Support" chrome extension.
         </p>
 

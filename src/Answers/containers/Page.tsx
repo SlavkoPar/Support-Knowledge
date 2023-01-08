@@ -3,14 +3,14 @@ import { Dispatch } from 'redux';
 
 import { IAppState } from '../../store/Store';
 
-import { AnswerActions,  addAnswer, editAnswer, removeAnswer, storeAnswer, cancelAnswer } from '../actions' // , IAddAnswer
+import { AnswerActions, addAnswer, editAnswer, removeAnswer, storeAnswer, cancelAnswer } from '../actions' // , IAddAnswer
 
 import { IAnswer } from '../types'
 
 import Page from '../components/Page'
 import { IQuestionAnswer, ICategoriesState } from '../../Categories/types';
 
-const getUsedAnswers = (categoriesState: ICategoriesState) : IQuestionAnswer[]=> {
+const getUsedAnswers = (categoriesState: ICategoriesState): IQuestionAnswer[] => {
 	const { categories, categoryMap } = categoriesState;
 	let questionAnswers: IQuestionAnswer[] = [];
 	for (let category of categories) {
@@ -27,9 +27,9 @@ const getUsedAnswers = (categoriesState: ICategoriesState) : IQuestionAnswer[]=>
 	return questionAnswers;
 }
 
-const getCategoryQuestion = (categoriesState: ICategoriesState, categoryId: number, questionId: number) : string => {
+const getCategoryQuestion = (categoriesState: ICategoriesState, categoryId: number, questionId: number): string => {
 	const { categories, categoryMap } = categoriesState;
-	const category = categories.find( g => g.categoryId === categoryId);
+	const category = categories.find(g => g.categoryId === categoryId);
 	const categoryState = categoryMap.get(category!.categoryId)!;
 	const question = categoryState.questions.find(q => q.questionId === questionId);
 	return `${category!.title}/${question!.text}`;
@@ -37,15 +37,19 @@ const getCategoryQuestion = (categoriesState: ICategoriesState, categoryId: numb
 }
 
 const mapStateToProps = (store: IAppState) => {
-  return {
-	answers: store.answerState.answers,
-	answer: store.answerState.answer!,
-	formMode: store.answerState.formMode,
-	usedAnswers: getUsedAnswers(store.categoriesState),
-	getCategoryQuestion: (categoryId: number, questionId: number): string => getCategoryQuestion(store.categoriesState, categoryId, questionId),
-	who: store.topState.top.auth!.who,
-	canEdit: store.topState.top.canEdit
-  };
+	return {
+		answers: store.answerState.answers.sort((a: IAnswer, b: IAnswer) => {
+			if (a > b) return 1;
+			if (a < b) return -1;
+			return 0;
+		}),
+		answer: store.answerState.answer!,
+		formMode: store.answerState.formMode,
+		usedAnswers: getUsedAnswers(store.categoriesState),
+		getCategoryQuestion: (categoryId: number, questionId: number): string => getCategoryQuestion(store.categoriesState, categoryId, questionId),
+		who: store.topState.top.auth!.who,
+		canEdit: store.topState.top.canEdit
+	};
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<AnswerActions>) => {
