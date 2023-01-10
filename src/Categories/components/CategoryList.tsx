@@ -34,8 +34,6 @@ const CategoryList: React.FC<ICategoryListProps> = (props: ICategoryListProps) =
 	// 	div!.style.display = 'block';
 	// }
 
-	console.log('RENDERUJEM Categories ----------->>>>>>>>>>')
-
 	return (
 		<>
 			<h5>Categories{' '}
